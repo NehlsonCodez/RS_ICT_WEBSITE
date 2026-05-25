@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block title %}Online Registration{% endblock %}
+{% block meta_desc %}Register for a Rivers State ICT training program. Free and government-subsidized courses for all citizens.{% endblock %}
+
+{% block content %}
+<div class="reg-hero">
+  <div class="container text-center">
+    <div class="section-label" style="justify-content:center;display:flex">Online Registration</div>
+    <h1>Apply for a Training Program</h1>
+    <p>All government-sponsored programs are free or heavily subsidized for Rivers State residents.</p>
+  </div>
+</div>
+
+<section class="section" style="padding-top:0">
+  <div class="reg-wrap">
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step-item">
+        <div class="step-dot active" data-step="1">1</div>
+        <div class="step-label">Personal Info</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" data-step="2">2</div>
+        <div class="step-label">Program Choice</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" data-step="3">3</div>
+        <div class="step-label">Review & Submit</div>
+      </div>
+    </div>
+
+    <div class="reg-form-card">
+
+      <!-- Step 1: Personal Info -->
+      <div id="reg-step-1" class="reg-step active">
+        <h2 class="step-title">Personal Information</h2>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">First Name *</label><input type="text" name="first_name" class="form-input" placeholder="Your first name" required></div>
+          <div class="form-group"><label class="form-label">Last Name *</label><input type="text" name="last_name" class="form-input" placeholder="Your last name" required></div>
+        </div>
+        <div class="form-group"><label class="form-label">Email Address *</label><input type="email" name="email" class="form-input" placeholder="you@example.com" required></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Phone Number *</label><input type="tel" name="phone" class="form-input" placeholder="+234 xxx xxx xxxx" required></div>
+          <div class="form-group"><label class="form-label">Gender</label><select name="gender" class="form-select"><option value="male">Male</option><option value="female">Female</option><option value="other">Prefer not to say</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Age Group</label><select name="age_group" class="form-select"><option value="under_18">Under 18</option><option value="18_25">18 – 25</option><option value="26_35" selected>26 – 35</option><option value="36_45">36 – 45</option><option value="46_plus">46+</option></select></div>
+          <div class="form-group"><label class="form-label">LGA of Residence *</label><select name="lga" class="form-select" required><option value="">-- Select LGA --</option><option>Abua-Odual</option><option>Ahoada East</option><option>Ahoada West</option><option>Andoni</option><option>Asari-Toru</option><option>Bonny</option><option>Degema</option><option>Eleme</option><option>Emouha</option><option>Etche</option><option>Gokana</option><option>Ikwerre</option><option>Khana</option><option>Obio/Akpor</option><option>Ogba-Egbema-Ndoni</option><option>Ogu-Bolo</option><option>Okrika</option><option>Omuma</option><option>Opobo-Nkoro</option><option>Oyigbo</option><option>Port Harcourt</option><option>Tai</option></select></div>
+        </div>
+        <div class="form-nav"><button type="button" class="btn btn-blue" onclick="nextRegStep()">Next: Choose Program <i class="fas fa-arrow-right"></i></button></div>
+      </div>
+
+      <!-- Step 2: Program -->
+      <div id="reg-step-2" class="reg-step">
+        <h2 class="step-title">Program Selection</h2>
+        <div class="form-group"><label class="form-label">Select Program *</label><select name="program" class="form-select" required><option value="">-- Choose a program --</option><option>Computer Appreciation (2 weeks)</option><option>Microsoft Office Suite (3 weeks)</option><option>Web Development (8 weeks)</option><option>Graphics Design (4 weeks)</option><option>Digital Literacy (2 weeks)</option><option>Cybersecurity Basics (3 weeks)</option><option>Data Analysis (4 weeks)</option><option>Coding for Beginners (6 weeks)</option><option>AI Tools for Education (2 weeks)</option><option>ICT Integration in Teaching (3 weeks)</option><option>Digital Marketing (4 weeks)</option><option>Cloud Computing (5 weeks)</option></select></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Preferred Schedule</label><select name="schedule" class="form-select"><option value="weekday_morning">Weekday Mornings (8am–12pm)</option><option value="weekday_afternoon">Weekday Afternoons (1pm–5pm)</option><option value="saturday">Saturday (9am–3pm)</option><option value="evening">Evening (5pm–8pm)</option></select></div>
+          <div class="form-group"><label class="form-label">Current Occupation</label><select name="occupation" class="form-select"><option value="student">Student</option><option value="teacher">Teacher / Educator</option><option value="civil_servant">Civil Servant</option><option value="business">Business Owner</option><option value="unemployed">Unemployed</option><option value="other">Other</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">ICT Experience Level</label><select name="experience" class="form-select"><option value="beginner">Complete Beginner</option><option value="basic">Basic (can use phone/email)</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select></div>
+          <div class="form-group"><label class="form-label">How did you hear about us?</label><select name="referral" class="form-select"><option value="social_media">Social Media</option><option value="friend">Friend / Family</option><option value="radio_tv">Radio / TV</option><option value="government">Government Notice</option><option value="flyer">Flyer / Poster</option><option value="school">School / Workplace</option></select></div>
+        </div>
+        <div class="form-nav">
+          <button type="button" class="btn btn-outline" onclick="prevRegStep()"><i class="fas fa-arrow-left"></i> Back</button>
+          <button type="button" class="btn btn-blue" onclick="nextRegStep()">Review Application <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Step 3: Review -->
+      <div id="reg-step-3" class="reg-step">
+        <h2 class="step-title">Review Your Application</h2>
+        <div class="summary-card" id="regSummary"><!-- filled by JS --></div>
+        <form onsubmit="submitRegistration(event)">
+          <div class="form-group" style="margin-top:20px">
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:14px;color:var(--gray-600)">
+              <input type="checkbox" id="regAgree" style="margin-top:3px;width:16px;height:16px;accent-color:var(--blue)">
+              I agree to the Rivers State ICT Department's terms and confirm that all information provided is accurate. I understand enrollment is subject to seat availability.
+            </label>
+          </div>
+          <div class="form-nav">
+            <button type="button" class="btn btn-outline" onclick="prevRegStep()"><i class="fas fa-arrow-left"></i> Back</button>
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-check-circle"></i> Submit Application</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success State -->
+      <div id="regSuccess" style="display:none;text-align:center;padding:40px 20px">
+        <div style="font-size:64px;margin-bottom:16px">🎉</div>
+        <h2 style="font-size:26px;font-weight:800;color:var(--navy);margin-bottom:10px">Application Submitted!</h2>
+        <p style="color:var(--gray-600);font-size:15px;margin-bottom:20px">Your registration has been received. A confirmation email will be sent within 24 hours.</p>
+        <div style="background:var(--blue-light);border-radius:12px;padding:18px;display:inline-block;margin-bottom:24px">
+          <div style="font-size:12px;color:var(--gray-600);font-weight:600;letter-spacing:1px;text-transform:uppercase">Reference Number</div>
+          <div style="font-size:24px;font-weight:800;color:var(--navy);margin-top:4px" id="refNum"></div>
+        </div>
+        <div><a href="/" class="btn btn-primary">Back to Home</a>&nbsp;&nbsp;<a href="/programs" class="btn btn-outline">View All Programs</a></div>
+      </div>
+
+    </div><!-- /reg-form-card -->
+
+    <!-- Info Sidebar -->
+    <div class="reg-sidebar">
+      <div class="sidebar-card">
+        <h4>📋 Registration Info</h4>
+        <ul>
+          <li>All programs are <strong>free or subsidized</strong> for RS residents</li>
+          <li>Bring a valid <strong>government-issued ID</strong></li>
+          <li>Classes run <strong>weekdays & Saturdays</strong></li>
+          <li>Certificates issued on <strong>completion</strong></li>
+          <li>Spaces are <strong>limited</strong> per cohort</li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <h4>📞 Need Help?</h4>
+        <p>Call us on <strong>+234 (0) 801 234 5678</strong> or email <strong>training@ict.riversstate.gov.ng</strong></p>
+        <p style="margin-top:10px">Office Hours: <strong>Mon–Fri, 8am–5pm</strong></p>
+      </div>
+      <div class="sidebar-card" style="background:var(--navy);color:white">
+        <h4 style="color:white">🗓️ Next Cohort Starts</h4>
+        <div style="font-size:28px;font-weight:800;color:#6ee7a8;margin:8px 0">June 2, 2026</div>
+        <p style="color:rgba(255,255,255,0.65);font-size:13px">Register now to secure your seat in the upcoming cohort.</p>
+      </div>
+    </div>
+
+  </div><!-- /reg-wrap -->
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.reg-hero { background: linear-gradient(135deg, var(--navy), var(--blue)); padding: 130px 24px 60px; color: white; }
+.reg-hero h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 800; letter-spacing: -1px; margin: 10px 0 12px; }
+.reg-hero p { font-size: 16px; color: rgba(255,255,255,0.7); }
+.reg-wrap { max-width: 1100px; margin: -32px auto 0; padding: 0 24px 60px; display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: start; }
+.step-indicator { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 8px; }
+.step-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.step-dot { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--gray-200); background: white; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: var(--gray-400); transition: var(--transition); }
+.step-dot.active { background: var(--blue); border-color: var(--blue); color: white; box-shadow: 0 4px 16px rgba(0,87,184,0.3); }
+.step-dot.done { background: var(--green); border-color: var(--green); color: white; }
+.step-label { font-size: 12px; font-weight: 600; color: var(--gray-400); white-space: nowrap; }
+.step-dot.active + .step-label { color: var(--blue); }
+.step-line { flex: 1; max-width: 80px; height: 2px; background: var(--gray-200); margin: 0 12px; margin-bottom: 24px; }
+.reg-form-card { background: white; border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-lg); border: 1px solid var(--gray-200); }
+.reg-step { display: none; }
+.reg-step.active { display: block; }
+.step-title { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 24px; letter-spacing: -0.5px; }
+.form-nav { display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end; }
+.summary-card { background: var(--off-white); border-radius: 12px; padding: 22px; border: 1px solid var(--gray-200); }
+.summary-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--gray-200); font-size: 14px; }
+.summary-row:last-child { border-bottom: none; }
+.summary-row span { color: var(--gray-600); }
+.summary-row strong { color: var(--navy); font-weight: 600; }
+.reg-sidebar { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 100px; }
+.sidebar-card { background: white; border-radius: var(--radius); padding: 22px; border: 1px solid var(--gray-200); }
+.sidebar-card h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+.sidebar-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.sidebar-card li { font-size: 13px; color: var(--gray-600); padding-left: 14px; position: relative; line-height: 1.5; }
+.sidebar-card li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-size: 12px; font-weight: 700; }
+.sidebar-card p { font-size: 13px; color: var(--gray-600); line-height: 1.65; }
+@media (max-width: 768px) { .reg-wrap { grid-template-columns: 1fr; } .step-indicator { gap: 0; } .reg-form-card { padding: 24px; } }
+</style>
+{% endblock %}

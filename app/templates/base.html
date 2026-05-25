@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% block meta_desc %}Rivers State ICT Department — Empowering Rivers State Through Digital Innovation. Explore ICT programs, e-government services, and digital training.{% endblock %}">
+  <meta name="keywords" content="Rivers State ICT, Digital Skills, Nigeria Technology, ICT Training, Port Harcourt Tech, E-Government">
+  <meta name="author" content="Rivers State ICT Department">
+  <meta property="og:title" content="{% block og_title %}Rivers State ICT Department{% endblock %}">
+  <meta property="og:description" content="Empowering Rivers State Through Digital Innovation">
+  <meta property="og:type" content="website">
+  <title>{% block title %}Rivers State ICT Department{% endblock %} | Digital Innovation Hub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/main.css">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- ═══ TOP ANNOUNCEMENT BAR ═══ -->
+<div class="announcement-bar">
+  <div class="ann-inner">
+    <span>🎓 New Cohort Starting June 2026 — <a href="/register">Register Now</a></span>
+    <span class="ann-sep">|</span>
+    <span>📞 Helpline: +234 (0) 801 234 5678</span>
+  </div>
+</div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="/">
+      <div class="nav-logo">RS</div>
+      <div class="nav-brand-text">
+        <span class="t1">Rivers State ICT Dept.</span>
+        <span class="t2">Ministry of Science, Technology & Innovation</span>
+      </div>
+    </a>
+
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="{% if page == 'home' %}active{% endif %}">Home</a>
+      <div class="nav-dropdown">
+        <a href="/about" class="{% if page in ['about','staff'] %}active{% endif %}">About <i class="fas fa-chevron-down nav-arrow"></i></a>
+        <div class="dropdown-menu">
+          <a href="/about"><i class="fas fa-info-circle"></i> About Us</a>
+          <a href="/staff"><i class="fas fa-users"></i> Leadership & Staff</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <a href="/services" class="{% if page in ['services','programs','training'] %}active{% endif %}">Services <i class="fas fa-chevron-down nav-arrow"></i></a>
+        <div class="dropdown-menu">
+          <a href="/services"><i class="fas fa-cogs"></i> ICT Services</a>
+          <a href="/programs"><i class="fas fa-graduation-cap"></i> Digital Skills Programs</a>
+          <a href="/training"><i class="fas fa-chalkboard-teacher"></i> Training Center</a>
+        </div>
+      </div>
+      <a href="/news" class="{% if page == 'news' %}active{% endif %}">News & Events</a>
+      <a href="/gallery" class="{% if page == 'gallery' %}active{% endif %}">Gallery</a>
+      <a href="/contact" class="{% if page == 'contact' %}active{% endif %}">Contact</a>
+      <a href="/register" class="nav-cta">Register Now</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-search-btn" onclick="toggleSearch()" aria-label="Search"><i class="fas fa-search"></i></button>
+      <button class="hamburger" id="hamburger" onclick="toggleMobile()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Overlay -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-inner">
+      <input type="text" id="searchInput" placeholder="Search programs, services, news..." oninput="doSearch(this.value)">
+      <button onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</nav>
+
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileMenu">
+  <a href="/">🏠 Home</a>
+  <a href="/about">🏛️ About Us</a>
+  <a href="/staff">👥 Leadership & Staff</a>
+  <a href="/services">⚙️ ICT Services</a>
+  <a href="/programs">📚 Digital Skills Programs</a>
+  <a href="/training">🎓 Training Center</a>
+  <a href="/news">📰 News & Events</a>
+  <a href="/gallery">🖼️ Gallery</a>
+  <a href="/contact">📞 Contact Us</a>
+  <a href="/register" style="color:#6ee7a8;font-weight:700">✍️ Register Now</a>
+</div>
+<!-- ═══ MAIN CONTENT ═══ -->
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ═══ NEWSLETTER STRIP ═══ -->
+{% block newsletter %}
+<section class="newsletter-strip">
+  <div class="nl-inner">
+    <div class="nl-text">
+      <h3>Stay Updated on ICT News</h3>
+      <p>Get programs, events, and digital opportunities delivered to your inbox.</p>
+    </div>
+    <form class="nl-form" onsubmit="submitNewsletter(event)">
+      <input type="email" name="email" placeholder="Enter your email address" required>
+      <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="fb-logo">
+          <div class="logo-box">RS</div>
+          <span>Rivers State ICT Department</span>
+        </div>
+        <p>Empowering Rivers State through digital innovation, skills development, and technology-driven governance — for every citizen.</p>
+        <p class="footer-slogan">"Connecting Rivers State to the Digital Future"</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="/">Home</a>
+        <a href="/about">About Us</a>
+        <a href="/services">Our Services</a>
+        <a href="/programs">Programs</a>
+        <a href="/news">News & Events</a>
+        <a href="/gallery">Gallery</a>
+        <a href="/contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Training Programs</h4>
+        <a href="/programs">Computer Appreciation</a>
+        <a href="/programs">Web Development</a>
+        <a href="/programs">Data Analysis</a>
+        <a href="/programs">Cybersecurity Basics</a>
+        <a href="/programs">AI Tools for Education</a>
+        <a href="/programs">Cloud Computing</a>
+        <a href="/register">Register Now →</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p><i class="fas fa-map-marker-alt"></i> ICT House, Trans-Amadi,<br>Port Harcourt, Rivers State</p>
+        <p><i class="fas fa-phone"></i> +234 (0) 801 234 5678</p>
+        <p><i class="fas fa-envelope"></i> info@ict.riversstate.gov.ng</p>
+        <p><i class="fas fa-clock"></i> Mon–Fri: 8am – 5pm</p>
+        <p><i class="fas fa-globe"></i> www.ict.riversstate.gov.ng</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Rivers State ICT Department · Ministry of Science, Technology & Innovation · All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Accessibility</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<script src="/static/js/main.js"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

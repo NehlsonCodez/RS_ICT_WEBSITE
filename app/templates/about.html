@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}About Us{% endblock %}
+{% block meta_desc %}Learn about the Rivers State ICT Department — our mission, vision, and commitment to digital transformation across Rivers State.{% endblock %}
+{% block content %}
+<div class="page-header"><h1>About the ICT Department</h1><p>Leading Rivers State's digital transformation since 2010</p><div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>About Us</span></div></div>
+<section class="section"><div class="section-inner">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start">
+<div>
+  <div class="section-label">Who We Are</div>
+  <h2 style="font-size:34px;font-weight:800;color:var(--navy);letter-spacing:-1px;margin-bottom:16px">Transforming Rivers State, One Click at a Time</h2>
+  <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">The Rivers State ICT Department is the principal government agency responsible for planning, implementing, and coordinating information and communication technology initiatives across all ministries, departments, and agencies (MDAs) of Rivers State.</p>
+  <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">Established under the Ministry of Science, Technology and Innovation, we drive digital transformation, e-government adoption, and ICT capacity building — positioning Rivers State as the foremost tech-enabled state in Southern Nigeria.</p>
+  <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:24px">Our flagship Rivers State ICT Training Center has trained over 15,000 citizens across 23 LGAs in digital skills from basic computing to AI and cloud technology.</p>
+  <blockquote style="background:var(--blue-xlight);border-left:4px solid var(--blue);border-radius:0 12px 12px 0;padding:20px 22px;margin:0">
+    <p style="font-size:16px;font-weight:700;color:var(--navy);font-family:var(--font-serif);font-style:italic;line-height:1.5">"Harnessing technology as the great equalizer — making quality digital education accessible to every Rivers State resident."</p>
+    <cite style="font-size:13px;color:var(--gray-600);margin-top:8px;display:block">— Director General, Rivers State ICT Department</cite>
+  </blockquote>
+</div>
+<div style="background:linear-gradient(135deg,var(--navy),#004080);border-radius:var(--radius-xl);padding:40px;color:white">
+  <h3 style="font-size:20px;font-weight:700;margin-bottom:6px">Rivers State ICT Dept.</h3>
+  <p style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:28px">Ministry of Science, Technology & Innovation</p>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div style="background:rgba(255,255,255,0.08);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:10px;background:rgba(110,231,168,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🎯</div><div><div style="font-size:14px;font-weight:600;color:white">Our Mission</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:3px">Drive digital inclusion and ICT-enabled growth across all communities</div></div></div>
+    <div style="background:rgba(255,255,255,0.08);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:10px;background:rgba(110,231,168,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">👁️</div><div><div style="font-size:14px;font-weight:600;color:white">Our Vision</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:3px">A digitally empowered Rivers State as the tech hub of Southern Nigeria</div></div></div>
+    <div style="background:rgba(255,255,255,0.08);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:10px;background:rgba(110,231,168,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⚖️</div><div><div style="font-size:14px;font-weight:600;color:white">Our Values</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:3px">Integrity · Innovation · Inclusion · Impact</div></div></div>
+    <div style="background:rgba(255,255,255,0.08);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:10px;background:rgba(110,231,168,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📋</div><div><div style="font-size:14px;font-weight:600;color:white">Established 2010</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:3px">Serving over 1 million Rivers State residents</div></div></div>
+  </div>
+</div>
+</div>
+</div></section>
+{% endblock %}
+{% block extra_css %}<style>@media(max-width:768px){section .section-inner > div{grid-template-columns:1fr!important;gap:32px!important}}</style>{% endblock %}

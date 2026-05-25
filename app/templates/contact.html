@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+{% block meta_desc %}Contact the Rivers State ICT Department. Reach us by phone, email, or visit our office in Port Harcourt.{% endblock %}
+{% block content %}
+<div class="page-header"><h1>Contact Us</h1><p>We're here to help — reach the Rivers State ICT Department</p><div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>Contact</span></div></div>
+<section class="section"><div class="section-inner"><div class="contact-grid">
+<div class="contact-left">
+  <div class="section-label">Get in Touch</div>
+  <h2 style="font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-0.5px;margin-bottom:14px">We'd love to hear from you</h2>
+  <p style="font-size:15px;color:var(--gray-600);line-height:1.8;margin-bottom:28px">Whether you're looking to enroll, explore partnership opportunities, or have questions — our team is ready to assist.</p>
+  <div class="contact-items">
+    <div class="ci"><div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="ci-label">Address</div><div class="ci-val">ICT House, Trans-Amadi Industrial Layout,<br>Port Harcourt, Rivers State, Nigeria</div></div></div>
+    <div class="ci"><div class="ci-icon"><i class="fas fa-phone"></i></div><div><div class="ci-label">Phone</div><div class="ci-val">+234 (0) 801 234 5678 · +234 (0) 800 ICT RSVS</div></div></div>
+    <div class="ci"><div class="ci-icon"><i class="fas fa-envelope"></i></div><div><div class="ci-label">Email</div><div class="ci-val">info@ict.riversstate.gov.ng<br>training@ict.riversstate.gov.ng</div></div></div>
+    <div class="ci"><div class="ci-icon"><i class="fas fa-clock"></i></div><div><div class="ci-label">Office Hours</div><div class="ci-val">Monday – Friday: 8:00 AM – 5:00 PM<br>Saturday: 9:00 AM – 1:00 PM</div></div></div>
+  </div>
+  <div style="background:var(--gray-100);border-radius:var(--radius-lg);height:200px;display:flex;align-items:center;justify-content:center;margin-top:28px;border:1px solid var(--gray-200)">
+    <div style="text-align:center;color:var(--gray-400)"><i class="fas fa-map-marked-alt" style="font-size:36px;margin-bottom:8px;display:block"></i><strong style="color:var(--gray-600)">Port Harcourt, Rivers State</strong><div style="font-size:12px;margin-top:4px">Google Map — embed via Maps API key</div></div>
+  </div>
+</div>
+<div class="contact-right">
+  <div style="background:white;border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-md);border:1px solid var(--gray-200)">
+    <h3 style="font-size:20px;font-weight:700;color:var(--navy);margin-bottom:24px">Send Us a Message</h3>
+    <form onsubmit="submitContact(event)">
+      <div class="form-row"><div class="form-group"><label class="form-label">First Name *</label><input type="text" name="first_name" class="form-input" required placeholder="First name"></div><div class="form-group"><label class="form-label">Last Name *</label><input type="text" name="last_name" class="form-input" required placeholder="Last name"></div></div>
+      <div class="form-group"><label class="form-label">Email *</label><input type="email" name="email" class="form-input" required placeholder="you@example.com"></div>
+      <div class="form-group"><label class="form-label">Phone</label><input type="tel" name="phone" class="form-input" placeholder="+234 xxx xxx xxxx"></div>
+      <div class="form-group"><label class="form-label">Subject *</label><select name="subject" class="form-select" required><option value="">-- Select subject --</option><option>General Inquiry</option><option>Program Enrollment</option><option>Partnership Opportunity</option><option>Technical Support</option><option>Media / Press</option><option>Complaint / Feedback</option></select></div>
+      <div class="form-group"><label class="form-label">Message *</label><textarea name="message" class="form-textarea" required placeholder="Tell us how we can help..."></textarea></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-paper-plane"></i> Send Message</button>
+      <div class="success-alert" id="contactSuccess" style="display:none"><i class="fas fa-check-circle" style="font-size:18px"></i> Thank you! We'll respond within 1–2 business days.</div>
+    </form>
+  </div>
+</div>
+</div></div></section>
+{% endblock %}
+{% block extra_css %}<style>
+.contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; }
+.contact-items { display: flex; flex-direction: column; gap: 18px; }
+.ci { display: flex; align-items: flex-start; gap: 14px; }
+.ci-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ci-icon i { color: var(--blue); font-size: 18px; }
+.ci-label { font-size: 12px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+.ci-val { font-size: 14px; font-weight: 500; color: var(--navy); line-height: 1.5; }
+@media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+</style>{% endblock %}

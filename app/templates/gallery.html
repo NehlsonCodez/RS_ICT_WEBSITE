@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}Photo Gallery — Rivers State ICT Department{% endblock %}
+{% block meta_desc %}Photo gallery of the Rivers State ICT Department — training sessions, graduation ceremonies, tech summits, infrastructure projects, and community outreach events.{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h1>Photo Gallery</h1>
+  <p>Capturing Rivers State's digital transformation in pictures</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>Photo Gallery</span></div>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <p style="font-size:15px;color:var(--gray-600);line-height:1.85;max-width:680px;margin:0 auto 48px;text-align:center">
+      Browse photos from our training programs, graduation ceremonies, government partnerships, community
+      outreach events, and infrastructure projects across all 23 LGAs of Rivers State.
+    </p>
+
+    <!-- Filter tabs -->
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:40px">
+      <button onclick="filterGallery('all')" id="btn-all" style="background:var(--navy);color:white;border:none;padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">All</button>
+      <button onclick="filterGallery('training')" id="btn-training" style="background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">Training &amp; Graduation</button>
+      <button onclick="filterGallery('events')" id="btn-events" style="background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">Events &amp; Summits</button>
+      <button onclick="filterGallery('infra')" id="btn-infra" style="background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">Infrastructure</button>
+      <button onclick="filterGallery('outreach')" id="btn-outreach" style="background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">Community Outreach</button>
+    </div>
+
+    <!-- Gallery grid with SVG placeholders -->
+    <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px">
+
+      <div class="gallery-item training" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
+        <div style="background:linear-gradient(135deg,#1a3a5c,#004080);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">🎓</div>
+          <div style="font-size:14px;font-weight:600">April 2026 Graduation Ceremony</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">1,200 graduates · Government House Banquet Hall</div>
+        </div>
+        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
+          <p style="font-size:12px;color:var(--gray-500)">📅 April 28, 2026 · Training &amp; Graduation</p>
+        </div>
+      </div>
+
+      <div class="gallery-item events" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
+        <div style="background:linear-gradient(135deg,#2d1b69,#5e35b1);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">🖥️</div>
+          <div style="font-size:14px;font-weight:600">Rivers State Tech Summit 2025</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">500+ attendees · Novotel Port Harcourt</div>
+        </div>
+        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
+          <p style="font-size:12px;color:var(--gray-500)">📅 November 2025 · Events &amp; Summits</p>
+        </div>
+      </div>
+
+      <div class="gallery-item training" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
+        <div style="background:linear-gradient(135deg,#1b5e20,#388e3c);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">👩‍💻</div>
+          <div style="font-size:14px;font-weight:600">Web Development Class — Cohort 7</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">Computer Lab 3 · Trans-Amadi Training Center</div>
+        </div>
+        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
+          <p style="font-size:12px;color:var(--gray-500)">📅 February 2026 · Training &amp; Graduation</p>
+        </div>
+      </div>
+
+      <div class="gallery-item infra" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
+        <div style="background:linear-gradient(135deg,#bf360c,#e64a19);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">🏗️</div>
+          <div style="font-size:14px;font-weight:600">Digital Hub Phase 2 Construction Progress</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">ICT House Expansion · Trans-Amadi, PH</div>
+        </div>
+        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
+          <p style="font-size:12px;color:var(--gray-500)">📅 March 2026 · Infrastructure</p>
+        </div>
+      </div>
+
+      <div class="gallery-item outreach" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
+        <div style="background:linear-gradient(135deg,#004d40,#00695c);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">🏘️</div>
+          <div style="font-size:14px;font-weight:600">Khana LGA Community Digital Literacy Drive</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">300 rural residents trained · Bori, Khana LGA</div>
+        </div>
+        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
+          <p style="font-size:12px;color:var(--gray-500)">📅 January 2026 · Community Outreach</p>
+        </div>
+      </div>
+
+      <div class="gallery-item events" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
+        <div style="background:linear-gradient(135deg,#0d47a1,#1976d2);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">🤝</div>
+          <div style="font-size:14px;font-weight:600">Microsoft Nigeria MoU Signing Ceremony</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">ICT House, Port Harcourt · April 2026</div>
+        </div>
+        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
+          <p style="font-size:12px;color:var(--gray-500)">📅 April 10, 2026 · Events &amp; Summits</p>
+        </div>
+      </div>
+
+      <div class="gallery-item training" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
+        <div style="background:linear-gradient(135deg,#4a148c,#7b1fa2);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">🔐</div>
+          <div style="font-size:14px;font-weight:600">Cybersecurity Bootcamp — Cohort 3</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">60 trainees · 10-week intensive program</div>
+        </div>
+        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
+          <p style="font-size:12px;color:var(--gray-500)">📅 March 2026 · Training &amp; Graduation</p>
+        </div>
+      </div>
+
+      <div class="gallery-item outreach" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
+        <div style="background:linear-gradient(135deg,#e65100,#f57c00);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">👩‍🎓</div>
+          <div style="font-size:14px;font-weight:600">Women in Tech Graduation — Obio/Akpor</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">250 women certified · Rumuola Centre</div>
+        </div>
+        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
+          <p style="font-size:12px;color:var(--gray-500)">📅 February 2026 · Community Outreach</p>
+        </div>
+      </div>
+
+      <div class="gallery-item infra" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
+        <div style="background:linear-gradient(135deg,#263238,#455a64);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
+          <div style="font-size:42px;margin-bottom:10px">🏫</div>
+          <div style="font-size:14px;font-weight:600">School Connectivity — GGC Port Harcourt</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">First 50 schools connected · Fibre Wi-Fi installation</div>
+        </div>
+        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
+          <p style="font-size:12px;color:var(--gray-500)">📅 May 2026 · Infrastructure</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+function filterGallery(cat) {
+  const items = document.querySelectorAll('.gallery-item');
+  items.forEach(item => {
+    item.style.display = (cat === 'all' || item.classList.contains(cat)) ? 'block' : 'none';
+  });
+  document.querySelectorAll('[id^="btn-"]').forEach(b => {
+    b.style.background = '#f1f5f9';
+    b.style.color = '#475569';
+    b.style.border = '1px solid #e2e8f0';
+  });
+  const active = document.getElementById('btn-' + cat);
+  if (active) { active.style.background = 'var(--navy)'; active.style.color = 'white'; active.style.border = 'none'; }
+}
+function openLightbox(el) {
+  const title = el.querySelector('[style*="font-size:14px;font-weight:600"]')?.innerText || '';
+  const desc = el.querySelector('[style*="color:rgba(255,255,255,0.55)"]')?.innerText || '';
+  alert('📸 ' + title + '\n' + desc + '\n\n(High-resolution photos available on request — contact info@ict.riversstate.gov.ng)');
+}
+</script>
+{% endblock %}
