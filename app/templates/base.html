@@ -3,114 +3,276 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="{% block meta_desc %}Rivers State ICT Department — Empowering Rivers State Through Digital Innovation. Explore ICT programs, e-government services, and digital training.{% endblock %}">
-  <meta name="keywords" content="Rivers State ICT, Digital Skills, Nigeria Technology, ICT Training, Port Harcourt Tech, E-Government">
+  <meta name="description" content="{% block meta_desc %}Rivers State ICT Department — Empowering Rivers State Through Digital Innovation.{% endblock %}">
+  <meta name="keywords" content="Rivers State ICT, Digital Skills, Nigeria Technology, ICT Training, Port Harcourt Tech, E-Government, Transparency, Procurement">
   <meta name="author" content="Rivers State ICT Department">
   <meta property="og:title" content="{% block og_title %}Rivers State ICT Department{% endblock %}">
   <meta property="og:description" content="Empowering Rivers State Through Digital Innovation">
   <meta property="og:type" content="website">
-  <title>{% block title %}Rivers State ICT Department{% endblock %} | Digital Innovation Hub</title>
-
+  <title>{% block title %}Rivers State ICT Department{% endblock %} | RS-ICT</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="/static/css/main.css">
+  <style>
+    /* ── MEGA NAV ── */
+    .mega-nav { background:var(--navy); position:fixed;top:0;left:0;right:0;z-index:1000;box-shadow:0 2px 20px rgba(0,0,0,.35); }
+    .top-bar { background:#0a1628;border-bottom:1px solid rgba(255,255,255,.06);padding:6px 0; }
+    .top-bar-inner { max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,.55); }
+    .top-bar a { color:rgba(255,255,255,.55);text-decoration:none; }
+    .top-bar a:hover { color:#6ee7a8; }
+    .top-bar-left { display:flex;gap:20px;align-items:center; }
+    .top-bar-right { display:flex;gap:16px;align-items:center; }
+    .top-bar-right a { background:rgba(255,255,255,.07);padding:3px 10px;border-radius:4px; }
+    .nav-main { max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px; }
+    .nav-brand { display:flex;align-items:center;gap:12px;text-decoration:none; }
+    .nav-logo-box { width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#0057B8,#003380);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:white;letter-spacing:.5px;flex-shrink:0; }
+    .nav-brand-text .t1 { display:block;font-size:14px;font-weight:700;color:white;line-height:1.2; }
+    .nav-brand-text .t2 { display:block;font-size:10px;color:rgba(255,255,255,.45);line-height:1.2; }
+    .nav-links { display:flex;align-items:center;gap:2px; }
+    .nav-links > .nav-item { position:relative; }
+    .nav-links > .nav-item > a { display:flex;align-items:center;gap:5px;padding:8px 12px;color:rgba(255,255,255,.82);font-size:13px;font-weight:500;border-radius:6px;text-decoration:none;transition:all .2s;white-space:nowrap; }
+    .nav-links > .nav-item > a:hover,
+    .nav-links > .nav-item > a.active { color:white;background:rgba(255,255,255,.1); }
+    .nav-links > .nav-item > a .arr { font-size:10px;opacity:.6; }
+    /* Mega dropdown */
+    .mega-drop { position:absolute;top:calc(100% + 8px);left:0;background:white;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.25);min-width:220px;padding:10px;opacity:0;visibility:hidden;transform:translateY(8px);transition:all .2s;z-index:900; }
+    .mega-drop.wide { min-width:580px;display:grid;grid-template-columns:repeat(2,1fr);gap:4px; }
+    .mega-drop.wide3 { min-width:720px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px; }
+    .mega-col-head { font-size:10px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.8px;padding:8px 12px 4px;grid-column:1/-1; }
+    .mega-drop a { display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--gray-700);font-size:13px;transition:background .15s; }
+    .mega-drop a:hover { background:var(--blue-xlight); }
+    .mega-drop a i { font-size:14px;color:var(--blue);margin-top:1px;width:16px;flex-shrink:0; }
+    .mega-drop a strong { display:block;font-size:13px;font-weight:600;color:var(--navy);line-height:1.2; }
+    .mega-drop a span { display:block;font-size:11px;color:var(--gray-500);margin-top:1px;line-height:1.3; }
+    .nav-item:hover .mega-drop { opacity:1;visibility:visible;transform:translateY(0); }
+    .nav-cta { background:linear-gradient(135deg,#00843D,#006830);color:white!important;padding:8px 18px!important;border-radius:20px!important;font-weight:600!important; }
+    .nav-cta:hover { background:linear-gradient(135deg,#009a47,#007a38)!important;background-color:transparent!important; }
+    .nav-actions { display:flex;gap:8px;align-items:center; }
+    .nav-icon-btn { width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:.2s; }
+    .nav-icon-btn:hover { background:rgba(255,255,255,.15);color:white; }
+    .hamburger { display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px; }
+    .hamburger span { display:block;width:22px;height:2px;background:rgba(255,255,255,.8);border-radius:2px; }
+    /* Search */
+    .search-bar { background:#0a1628;border-top:1px solid rgba(255,255,255,.08);padding:0;max-height:0;overflow:hidden;transition:all .3s; }
+    .search-bar.open { max-height:80px;padding:12px 24px; }
+    .search-bar-inner { max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:12px; }
+    .search-bar input { flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:10px 16px;color:white;font-size:14px;outline:none; }
+    .search-bar input::placeholder { color:rgba(255,255,255,.3); }
+    .search-results-bar { max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;padding-top:8px; }
+    .sr-item { background:rgba(255,255,255,.08);border-radius:6px;padding:4px 12px;font-size:12px;color:rgba(255,255,255,.7);cursor:pointer;text-decoration:none; }
+    .sr-item:hover { background:rgba(255,255,255,.16);color:white; }
+    /* Mobile nav */
+    .mobile-drawer { position:fixed;inset:0;z-index:2000;pointer-events:none; }
+    .mobile-overlay { position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .3s; }
+    .mobile-panel { position:absolute;top:0;right:0;bottom:0;width:300px;background:var(--navy);transform:translateX(100%);transition:transform .3s;overflow-y:auto;padding:24px 0; }
+    .mobile-drawer.open { pointer-events:all; }
+    .mobile-drawer.open .mobile-overlay { opacity:1; }
+    .mobile-drawer.open .mobile-panel { transform:translateX(0); }
+    .mob-close { display:flex;align-items:center;justify-content:space-between;padding:0 24px 20px;border-bottom:1px solid rgba(255,255,255,.1); }
+    .mob-close span { color:white;font-weight:600;font-size:15px; }
+    .mob-close button { background:rgba(255,255,255,.1);border:none;color:white;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px; }
+    .mob-section { padding:12px 0; }
+    .mob-section-title { font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;padding:8px 24px 4px; }
+    .mob-link { display:flex;align-items:center;gap:10px;padding:11px 24px;color:rgba(255,255,255,.75);text-decoration:none;font-size:14px;transition:.15s; }
+    .mob-link:hover { background:rgba(255,255,255,.07);color:white; }
+    .mob-link i { width:18px;color:rgba(255,255,255,.4);font-size:13px; }
+    .mob-cta { margin:16px 24px 0;background:linear-gradient(135deg,#00843D,#006830);color:white;display:block;text-align:center;padding:12px;border-radius:10px;font-weight:600;text-decoration:none;font-size:14px; }
+    /* Breadcrumb */
+    .page-header { background:linear-gradient(135deg,var(--navy) 0%,#002855 60%,#003d70 100%);padding:80px 0 48px;margin-top:99px;position:relative;overflow:hidden; }
+    .page-header::before { content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:50px 50px; }
+    .page-header .ph-inner { max-width:1280px;margin:0 auto;padding:0 24px;position:relative;z-index:1; }
+    .page-header h1 { font-size:clamp(26px,4vw,44px);font-weight:800;color:white;letter-spacing:-1px;margin-bottom:8px; }
+    .page-header p { font-size:15px;color:rgba(255,255,255,.6);margin-bottom:16px; }
+    .breadcrumb { display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.4); }
+    .breadcrumb a { color:rgba(255,255,255,.5);text-decoration:none; }
+    .breadcrumb a:hover { color:#6ee7a8; }
+    .breadcrumb .sep { color:rgba(255,255,255,.25); }
+    @media(max-width:1024px){ .nav-links { display:none; } .hamburger { display:flex; } .mega-nav .top-bar { display:none; } .page-header { margin-top:64px; } }
+  </style>
   {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-<!-- ═══ TOP ANNOUNCEMENT BAR ═══ -->
-<div class="announcement-bar">
-  <div class="ann-inner">
-    <span>🎓 New Cohort Starting June 2026 — <a href="/register">Register Now</a></span>
-    <span class="ann-sep">|</span>
-    <span>📞 Helpline: +234 (0) 801 234 5678</span>
+<!-- ═══ MEGA NAV ═══ -->
+<nav class="mega-nav" role="navigation" aria-label="Main navigation">
+  <div class="top-bar" aria-label="Utility bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-left">
+        <span><i class="fas fa-phone" style="margin-right:5px"></i>+234 (0) 801 234 5678</span>
+        <span><i class="fas fa-envelope" style="margin-right:5px"></i>info@ict.riversstate.gov.ng</span>
+        <span><i class="fas fa-clock" style="margin-right:5px"></i>Mon–Fri 8am–5pm</span>
+      </div>
+      <div class="top-bar-right">
+        <a href="/transparency"><i class="fas fa-file-alt" style="margin-right:4px"></i>Budget &amp; Procurement</a>
+        <a href="/foi"><i class="fas fa-balance-scale" style="margin-right:4px"></i>FOI Desk</a>
+        <a href="/contact#feedback"><i class="fas fa-comment-alt" style="margin-right:4px"></i>Feedback</a>
+      </div>
+    </div>
   </div>
+  <div class="nav-main">
+    <a class="nav-brand" href="/" aria-label="Rivers State ICT Department Home">
+      <div class="nav-logo-box">
+    <img src="{{ url_for('static', path='images/riverslogo.jpeg') }}" alt="Rivers State ICT Logo">
 </div>
 
-<!-- ═══ NAVIGATION ═══ -->
-<nav id="mainNav">
-  <div class="nav-inner">
-    <a class="nav-brand" href="/">
-      <div class="nav-logo">
-    <img src="static/images/riverslogo.jpeg">
+<div class="nav-brand-text">
+    <span class="t1">Rivers State ICT Department</span>
+    <span class="t2">Ministry of Science, Technology &amp; Innovation</span>
 </div>
-      <div class="nav-brand-text">
-        <span class="t1">Rivers State ICT Dept.</span>
-        <span class="t2">Ministry of Science, Technology & Innovation</span>
-      </div>
     </a>
+    <div class="nav-links" role="menubar">
 
-    <div class="nav-links" id="navLinks">
-      <a href="/" class="{% if page == 'home' %}active{% endif %}">Home</a>
-      <div class="nav-dropdown">
-        <a href="/about" class="{% if page in ['about','staff'] %}active{% endif %}">About <i class="fas fa-chevron-down nav-arrow"></i></a>
-        <div class="dropdown-menu">
-          <a href="/about"><i class="fas fa-info-circle"></i> About Us</a>
-          <a href="/staff"><i class="fas fa-users"></i> Leadership & Staff</a>
+      <div class="nav-item" role="none">
+        <a href="/" role="menuitem" class="{% if page=='home' %}active{% endif %}">Home</a>
+      </div>
+
+      <div class="nav-item" role="none">
+        <a href="/about" role="menuitem" class="{% if page in ['about','staff','mandate','structure'] %}active{% endif %}">About Us <i class="fas fa-chevron-down arr"></i></a>
+        <div class="mega-drop wide">
+          <div class="mega-col-head">About the Department</div>
+          <a href="/about"><i class="fas fa-info-circle"></i><div><strong>Mission &amp; Vision</strong><span>Our purpose, values and strategic goals</span></div></a>
+          <a href="/mandate"><i class="fas fa-gavel"></i><div><strong>Mandate &amp; Objectives</strong><span>Legal mandate and statutory functions</span></div></a>
+          <a href="/structure"><i class="fas fa-sitemap"></i><div><strong>Organisational Structure</strong><span>Departments, units and organogram</span></div></a>
+          <a href="/staff"><i class="fas fa-users"></i><div><strong>Leadership &amp; Management</strong><span>Director General and senior team</span></div></a>
         </div>
       </div>
-      <div class="nav-dropdown">
-        <a href="/services" class="{% if page in ['services','programs','training'] %}active{% endif %}">Services <i class="fas fa-chevron-down nav-arrow"></i></a>
-        <div class="dropdown-menu">
-          <a href="/services"><i class="fas fa-cogs"></i> ICT Services</a>
-          <a href="/programs"><i class="fas fa-graduation-cap"></i> Digital Skills Programs</a>
-          <a href="/training"><i class="fas fa-chalkboard-teacher"></i> Training Center</a>
+
+      <div class="nav-item" role="none">
+        <a href="/services" role="menuitem" class="{% if page in ['services','programs','training','vendor','project-reg'] %}active{% endif %}">Services <i class="fas fa-chevron-down arr"></i></a>
+        <div class="mega-drop wide3">
+          <div class="mega-col-head">ICT Services &amp; Solutions</div>
+          <a href="/services"><i class="fas fa-file-alt"></i><div><strong>ICT Policy &amp; Standards</strong><span>Frameworks, guidelines &amp; compliance</span></div></a>
+          <a href="/services#egovt"><i class="fas fa-landmark"></i><div><strong>E-Government Services</strong><span>Citizen-facing digital portals</span></div></a>
+          <a href="/project-registration"><i class="fas fa-clipboard-list"></i><div><strong>Project Registration</strong><span>Register ICT projects with the department</span></div></a>
+          <a href="/vendor-licensing"><i class="fas fa-id-badge"></i><div><strong>Vendor Licensing</strong><span>Accreditation for ICT vendors</span></div></a>
+          <a href="/programs"><i class="fas fa-graduation-cap"></i><div><strong>Digital Training Programs</strong><span>Free &amp; subsidised skills programs</span></div></a>
+          <a href="/training"><i class="fas fa-chalkboard-teacher"></i><div><strong>Training Centre</strong><span>Facilities, schedule &amp; certification</span></div></a>
         </div>
       </div>
-      <a href="/news" class="{% if page == 'news' %}active{% endif %}">News & Events</a>
-      <a href="/gallery" class="{% if page == 'gallery' %}active{% endif %}">Gallery</a>
-      <a href="/contact" class="{% if page == 'contact' %}active{% endif %}">Contact</a>
-      <a href="/register" class="nav-cta">Register Now</a>
+
+      <div class="nav-item" role="none">
+        <a href="/resources" role="menuitem" class="{% if page in ['resources','publications','annual-reports'] %}active{% endif %}">Resources <i class="fas fa-chevron-down arr"></i></a>
+        <div class="mega-drop">
+          <a href="/resources"><i class="fas fa-file-pdf"></i><div><strong>Official Policies &amp; Documents</strong><span>PDF downloads</span></div></a>
+          <a href="/publications"><i class="fas fa-book-open"></i><div><strong>ICT Publications</strong><span>Research papers &amp; reports</span></div></a>
+          <a href="/resources#guidelines"><i class="fas fa-list-alt"></i><div><strong>Guidelines &amp; Templates</strong><span>Standard operating procedures</span></div></a>
+          <a href="/annual-reports"><i class="fas fa-chart-bar"></i><div><strong>Annual Reports</strong><span>Year-on-year performance data</span></div></a>
+        </div>
+      </div>
+
+      <div class="nav-item" role="none">
+        <a href="/transparency" role="menuitem" class="{% if page in ['transparency','procurement','performance'] %}active{% endif %}">Transparency <i class="fas fa-chevron-down arr"></i></a>
+        <div class="mega-drop">
+          <a href="/transparency"><i class="fas fa-money-bill-wave"></i><div><strong>Budget &amp; Appropriation</strong><span>2024–2026 ICT budget data</span></div></a>
+          <a href="/procurement"><i class="fas fa-shopping-cart"></i><div><strong>Procurement Opportunities</strong><span>Open tenders &amp; contracts</span></div></a>
+          <a href="/performance"><i class="fas fa-chart-line"></i><div><strong>Performance Reports</strong><span>KPIs and delivery scorecards</span></div></a>
+          <a href="/foi"><i class="fas fa-balance-scale"></i><div><strong>FOI Desk</strong><span>Freedom of Information requests</span></div></a>
+        </div>
+      </div>
+
+      <div class="nav-item" role="none">
+        <a href="/news" role="menuitem" class="{% if page in ['news','gallery','events'] %}active{% endif %}">News &amp; Events <i class="fas fa-chevron-down arr"></i></a>
+        <div class="mega-drop">
+          <a href="/news"><i class="fas fa-newspaper"></i><div><strong>Press Releases</strong><span>Official announcements</span></div></a>
+          <a href="/gallery"><i class="fas fa-images"></i><div><strong>Photo Gallery</strong><span>Events and programme photos</span></div></a>
+          <a href="/news#calendar"><i class="fas fa-calendar-alt"></i><div><strong>Calendar of Events</strong><span>Upcoming events &amp; training dates</span></div></a>
+        </div>
+      </div>
+
+      <div class="nav-item" role="none">
+        <a href="/contact" role="menuitem" class="{% if page=='contact' %}active{% endif %}">Contact Us</a>
+      </div>
+
+      <div class="nav-item" role="none">
+        <a href="/register" class="nav-cta" role="menuitem"><i class="fas fa-user-plus" style="margin-right:5px"></i>Register</a>
+      </div>
     </div>
 
     <div class="nav-actions">
-      <button class="nav-search-btn" onclick="toggleSearch()" aria-label="Search"><i class="fas fa-search"></i></button>
-      <button class="hamburger" id="hamburger" onclick="toggleMobile()" aria-label="Menu">
+      <button class="nav-icon-btn" onclick="toggleSearch()" aria-label="Search site"><i class="fas fa-search"></i></button>
+      <button class="hamburger" onclick="openMobile()" aria-label="Open menu" aria-expanded="false" id="hambBtn">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 
-  <!-- Search Overlay -->
-  <div class="search-overlay" id="searchOverlay">
-    <div class="search-inner">
-      <input type="text" id="searchInput" placeholder="Search programs, services, news..." oninput="doSearch(this.value)">
-      <button onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+  <!-- Search bar -->
+  <div class="search-bar" id="searchBar" role="search">
+    <div class="search-bar-inner">
+      <i class="fas fa-search" style="color:rgba(255,255,255,.4)"></i>
+      <input type="text" id="searchInput" placeholder="Search policies, programs, procurement, services..." oninput="doSearch(this.value)" aria-label="Search">
+      <button class="nav-icon-btn" onclick="toggleSearch()" aria-label="Close search"><i class="fas fa-times"></i></button>
     </div>
-    <div class="search-results" id="searchResults"></div>
+    <div class="search-results-bar" id="searchResults"></div>
   </div>
 </nav>
 
-
-<!-- Mobile Nav -->
-<div class="mobile-nav" id="mobileMenu">
-  <a href="/">🏠 Home</a>
-  <a href="/about">🏛️ About Us</a>
-  <a href="/staff">👥 Leadership & Staff</a>
-  <a href="/services">⚙️ ICT Services</a>
-  <a href="/programs">📚 Digital Skills Programs</a>
-  <a href="/training">🎓 Training Center</a>
-  <a href="/news">📰 News & Events</a>
-  <a href="/gallery">🖼️ Gallery</a>
-  <a href="/contact">📞 Contact Us</a>
-  <a href="/register" style="color:#6ee7a8;font-weight:700">✍️ Register Now</a>
+<!-- Mobile Drawer -->
+<div class="mobile-drawer" id="mobileDrawer" aria-modal="true" role="dialog">
+  <div class="mobile-overlay" onclick="closeMobile()"></div>
+  <div class="mobile-panel">
+    <div class="mob-close">
+      <span>RS ICT Department</span>
+      <button onclick="closeMobile()" aria-label="Close menu">✕</button>
+    </div>
+    <div class="mob-section">
+      <a href="/" class="mob-link"><i class="fas fa-home"></i>Home</a>
+    </div>
+    <div class="mob-section">
+      <div class="mob-section-title">About Us</div>
+      <a href="/about" class="mob-link"><i class="fas fa-info-circle"></i>Mission &amp; Vision</a>
+      <a href="/mandate" class="mob-link"><i class="fas fa-gavel"></i>Mandate &amp; Objectives</a>
+      <a href="/structure" class="mob-link"><i class="fas fa-sitemap"></i>Organisational Structure</a>
+      <a href="/staff" class="mob-link"><i class="fas fa-users"></i>Leadership &amp; Staff</a>
+    </div>
+    <div class="mob-section">
+      <div class="mob-section-title">Services</div>
+      <a href="/services" class="mob-link"><i class="fas fa-file-alt"></i>ICT Policy &amp; Standards</a>
+      <a href="/services#egovt" class="mob-link"><i class="fas fa-landmark"></i>E-Government Services</a>
+      <a href="/project-registration" class="mob-link"><i class="fas fa-clipboard-list"></i>Project Registration</a>
+      <a href="/vendor-licensing" class="mob-link"><i class="fas fa-id-badge"></i>Vendor Licensing</a>
+      <a href="/programs" class="mob-link"><i class="fas fa-graduation-cap"></i>Digital Training Programs</a>
+      <a href="/training" class="mob-link"><i class="fas fa-chalkboard-teacher"></i>Training Centre</a>
+    </div>
+    <div class="mob-section">
+      <div class="mob-section-title">Resources</div>
+      <a href="/resources" class="mob-link"><i class="fas fa-file-pdf"></i>Policies &amp; Documents</a>
+      <a href="/publications" class="mob-link"><i class="fas fa-book-open"></i>ICT Publications</a>
+      <a href="/annual-reports" class="mob-link"><i class="fas fa-chart-bar"></i>Annual Reports</a>
+    </div>
+    <div class="mob-section">
+      <div class="mob-section-title">Transparency</div>
+      <a href="/transparency" class="mob-link"><i class="fas fa-money-bill-wave"></i>Budget &amp; Appropriation</a>
+      <a href="/procurement" class="mob-link"><i class="fas fa-shopping-cart"></i>Procurement</a>
+      <a href="/performance" class="mob-link"><i class="fas fa-chart-line"></i>Performance Reports</a>
+      <a href="/foi" class="mob-link"><i class="fas fa-balance-scale"></i>FOI Desk</a>
+    </div>
+    <div class="mob-section">
+      <div class="mob-section-title">News &amp; Events</div>
+      <a href="/news" class="mob-link"><i class="fas fa-newspaper"></i>Press Releases</a>
+      <a href="/gallery" class="mob-link"><i class="fas fa-images"></i>Gallery</a>
+    </div>
+    <a href="/contact" class="mob-link" style="border-top:1px solid rgba(255,255,255,.08);margin-top:8px;padding-top:16px"><i class="fas fa-envelope"></i>Contact Us</a>
+    <a href="/register" class="mob-cta">✍️ Register for a Program</a>
+  </div>
 </div>
+
 <!-- ═══ MAIN CONTENT ═══ -->
-<main>
+<main id="main-content">
   {% block content %}{% endblock %}
 </main>
 
 <!-- ═══ NEWSLETTER STRIP ═══ -->
 {% block newsletter %}
-<section class="newsletter-strip">
+<section class="newsletter-strip" aria-label="Newsletter subscription">
   <div class="nl-inner">
     <div class="nl-text">
       <h3>Stay Updated on ICT News</h3>
       <p>Get programs, events, and digital opportunities delivered to your inbox.</p>
     </div>
     <form class="nl-form" onsubmit="submitNewsletter(event)">
-      <input type="email" name="email" placeholder="Enter your email address" required>
+      <input type="email" name="email" placeholder="Enter your email address" required aria-label="Email address">
       <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
     </form>
   </div>
@@ -118,16 +280,16 @@
 {% endblock %}
 
 <!-- ═══ FOOTER ═══ -->
-<footer>
+<footer role="contentinfo">
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
         <div class="fb-logo">
-          <div class="nav-logo">
-            <img src="static/images/riverslogo.jpeg">
-          </div>
-          <span>Rivers State ICT Department</span>
-        </div>
+    <div class="logo-box">
+        <img src="{{ url_for('static', path='images/riverslogo.jpeg') }}" style="height: 100%; width: 100%; object-fit: contain;">
+    </div>
+    <span>Rivers State ICT Department</span>
+</div>
         <p>Empowering Rivers State through digital innovation, skills development, and technology-driven governance — for every citizen.</p>
         <p class="footer-slogan">"Connecting Rivers State to the Digital Future"</p>
         <div class="social-links">
@@ -139,24 +301,28 @@
         </div>
       </div>
       <div class="footer-col">
-        <h4>Quick Links</h4>
-        <a href="/">Home</a>
-        <a href="/about">About Us</a>
-        <a href="/services">Our Services</a>
-        <a href="/programs">Programs</a>
-        <a href="/news">News & Events</a>
-        <a href="/gallery">Gallery</a>
-        <a href="/contact">Contact</a>
+        <h4>About Us</h4>
+        <a href="/about">Mission &amp; Vision</a>
+        <a href="/mandate">Mandate &amp; Objectives</a>
+        <a href="/structure">Organisational Structure</a>
+        <a href="/staff">Leadership Team</a>
       </div>
       <div class="footer-col">
-        <h4>Training Programs</h4>
-        <a href="/programs">Computer Appreciation</a>
-        <a href="/programs">Web Development</a>
-        <a href="/programs">Data Analysis</a>
-        <a href="/programs">Cybersecurity Basics</a>
-        <a href="/programs">AI Tools for Education</a>
-        <a href="/programs">Cloud Computing</a>
-        <a href="/register">Register Now →</a>
+        <h4>Services</h4>
+        <a href="/services">ICT Policy &amp; Standards</a>
+        <a href="/services#egovt">E-Government Services</a>
+        <a href="/project-registration">Project Registration</a>
+        <a href="/vendor-licensing">Vendor Licensing</a>
+        <a href="/programs">Training Programs</a>
+      </div>
+      <div class="footer-col">
+        <h4>Transparency</h4>
+        <a href="/transparency">Budget &amp; Appropriation</a>
+        <a href="/procurement">Procurement</a>
+        <a href="/performance">Performance Reports</a>
+        <a href="/resources">Policies &amp; Documents</a>
+        <a href="/annual-reports">Annual Reports</a>
+        <a href="/foi">FOI Desk</a>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
@@ -164,25 +330,46 @@
         <p><i class="fas fa-phone"></i> +234 (0) 801 234 5678</p>
         <p><i class="fas fa-envelope"></i> info@ict.riversstate.gov.ng</p>
         <p><i class="fas fa-clock"></i> Mon–Fri: 8am – 5pm</p>
-        <p><i class="fas fa-globe"></i> www.ict.riversstate.gov.ng</p>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Rivers State ICT Department · Ministry of Science, Technology & Innovation · All rights reserved.</p>
+      <p>© 2026 Rivers State ICT Department · Ministry of Science, Technology &amp; Innovation · All rights reserved.</p>
       <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Accessibility</a>
-        <a href="#">Sitemap</a>
+        <a href="/resources#privacy">Privacy Policy</a>
+        <a href="/resources#terms">Terms of Use</a>
+        <a href="/resources#accessibility">Accessibility</a>
+        <a href="/sitemap">Sitemap</a>
+        <a href="/foi">FOI</a>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- Toast Notification -->
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="alert" aria-live="polite"></div>
 
 <script src="/static/js/main.js"></script>
+<script>
+function toggleSearch(){
+  const bar=document.getElementById('searchBar');
+  bar.classList.toggle('open');
+  if(bar.classList.contains('open')) document.getElementById('searchInput').focus();
+}
+function openMobile(){
+  document.getElementById('mobileDrawer').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeMobile(){
+  document.getElementById('mobileDrawer').classList.remove('open');
+  document.body.style.overflow='';
+}
+async function doSearch(q){
+  const el=document.getElementById('searchResults');
+  if(!q||q.length<2){el.innerHTML='';return;}
+  const r=await fetch('/api/search?q='+encodeURIComponent(q));
+  const d=await r.json();
+  el.innerHTML=d.results.slice(0,8).map(x=>`<a class="sr-item" href="${x.url}">${x.title} <em style="opacity:.5;font-size:10px">${x.type}</em></a>`).join('');
+}
+</script>
 {% block extra_js %}{% endblock %}
 </body>
 </html>

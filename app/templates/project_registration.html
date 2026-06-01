@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}ICT Project Registration{% endblock %}
+{% block meta_desc %}Register your ICT project with the Rivers State ICT Department for review, approval, and departmental support.{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>ICT Project Registration</h1>
+  <p>Register ICT projects with the department for review, coordination, and compliance clearance</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/services">Services</a><span class="sep">/</span><span>Project Registration</span></div>
+</div></div>
+
+<section class="section"><div class="section-inner">
+  <div style="display:grid;grid-template-columns:1fr 1.3fr;gap:48px;align-items:start">
+    <div>
+      <div class="section-label">Who Must Register</div>
+      <h2 style="font-size:26px;font-weight:800;color:var(--navy);margin-bottom:14px">Mandatory ICT Project Registration</h2>
+      <p style="font-size:14px;color:var(--gray-600);line-height:1.8;margin-bottom:16px">
+        Under the <strong>Rivers State ICT Policy Framework 2024</strong>, all ICT projects above ₦5,000,000 in value initiated by any government MDA must be registered with the ICT Department before procurement commences. This ensures interoperability, prevents duplication, and maintains security standards.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
+        {% for item in ["Any MDA procuring ICT hardware, software, or services","Network and connectivity infrastructure projects","E-government and citizen-facing digital service projects","Data collection and management system implementations","Training and capacity building programs using ICT"] %}
+        <div style="display:flex;gap:10px;align-items:start;font-size:14px;color:var(--gray-600)">
+          <i class="fas fa-check-circle" style="color:var(--green);margin-top:3px;flex-shrink:0"></i>{{item}}
+        </div>
+        {% endfor %}
+      </div>
+
+      <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:12px">Registration Process</h3>
+      {% for n, t, d in [("1","Submit Form","Complete the project registration form with full technical and financial details."),("2","Review (5 days)","The ICT Department technical team reviews for policy compliance and feasibility."),("3","Clearance Letter","A Registration Certificate or Conditional Clearance is issued within 7 working days."),("4","Proceed to Procurement","Present the Clearance Letter before the Bureau of Public Procurement.")] %}
+      <div style="display:flex;gap:14px;margin-bottom:14px">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">{{n}}</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--navy)">{{t}}</div><div style="font-size:13px;color:var(--gray-600);line-height:1.6">{{d}}</div></div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Registration Form -->
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-md)">
+      <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:22px">Project Registration Form</h3>
+      <form onsubmit="submitProjectReg(event)">
+        <div class="form-group"><label class="form-label">MDA Name *</label><input type="text" class="form-input" required placeholder="e.g. Ministry of Education"></div>
+        <div class="form-group"><label class="form-label">Project Title *</label><input type="text" class="form-input" required placeholder="Brief project title"></div>
+        <div class="form-group"><label class="form-label">Project Category *</label>
+          <select class="form-select" required>
+            <option value="">-- Select --</option>
+            <option>Hardware Procurement</option>
+            <option>Software / Application Development</option>
+            <option>Network &amp; Connectivity</option>
+            <option>E-Government / Citizen Service</option>
+            <option>Data System / Database</option>
+            <option>Training &amp; Capacity Building</option>
+            <option>Cybersecurity</option>
+            <option>Cloud / Data Centre</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Estimated Value (₦) *</label><input type="number" class="form-input" required placeholder="e.g. 10000000"></div>
+          <div class="form-group"><label class="form-label">Duration (months) *</label><input type="number" class="form-input" required placeholder="e.g. 6"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Project Description *</label><textarea class="form-textarea" required placeholder="Describe the project objectives, scope, and intended beneficiaries." style="min-height:100px"></textarea></div>
+        <div class="form-group"><label class="form-label">Contact Officer Name *</label><input type="text" class="form-input" required placeholder="Full name of the responsible officer"></div>
+        <div class="form-group"><label class="form-label">Contact Email *</label><input type="email" class="form-input" required placeholder="Official government email"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-clipboard-check"></i> Submit Registration</button>
+      </form>
+    </div>
+  </div>
+</div></section>
+{% endblock %}
+{% block extra_js %}
+<script>
+function submitProjectReg(e){
+  e.preventDefault();
+  const ref='RSICT-PROJ-'+new Date().getFullYear()+'-'+Math.floor(1000+Math.random()*9000);
+  const t=document.getElementById('toast');
+  t.textContent='✅ Project registered! Reference: '+ref+'. A clearance letter will be issued within 7 working days.';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),7000);
+  e.target.reset();
+}
+</script>
+{% endblock %}
+{% block extra_css %}<style>@media(max-width:900px){section .section-inner>div[style*="grid-template-columns:1fr"]{grid-template-columns:1fr!important}}</style>{% endblock %}

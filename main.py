@@ -194,15 +194,30 @@ async def get_stats(db: AsyncSession = Depends(get_db)):
 async def search(q: str):
     results = [
         {"title": "Web Development Program", "url": "/programs", "type": "Program"},
-        {"title": "Cybersecurity Basics", "url": "/programs", "type": "Program"},
-        {"title": "Data Analysis with Python", "url": "/programs", "type": "Program"},
-        {"title": "Cloud Computing Fundamentals", "url": "/programs", "type": "Program"},
-        {"title": "AI Tools for Education", "url": "/programs", "type": "Program"},
-        {"title": "Contact Us", "url": "/contact", "type": "Page"},
+        {"title": "Cybersecurity Fundamentals", "url": "/programs", "type": "Program"},
+        {"title": "AI & Machine Learning", "url": "/programs", "type": "Program"},
+        {"title": "Cloud Computing", "url": "/programs", "type": "Program"},
+        {"title": "Data Analysis", "url": "/programs", "type": "Program"},
+        {"title": "Digital Marketing", "url": "/programs", "type": "Program"},
+        {"title": "E-Government Services", "url": "/services#egovt", "type": "Service"},
+        {"title": "ICT Policy & Standards", "url": "/services", "type": "Service"},
+        {"title": "Project Registration", "url": "/project-registration", "type": "Service"},
+        {"title": "Vendor Licensing", "url": "/vendor-licensing", "type": "Service"},
         {"title": "About the ICT Department", "url": "/about", "type": "Page"},
-        {"title": "Digital Skills Training", "url": "/training", "type": "Service"},
-        {"title": "E-Government Services", "url": "/services", "type": "Service"},
-        {"title": "ICT Infrastructure Services", "url": "/services", "type": "Service"},
+        {"title": "Mandate & Objectives", "url": "/mandate", "type": "Page"},
+        {"title": "Organisational Structure", "url": "/structure", "type": "Page"},
+        {"title": "Leadership & Staff", "url": "/staff", "type": "Page"},
+        {"title": "Contact Us", "url": "/contact", "type": "Page"},
+        {"title": "Feedback & Complaints", "url": "/contact#feedback", "type": "Page"},
+        {"title": "Official Policies & Documents", "url": "/resources", "type": "Resource"},
+        {"title": "ICT Publications", "url": "/publications", "type": "Resource"},
+        {"title": "Annual Reports", "url": "/annual-reports", "type": "Resource"},
+        {"title": "Budget & Appropriation", "url": "/transparency", "type": "Transparency"},
+        {"title": "Procurement Opportunities", "url": "/procurement", "type": "Transparency"},
+        {"title": "Performance Reports", "url": "/performance", "type": "Transparency"},
+        {"title": "Freedom of Information FOI Desk", "url": "/foi", "type": "Transparency"},
+        {"title": "News & Press Releases", "url": "/news", "type": "News"},
+        {"title": "Photo Gallery", "url": "/gallery", "type": "News"},
     ]
     filtered = [r for r in results if q.lower() in r["title"].lower()]
     return {"results": filtered, "query": q, "count": len(filtered)}
@@ -210,3 +225,65 @@ async def search(q: str):
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+
+# ─── New structured pages ───────────────────────────────────────
+
+@app.get("/mandate", response_class=HTMLResponse)
+async def mandate(request: Request):
+    return templates.TemplateResponse("mandate.html", {"request": request, "page": "mandate"})
+
+
+@app.get("/structure", response_class=HTMLResponse)
+async def structure(request: Request):
+    return templates.TemplateResponse("structure.html", {"request": request, "page": "structure"})
+
+
+@app.get("/resources", response_class=HTMLResponse)
+async def resources(request: Request):
+    return templates.TemplateResponse("resources.html", {"request": request, "page": "resources"})
+
+
+@app.get("/publications", response_class=HTMLResponse)
+async def publications(request: Request):
+    return templates.TemplateResponse("resources.html", {"request": request, "page": "publications"})
+
+
+@app.get("/annual-reports", response_class=HTMLResponse)
+async def annual_reports(request: Request):
+    return templates.TemplateResponse("resources.html", {"request": request, "page": "annual-reports"})
+
+
+@app.get("/transparency", response_class=HTMLResponse)
+async def transparency(request: Request):
+    return templates.TemplateResponse("transparency.html", {"request": request, "page": "transparency"})
+
+
+@app.get("/procurement", response_class=HTMLResponse)
+async def procurement(request: Request):
+    return templates.TemplateResponse("procurement.html", {"request": request, "page": "procurement"})
+
+
+@app.get("/performance", response_class=HTMLResponse)
+async def performance(request: Request):
+    return templates.TemplateResponse("transparency.html", {"request": request, "page": "performance"})
+
+
+@app.get("/foi", response_class=HTMLResponse)
+async def foi(request: Request):
+    return templates.TemplateResponse("foi.html", {"request": request, "page": "foi"})
+
+
+@app.get("/project-registration", response_class=HTMLResponse)
+async def project_registration(request: Request):
+    return templates.TemplateResponse("project_registration.html", {"request": request, "page": "project-reg"})
+
+
+@app.get("/vendor-licensing", response_class=HTMLResponse)
+async def vendor_licensing(request: Request):
+    return templates.TemplateResponse("vendor_licensing.html", {"request": request, "page": "vendor"})
+
+
+@app.get("/sitemap", response_class=HTMLResponse)
+async def sitemap(request: Request):
+    return templates.TemplateResponse("sitemap.html", {"request": request, "page": "sitemap"})

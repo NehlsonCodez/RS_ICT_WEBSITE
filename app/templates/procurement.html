@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Procurement Opportunities{% endblock %}
+{% block meta_desc %}Open tenders, contract awards, and procurement notices from the Rivers State ICT Department.{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Procurement Opportunities</h1>
+  <p>Open tenders, contract awards, and bid notices — published in line with the Public Procurement Act 2007</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/transparency">Transparency</a><span class="sep">/</span><span>Procurement</span></div>
+</div></div>
+
+<section class="section"><div class="section-inner">
+  <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:40px;display:flex;gap:12px;align-items:start">
+    <i class="fas fa-exclamation-triangle" style="color:#f57f17;margin-top:3px;flex-shrink:0"></i>
+    <p style="font-size:13px;color:#5d4037;line-height:1.7;margin:0">
+      All procurement activities are governed by the <strong>Public Procurement Act 2007</strong> and the <strong>Rivers State Procurement Law 2019</strong>.
+      Bids must be submitted through the official <strong>BuyRS Government Procurement Portal</strong> at <em>procurement.riversstate.gov.ng</em>.
+      The ICT Department does not receive physical bids or respond to unsolicited proposals.
+    </p>
+  </div>
+
+  <!-- Open Tenders -->
+  <div class="section-label" style="margin-bottom:16px">Open Tenders</div>
+  <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:48px">
+    {% set tenders = [
+      ("ICT-T-2026-011","Supply and Installation of 1,000 Desktop Computers for School Connectivity Phase 2","Open Competitive Bidding","June 2, 2026","June 23, 2026","₦180,000,000","ICT Infrastructure"),
+      ("ICT-T-2026-012","Provision of Managed Security Operations Centre (SOC) Services — 24-month Contract","Open Competitive Bidding","June 5, 2026","June 30, 2026","₦250,000,000","Cybersecurity"),
+      ("ICT-T-2026-013","Supply of ICT Training Equipment (Laptops, Projectors, Whiteboards) for Training Centre Expansion","Open Competitive Bidding","June 10, 2026","July 7, 2026","₦75,000,000","Training Infrastructure"),
+      ("ICT-T-2026-014","Development and Maintenance of Rivers State Open Data Portal v2.0","Open Competitive Bidding","June 15, 2026","July 14, 2026","₦45,000,000","E-Government"),
+    ] %}
+    {% for ref, title, method, pub, close, value, category in tenders %}
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm)">
+      <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:12px">
+        <div style="flex:1;min-width:280px">
+          <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+            <span style="background:var(--blue-xlight);color:var(--blue);font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px">{{ref}}</span>
+            <span style="background:#e8f5e9;color:#1b5e20;font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px">{{category}}</span>
+            <span style="background:#fce4ec;color:#880e4f;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px">OPEN</span>
+          </div>
+          <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:10px;line-height:1.3">{{title}}</h3>
+          <div style="display:flex;gap:20px;font-size:12px;color:var(--gray-500);flex-wrap:wrap">
+            <span><i class="fas fa-gavel" style="margin-right:4px"></i>{{method}}</span>
+            <span><i class="fas fa-calendar" style="margin-right:4px"></i>Published: {{pub}}</span>
+            <span><i class="fas fa-clock" style="margin-right:4px;color:#c0392b"></i>Closes: <strong style="color:#c0392b">{{close}}</strong></span>
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:18px;font-weight:800;color:var(--navy);margin-bottom:4px">{{value}}</div>
+          <div style="font-size:11px;color:var(--gray-500);margin-bottom:12px">Estimated Value</div>
+          <a href="#" onclick="alert('Bid documents available on procurement.riversstate.gov.ng');return false" style="display:block;background:var(--navy);color:white;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;text-align:center"><i class="fas fa-file-download" style="margin-right:5px"></i>Bid Documents</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Contract Awards -->
+  <div class="section-label" style="margin-bottom:16px">Recent Contract Awards</div>
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm)">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--gray-50)">
+        <th style="padding:12px 20px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px">Reference</th>
+        <th style="padding:12px 20px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px">Contract Description</th>
+        <th style="padding:12px 20px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px">Awardee</th>
+        <th style="padding:12px 20px;text-align:right;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px">Amount (₦)</th>
+        <th style="padding:12px 20px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px">Award Date</th>
+      </tr></thead>
+      <tbody>
+        {% set awards = [
+          ("ICT-T-2026-007","Fibre Optic Network Expansion — Phase 1 (50 MDAs)","Owerri Networks Ltd","420,000,000","March 14, 2026"),
+          ("ICT-T-2026-008","Upgrade of Government Data Centre — Server &amp; Storage","DataTech Nigeria Ltd","185,000,000","March 22, 2026"),
+          ("ICT-T-2026-009","Supply of 500 Laptops for April 2026 Training Cohort","Zinox Technologies","37,500,000","April 2, 2026"),
+          ("ICT-T-2026-010","NDPR Compliance Assessment &amp; Remediation — 48 MDAs","CyberSecure NG","28,000,000","April 18, 2026"),
+        ] %}
+        {% for ref, desc, awardee, amount, date in awards %}
+        <tr style="border-top:1px solid var(--gray-100)">
+          <td style="padding:14px 20px;font-weight:600;color:var(--blue);font-size:11px">{{ref}}</td>
+          <td style="padding:14px 20px;color:var(--navy);font-weight:500">{{desc}}</td>
+          <td style="padding:14px 20px;color:var(--gray-700)">{{awardee}}</td>
+          <td style="padding:14px 20px;text-align:right;font-family:monospace;color:var(--gray-700)">{{amount}}</td>
+          <td style="padding:14px 20px;color:var(--gray-500)">{{date}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:24px;text-align:center">
+    <a href="#" onclick="alert('Full contract register available in production.');return false" style="display:inline-block;background:var(--navy);color:white;padding:12px 28px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Download Full Contract Register (CSV) →</a>
+  </div>
+</div></section>
+{% endblock %}

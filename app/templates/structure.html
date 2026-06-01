@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Organisational Structure{% endblock %}
+{% block meta_desc %}Organisational chart, departments and units of the Rivers State ICT Department.{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Organisational Structure</h1>
+  <p>Departments, units and reporting lines of the RS ICT Department</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/about">About Us</a><span class="sep">/</span><span>Organisational Structure</span></div>
+</div></div>
+
+<section class="section"><div class="section-inner">
+  <p style="font-size:15px;color:var(--gray-600);line-height:1.85;max-width:680px;margin:0 auto 48px;text-align:center">
+    The Rivers State ICT Department is structured into six technical divisions and two administrative support units, each headed by a Director reporting to the Director General.
+  </p>
+
+  <!-- Org Chart Visual -->
+  <div style="overflow-x:auto">
+    <div style="min-width:700px">
+      <!-- DG -->
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="display:inline-block;background:linear-gradient(135deg,var(--navy),#004080);color:white;border-radius:14px;padding:18px 32px">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Office of the</div>
+          <div style="font-size:17px;font-weight:800">Director General</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:2px">Engr. Chidiebere Nwosu</div>
+        </div>
+      </div>
+      <!-- Deputy DG level -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;max-width:700px;margin-left:auto;margin-right:auto">
+        <div style="background:#1a3a5c;color:white;border-radius:12px;padding:16px 20px;text-align:center">
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:3px">DDG</div>
+          <div style="font-size:14px;font-weight:700">Operations &amp; Administration</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">Mrs. Tamara Briggs-Levi</div>
+        </div>
+        <div style="background:#1a3a5c;color:white;border-radius:12px;padding:16px 20px;text-align:center">
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:3px">DDG</div>
+          <div style="font-size:14px;font-weight:700">Technical Services</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">Engr. Kingsley Odika (Ag.)</div>
+        </div>
+      </div>
+      <!-- Divisions -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        {% set divs = [
+          ("fa-network-wired","#0057B8","Infrastructure &amp; Networks","Broadband, fibre, data centre, school connectivity, government WAN"),
+          ("fa-shield-alt","#c0392b","Cybersecurity &amp; Data Protection","NDPR compliance, security audits, incident response, awareness"),
+          ("fa-landmark","#00843D","E-Government &amp; Digital Services","Citizen portals, Government Service Bus, MDA digitalisation"),
+          ("fa-graduation-cap","#8e44ad","Training &amp; Capacity Building","ICT Training Centre, curriculum, instructor mgmt, certification"),
+          ("fa-chart-line","#d35400","Policy, Planning &amp; Research","ICT policy, standards, enterprise architecture, open data"),
+          ("fa-id-badge","#16a085","Vendor Affairs &amp; Licensing","Vendor accreditation, project registration, industry liaison"),
+        ] %}
+        {% for icon, color, title, desc in divs %}
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:12px;padding:20px;box-shadow:var(--shadow-sm)">
+          <div style="width:40px;height:40px;border-radius:10px;background:{{color}};display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+            <i class="fas {{icon}}" style="color:white;font-size:16px"></i>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px">{{title}}</div>
+          <div style="font-size:12px;color:var(--gray-600);line-height:1.6">{{desc}}</div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Support units -->
+      <div style="margin-top:24px;border-top:1px solid var(--gray-200);padding-top:24px">
+        <div style="text-align:center;font-size:12px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px">Administrative Support Units</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          {% for u in ["Legal &amp; Compliance","Finance &amp; Accounts","Human Resources","Public Affairs &amp; Communication"] %}
+          <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:14px;text-align:center;font-size:13px;color:var(--gray-600);font-weight:500">{{u}}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;text-align:center">
+    <a href="/resources" style="display:inline-block;background:var(--navy);color:white;padding:12px 28px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;margin-right:12px">Download Full Organogram (PDF) →</a>
+    <a href="/staff" style="display:inline-block;background:white;color:var(--navy);padding:12px 28px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;border:2px solid var(--navy)">Meet the Leadership Team →</a>
+  </div>
+</div></section>
+{% endblock %}
+{% block extra_css %}<style>@media(max-width:768px){div[style*="repeat(3,1fr)"]{grid-template-columns:1fr 1fr!important}div[style*="repeat(4,1fr)"]{grid-template-columns:1fr 1fr!important}}</style>{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}ICT Vendor Licensing &amp; Accreditation{% endblock %}
+{% block meta_desc %}Apply for Rivers State ICT vendor accreditation and licensing to supply goods or services to the Rivers State Government.{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Vendor Licensing &amp; Accreditation</h1>
+  <p>Register as an approved ICT vendor to supply goods and services to the Rivers State Government</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/services">Services</a><span class="sep">/</span><span>Vendor Licensing</span></div>
+</div></div>
+
+<section class="section"><div class="section-inner">
+
+  <!-- Intro -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-bottom:48px">
+    <div>
+      <div class="section-label">Why Get Licensed</div>
+      <h2 style="font-size:26px;font-weight:800;color:var(--navy);margin-bottom:14px">Become an Approved RS Government ICT Vendor</h2>
+      <p style="font-size:14px;color:var(--gray-600);line-height:1.8;margin-bottom:16px">
+        The ICT Vendor Licensing scheme ensures that all companies supplying ICT goods and services to Rivers State Government MDAs meet minimum standards of technical capacity, financial integrity, and legal compliance. A valid RS ICT Vendor Licence is required to bid on any government ICT contract.
+      </p>
+      <p style="font-size:14px;color:var(--gray-600);line-height:1.8;margin-bottom:20px">
+        Licences are valid for <strong>2 years</strong> and renewable. There are three licence tiers based on company turnover and project capacity.
+      </p>
+
+      <!-- Tiers -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+        {% for tier, range, limit, fee in [
+          ("Tier 1 — Micro/SME","Annual turnover up to ₦100M","Max contract value: ₦50M","₦25,000"),
+          ("Tier 2 — Medium Enterprise","Annual turnover ₦100M–₦500M","Max contract value: ₦250M","₦75,000"),
+          ("Tier 3 — Large Enterprise","Annual turnover above ₦500M","No contract ceiling","₦150,000"),
+        ] %}
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:12px;padding:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:var(--shadow-sm)">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--navy)">{{tier}}</div>
+            <div style="font-size:12px;color:var(--gray-500);margin-top:3px">{{range}} · {{limit}}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-size:15px;font-weight:800;color:var(--blue)">{{fee}}</div>
+            <div style="font-size:11px;color:var(--gray-500)">per 2-year licence</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Required Documents -->
+    <div style="background:var(--blue-xlight);border:1px solid var(--blue-light);border-radius:var(--radius-lg);padding:28px">
+      <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:16px">Required Documents</h3>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        {% for doc in [
+          "CAC Certificate of Incorporation (or Business Name Registration)",
+          "Tax Clearance Certificate — last 3 years (FIRS &amp; RIRS)",
+          "PENCOM Compliance Certificate",
+          "NSITF Compliance Certificate",
+          "BPP Interim Registration Certificate (IRC)",
+          "Company profile and audited financial statements",
+          "Evidence of technical capacity (staff CVs, certifications, past projects)",
+          "Letter of Reference from at least 2 previous government clients",
+          "Completed Vendor Application Form (download below)",
+        ] %}
+        <div style="display:flex;gap:10px;align-items:start;font-size:13px;color:var(--gray-600)">
+          <i class="fas fa-file-check" style="color:var(--blue);margin-top:2px;flex-shrink:0"></i>{{doc}}
+        </div>
+        {% endfor %}
+      </div>
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+        <a href="#" onclick="alert('Form available in production.');return false" style="background:var(--navy);color:white;padding:10px 16px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none"><i class="fas fa-download" style="margin-right:5px"></i>Application Form (PDF)</a>
+        <a href="#" onclick="alert('Checklist available in production.');return false" style="background:white;color:var(--navy);padding:10px 16px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;border:1px solid var(--navy)"><i class="fas fa-list-check" style="margin-right:5px"></i>Document Checklist</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application form -->
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-md)">
+    <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:24px">Online Vendor Licence Application</h3>
+    <form onsubmit="submitVendor(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px">
+        <div class="form-group"><label class="form-label">Company Name *</label><input type="text" class="form-input" required placeholder="Registered company name"></div>
+        <div class="form-group"><label class="form-label">RC / BN Number *</label><input type="text" class="form-input" required placeholder="CAC Registration Number"></div>
+        <div class="form-group"><label class="form-label">Company Email *</label><input type="email" class="form-input" required placeholder="info@company.com"></div>
+        <div class="form-group"><label class="form-label">Phone Number *</label><input type="tel" class="form-input" required placeholder="+234 xxx xxx xxxx"></div>
+        <div class="form-group"><label class="form-label">Licence Tier *</label>
+          <select class="form-select" required>
+            <option value="">-- Select Tier --</option>
+            <option>Tier 1 — Micro/SME (₦25,000)</option>
+            <option>Tier 2 — Medium Enterprise (₦75,000)</option>
+            <option>Tier 3 — Large Enterprise (₦150,000)</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Primary Service Category *</label>
+          <select class="form-select" required>
+            <option value="">-- Select --</option>
+            <option>Hardware Supply</option>
+            <option>Software Development</option>
+            <option>Network &amp; Connectivity</option>
+            <option>Cloud Services</option>
+            <option>Cybersecurity</option>
+            <option>IT Training &amp; Consulting</option>
+            <option>Managed IT Services</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Brief Company Profile *</label><textarea class="form-textarea" required placeholder="Summarise your company's services, years of experience, and key government clients." style="min-height:100px"></textarea></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-id-badge"></i> Submit Licence Application</button>
+    </form>
+  </div>
+
+</div></section>
+{% endblock %}
+{% block extra_js %}
+<script>
+function submitVendor(e){
+  e.preventDefault();
+  const ref='RSICT-VL-'+new Date().getFullYear()+'-'+Math.floor(1000+Math.random()*9000);
+  const t=document.getElementById('toast');
+  t.textContent='✅ Application received! Reference: '+ref+'. Submit physical documents to ICT House, Trans-Amadi within 14 days.';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),8000);
+  e.target.reset();
+}
+</script>
+{% endblock %}
+{% block extra_css %}<style>@media(max-width:768px){div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}section .section-inner>div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}}</style>{% endblock %}

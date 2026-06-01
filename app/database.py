@@ -1,7 +1,12 @@
+import os
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from app.models.models import Base
 
-DATABASE_URL = "sqlite+aiosqlite:///./rs_ict.db"
+# On Railway: mount a volume at /data and set DATA_DIR=/data
+# On Render:  disk is mounted at /data via render.yaml
+# Locally:    falls back to ./rs_ict.db in the project folder
+_data_dir = os.environ.get("DATA_DIR", ".")
+DATABASE_URL = f"sqlite+aiosqlite:///{_data_dir}/rs_ict.db"
 
 engine = create_async_engine(DATABASE_URL, echo=False)
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Sitemap{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Sitemap</h1>
+  <p>Complete directory of all pages on the RS ICT Department website</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>Sitemap</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:32px">
+    {% for section, links in [
+      ("Home",[("/","Homepage")]),
+      ("About Us",[("/about","Mission & Vision"),("/mandate","Mandate & Objectives"),("/structure","Organisational Structure"),("/staff","Leadership & Staff")]),
+      ("Services",[("/services","ICT Policy & Standards"),("/services#egovt","E-Government Services"),("/project-registration","Project Registration"),("/vendor-licensing","Vendor Licensing"),("/programs","Digital Training Programs"),("/training","Training Centre")]),
+      ("Resources",[("/resources","Official Policies & Documents"),("/resources","ICT Publications"),("/resources#guidelines","Guidelines & Templates"),("/annual-reports","Annual Reports")]),
+      ("Transparency",[("/transparency","Budget & Appropriation"),("/procurement","Procurement Opportunities"),("/performance","Performance Reports"),("/foi","FOI Desk")]),
+      ("News & Events",[("/news","Press Releases & News"),("/gallery","Photo Gallery"),("/news#calendar","Calendar of Events")]),
+      ("Contact",[("/contact","Contact Us & Office Locations"),("/contact#feedback","Feedback & Complaints"),("/register","Register for a Program")]),
+    ] %}
+    <div>
+      <h3 style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--blue);padding-bottom:8px;margin-bottom:12px">{{section}}</h3>
+      {% for url, label in links %}
+      <div style="margin-bottom:8px"><a href="{{url}}" style="font-size:14px;color:var(--blue);text-decoration:none">→ {{label}}</a></div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</div></section>
+{% endblock %}

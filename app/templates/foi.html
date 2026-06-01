@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}FOI Desk — Freedom of Information{% endblock %}
+{% block meta_desc %}Submit Freedom of Information (FOI) requests to the Rivers State ICT Department under the FOI Act 2011.{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Freedom of Information Desk</h1>
+  <p>Submit FOI requests and access proactively disclosed government information</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/transparency">Transparency</a><span class="sep">/</span><span>FOI Desk</span></div>
+</div></div>
+
+<section class="section"><div class="section-inner">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
+    <div>
+      <div class="section-label">Your Right to Know</div>
+      <h2 style="font-size:28px;font-weight:800;color:var(--navy);margin-bottom:16px">Freedom of Information Act 2011</h2>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">
+        The <strong>Freedom of Information (FOI) Act 2011</strong> grants every Nigerian citizen the right to request and receive information held by public institutions, including the Rivers State ICT Department. We are committed to responding to all valid FOI requests within <strong>7 working days</strong> as required by law.
+      </p>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:28px">
+        Before submitting a request, please check our <a href="/resources" style="color:var(--blue)">Resources page</a> and the <a href="/transparency" style="color:var(--blue)">Transparency section</a> — much of our information is proactively published and immediately available.
+      </p>
+
+      <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:14px">How to Submit an FOI Request</h3>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
+        {% for n, step in [("1","Complete the FOI Request Form on the right (or download the PDF form below)."),("2","Describe clearly the specific information you are requesting — be as precise as possible."),("3","Include your full name, contact details, and preferred response format (email or physical letter)."),("4","Submit online or deliver to: FOI Desk Officer, Rivers State ICT Department, ICT House, Trans-Amadi, Port Harcourt."),("5","You will receive an acknowledgement reference within 24 hours. A full response within 7 working days.")] %}
+        <div style="display:flex;gap:14px;align-items:start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--navy);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">{{n}}</div>
+          <div style="font-size:14px;color:var(--gray-600);line-height:1.65;padding-top:4px">{{step}}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <div style="background:var(--blue-xlight);border-radius:var(--radius-lg);padding:20px">
+        <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px">Exemptions Under the FOI Act</h4>
+        <p style="font-size:13px;color:var(--gray-600);line-height:1.7;margin-bottom:10px">Certain categories of information may be withheld, including classified security information, ongoing litigation, personal data of third parties, and deliberative process documents. We will always notify you if an exemption applies and explain the grounds.</p>
+        <a href="#" onclick="alert('PDF form available in production.');return false" style="font-size:13px;font-weight:600;color:var(--blue);text-decoration:none"><i class="fas fa-download" style="margin-right:5px"></i>Download FOI Request Form (PDF)</a>
+      </div>
+    </div>
+
+    <!-- FOI Form -->
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-md)">
+      <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:24px"><i class="fas fa-balance-scale" style="color:var(--blue);margin-right:8px"></i>Submit FOI Request Online</h3>
+      <form onsubmit="submitFOI(event)">
+        <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-input" required placeholder="Your full name"></div>
+        <div class="form-group"><label class="form-label">Email Address *</label><input type="email" class="form-input" required placeholder="you@example.com"></div>
+        <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-input" placeholder="+234 xxx xxx xxxx"></div>
+        <div class="form-group"><label class="form-label">Category of Information Requested *</label>
+          <select class="form-select" required>
+            <option value="">-- Select category --</option>
+            <option>Budget &amp; Financial Records</option>
+            <option>Procurement &amp; Contracts</option>
+            <option>Policy Documents</option>
+            <option>Staff Information</option>
+            <option>Project/Programme Data</option>
+            <option>Meeting Minutes</option>
+            <option>Statistical Data</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Description of Information Requested *</label><textarea class="form-textarea" required placeholder="Please describe precisely the information you are requesting, including specific dates, reference numbers, or document titles where known." style="min-height:120px"></textarea></div>
+        <div class="form-group"><label class="form-label">Preferred Response Format</label>
+          <select class="form-select">
+            <option>Email (PDF attachment)</option>
+            <option>Physical letter</option>
+            <option>Inspection at office</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-paper-plane"></i> Submit FOI Request</button>
+      </form>
+    </div>
+  </div>
+</div></section>
+{% endblock %}
+{% block extra_js %}
+<script>
+function submitFOI(e){
+  e.preventDefault();
+  const t=document.getElementById('toast');
+  t.textContent='✅ FOI request submitted. Reference RS-FOI-'+Math.floor(10000+Math.random()*90000)+'. You will receive acknowledgement within 24 hours.';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),6000);
+  e.target.reset();
+}
+</script>
+{% endblock %}
+{% block extra_css %}<style>@media(max-width:900px){section .section-inner>div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}}</style>{% endblock %}

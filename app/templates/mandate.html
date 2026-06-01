@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Mandate &amp; Objectives{% endblock %}
+{% block meta_desc %}The statutory mandate, legal authority, and strategic objectives of the Rivers State ICT Department under the Ministry of Science, Technology and Innovation.{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Mandate &amp; Objectives</h1>
+  <p>Statutory functions and strategic objectives of the RS ICT Department</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/about">About Us</a><span class="sep">/</span><span>Mandate &amp; Objectives</span></div>
+</div></div>
+
+<section class="section"><div class="section-inner">
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:48px;align-items:start">
+    <div>
+      <div class="section-label">Legal Authority</div>
+      <h2 style="font-size:30px;font-weight:800;color:var(--navy);margin-bottom:16px">Statutory Mandate</h2>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">
+        The Rivers State ICT Department was established under the <strong>Rivers State Science, Technology and Innovation Law, 2012 (as amended 2021)</strong>, which confers on the department the authority and responsibility to plan, implement, regulate, and coordinate all information and communication technology activities across the Rivers State Government.
+      </p>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:28px">
+        The department operates in alignment with the <strong>National Digital Economy Policy &amp; Strategy (NDEPS) 2020–2030</strong>, the <strong>Nigeria Data Protection Regulation (NDPR) 2019</strong>, and the <strong>Rivers State Digital Transformation Agenda 2024–2028</strong> — a four-year roadmap approved by the State Executive Council.
+      </p>
+
+      <h3 style="font-size:20px;font-weight:700;color:var(--navy);margin-bottom:16px">Core Statutory Functions</h3>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px">
+        {% set funcs = [
+          ("fa-file-alt","ICT Policy Formulation","Develop, review, and enforce Rivers State ICT policies, standards, and regulatory frameworks applicable to all government MDAs."),
+          ("fa-network-wired","Infrastructure Coordination","Plan and oversee deployment of state ICT infrastructure including broadband networks, data centres, and government connectivity."),
+          ("fa-landmark","E-Government Implementation","Design and deliver digital government services that improve citizen access to public services and reduce bureaucracy."),
+          ("fa-graduation-cap","Capacity Building","Coordinate digital skills training and ICT capacity development programs for civil servants and the general public."),
+          ("fa-shield-alt","Cybersecurity Oversight","Establish and enforce cybersecurity standards across all government systems and ensure NDPR compliance for all MDAs."),
+          ("fa-handshake","Partnership &amp; Innovation","Foster public-private partnerships and attract technology investment to Rivers State."),
+          ("fa-database","Data Governance","Manage the Rivers State Government data assets and promote open data initiatives for transparency and research."),
+          ("fa-id-badge","Vendor Regulation","License, accredit, and regulate ICT vendors and service providers operating within the Rivers State Government ecosystem."),
+        ] %}
+        {% for icon, title, desc in funcs %}
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:12px;padding:18px;display:flex;gap:14px;box-shadow:var(--shadow-sm)">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas {{icon}}" style="color:var(--blue);font-size:15px"></i></div>
+          <div><div style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px">{{title}}</div><div style="font-size:13px;color:var(--gray-600);line-height:1.6">{{desc}}</div></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div>
+      <div style="background:linear-gradient(135deg,var(--navy),#004080);border-radius:var(--radius-xl);padding:32px;color:white;margin-bottom:24px">
+        <h3 style="font-size:17px;font-weight:700;margin-bottom:20px">Strategic Objectives 2024–2028</h3>
+        <ol style="padding-left:18px;display:flex;flex-direction:column;gap:14px">
+          <li style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.6">Achieve 80% digital literacy rate among Rivers State adults by 2028</li>
+          <li style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.6">Connect all 200 public secondary schools to broadband by Q4 2026</li>
+          <li style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.6">Digitise 100% of government service delivery touchpoints by 2027</li>
+          <li style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.6">Ensure full NDPR compliance across all 48 MDAs by 2025 ✅</li>
+          <li style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.6">Train 50,000 residents in digital skills by end of 2028</li>
+          <li style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.6">Establish Rivers State as top-3 tech investment destination in Nigeria</li>
+        </ol>
+      </div>
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:24px">
+        <h4 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px">Key Legislative References</h4>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:12px;color:var(--gray-600);padding:10px;background:var(--gray-50);border-radius:8px;line-height:1.5"><strong style="color:var(--navy)">RS Science, Technology &amp; Innovation Law 2012</strong><br>Primary enabling legislation</div>
+          <div style="font-size:12px;color:var(--gray-600);padding:10px;background:var(--gray-50);border-radius:8px;line-height:1.5"><strong style="color:var(--navy)">NDPR 2019 (NITDA)</strong><br>Data protection compliance standard</div>
+          <div style="font-size:12px;color:var(--gray-600);padding:10px;background:var(--gray-50);border-radius:8px;line-height:1.5"><strong style="color:var(--navy)">Nigeria Digital Economy Policy 2020</strong><br>National strategic alignment</div>
+          <div style="font-size:12px;color:var(--gray-600);padding:10px;background:var(--gray-50);border-radius:8px;line-height:1.5"><strong style="color:var(--navy)">Public Procurement Act 2007</strong><br>Governs all ICT procurement</div>
+        </div>
+        <a href="/resources" style="display:block;text-align:center;background:var(--navy);color:white;padding:11px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;margin-top:16px">Download Policy Documents →</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+{% endblock %}
+{% block extra_css %}<style>@media(max-width:900px){section .section-inner>div[style*="grid-template-columns:2fr"]{grid-template-columns:1fr!important}}</style>{% endblock %}

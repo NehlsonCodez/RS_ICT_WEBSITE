@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}Resources — Policies, Documents &amp; Publications{% endblock %}
+{% block meta_desc %}Download official ICT policies, guidelines, templates, and publications from the Rivers State ICT Department.{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Resources &amp; Publications</h1>
+  <p>Official documents, policies, guidelines and downloadable resources</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>Resources</span></div>
+</div></div>
+
+<section class="section"><div class="section-inner">
+
+  <!-- Tabs -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px" role="tablist">
+    {% for tid, tlabel in [('policies','Official Policies &amp; Documents'),('publications','ICT Publications'),('guidelines','Guidelines &amp; Templates'),('reports','Annual Reports')] %}
+    <button onclick="showTab('{{tid}}')" id="tab-{{tid}}" role="tab" aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+      style="padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid {% if loop.first %}var(--navy){% else %}var(--gray-200){% endif %};background:{% if loop.first %}var(--navy){% else %}white{% endif %};color:{% if loop.first %}white{% else %}var(--gray-600){% endif %};transition:.2s">
+      {{tlabel}}
+    </button>
+    {% endfor %}
+  </div>
+
+  <!-- Official Policies -->
+  <div id="tab-content-policies">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px">
+      {% set docs = [
+        ("Rivers State ICT Policy Framework 2024–2028","Policy","PDF · 2.4 MB · Published March 2024","The overarching ICT policy document setting strategic direction for all government technology activities."),
+        ("Rivers State Cybersecurity Policy 2023","Policy","PDF · 1.1 MB · Published November 2023","Security baseline standards, incident response procedures and NDPR compliance requirements for all MDAs."),
+        ("ICT Procurement Standards &amp; Guidelines","Standard","PDF · 890 KB · Published January 2024","Procurement process, vendor evaluation criteria and contract management guidelines for ICT acquisitions."),
+        ("Data Governance &amp; Classification Framework","Framework","PDF · 1.3 MB · Published August 2023","Government data classification levels, handling rules and open data release criteria."),
+        ("E-Government Interoperability Standard (RS-GIS)","Standard","PDF · 760 KB · Published May 2024","Technical standards for inter-MDA data exchange and API integration on the Government Service Bus."),
+        ("Acceptable Use Policy for Government ICT Resources","Policy","PDF · 540 KB · Published 2023","Rules governing the use of government computers, internet, email and cloud services by civil servants."),
+      ] %}
+      {% for title, type, meta, desc in docs %}
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:12px;padding:22px;box-shadow:var(--shadow-sm);display:flex;gap:16px">
+        <div style="width:48px;height:56px;background:#c0392b;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:white;font-size:11px;font-weight:700">PDF</div>
+        <div>
+          <div style="display:inline-block;background:var(--blue-xlight);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:6px">{{type}}</div>
+          <div style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px;line-height:1.3">{{title}}</div>
+          <div style="font-size:11px;color:var(--gray-500);margin-bottom:8px">{{meta}}</div>
+          <div style="font-size:12px;color:var(--gray-600);line-height:1.5;margin-bottom:10px">{{desc}}</div>
+          <a href="#" onclick="alert('PDF download available in full production deployment.');return false" style="font-size:12px;font-weight:600;color:var(--blue);text-decoration:none"><i class="fas fa-download" style="margin-right:4px"></i>Download</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Publications -->
+  <div id="tab-content-publications" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px">
+      {% set pubs = [
+        ("Rivers State Digital Economy Report 2025","Research","PDF · 3.8 MB","Comprehensive assessment of the digital economy landscape, skills gap analysis, and sectoral ICT adoption rates across Rivers State."),
+        ("ICT in Education: Rivers State Baseline Survey 2024","Survey","PDF · 2.1 MB","Survey of ICT infrastructure, digital tool usage, and teacher capability across 312 public schools."),
+        ("Women in Tech RS: 2024 Impact Assessment","Report","PDF · 1.6 MB","Evaluation of the Women in Technology Initiative — employment outcomes, business formation, and income growth data."),
+        ("Nigeria-South-South ICT Infrastructure Index 2025","Publication","PDF · 2.9 MB","Comparative benchmarking of ICT infrastructure across South-South states — connectivity, e-services, and digital literacy."),
+        ("Port Harcourt Tech Ecosystem Report 2024","Publication","PDF · 1.8 MB","Mapping of startups, hubs, investors, and talent in the Port Harcourt technology ecosystem."),
+        ("Open Data Readiness Assessment: RS MDAs 2024","Assessment","PDF · 990 KB","Evaluation of all 48 MDAs' readiness to publish open data and participate in the RS Open Data Portal."),
+      ] %}
+      {% for title, type, meta, desc in pubs %}
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:12px;padding:22px;box-shadow:var(--shadow-sm)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="font-size:24px">📄</div>
+          <div style="display:inline-block;background:#e8f5e9;color:#1b5e20;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">{{type}}</div>
+          <div style="font-size:11px;color:var(--gray-500)">{{meta}}</div>
+        </div>
+        <div style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px;line-height:1.3">{{title}}</div>
+        <div style="font-size:12px;color:var(--gray-600);line-height:1.6;margin-bottom:12px">{{desc}}</div>
+        <a href="#" onclick="alert('PDF download available in full production deployment.');return false" style="font-size:12px;font-weight:600;color:var(--blue);text-decoration:none"><i class="fas fa-download" style="margin-right:4px"></i>Download PDF</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Guidelines -->
+  <div id="tab-content-guidelines" style="display:none" id="guidelines">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+      {% set guides = [
+        ("fa-server","ICT Project Proposal Template","DOCX template for MDAs submitting ICT project requests for departmental review and registration.","DOCX"),
+        ("fa-lock","Password & Account Security Checklist","Best-practice checklist for civil servants to secure their government accounts, devices, and sensitive data.","PDF"),
+        ("fa-cloud-upload-alt","Cloud Migration Readiness Checklist","Step-by-step guide for MDAs assessing readiness to migrate applications to the RS Government Cloud.","PDF"),
+        ("fa-file-contract","ICT Vendor SLA Template","Standard Service Level Agreement template for government ICT contracts — includes KPIs, penalties, and escalation procedures.","DOCX"),
+        ("fa-universal-access","Web Accessibility Standard (WCAG 2.1)","Guidance for MDA web developers on implementing WCAG 2.1 AA accessibility standards in government websites.","PDF"),
+        ("fa-database","Data Backup & Recovery SOP","Standard Operating Procedure for data backup frequency, media management, and disaster recovery testing.","PDF"),
+      ] %}
+      {% for icon, title, desc, fmt in guides %}
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:12px;padding:22px;box-shadow:var(--shadow-sm)">
+        <div style="width:44px;height:44px;border-radius:10px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+          <i class="fas {{icon}}" style="color:var(--blue);font-size:18px"></i>
+        </div>
+        <div style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px">{{title}}</div>
+        <div style="font-size:12px;color:var(--gray-600);line-height:1.6;margin-bottom:12px">{{desc}}</div>
+        <a href="#" onclick="alert('Download available in production deployment.');return false" style="font-size:12px;font-weight:600;color:var(--blue);text-decoration:none"><i class="fas fa-download" style="margin-right:4px"></i>Download {{fmt}}</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Annual Reports -->
+  <div id="tab-content-reports" style="display:none">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      {% set years = [
+        ("2025","Full Year Report","Rivers State ICT Department Annual Report 2025 — training statistics, infrastructure milestones, e-government KPIs, financial summary, and 2026 outlook.","PDF · 5.2 MB","Published February 2026"),
+        ("2024","Full Year Report","Rivers State ICT Department Annual Report 2024 — highlights include the launch of 200-school connectivity project, Women in Tech initiative results, and NDPR audit completion.","PDF · 4.8 MB","Published March 2025"),
+        ("2023","Full Year Report","Rivers State ICT Department Annual Report 2023 — first year under the Rivers State Digital Transformation Agenda. Baseline data, program launches, and partnership summaries.","PDF · 4.1 MB","Published April 2024"),
+        ("2022","Full Year Report","Rivers State ICT Department Annual Report 2022 — training centre expansion, cybersecurity audit results, and e-government portal launch summaries.","PDF · 3.6 MB","Published May 2023"),
+      ] %}
+      {% for year, label, desc, meta, published in years %}
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:12px;padding:24px;display:flex;align-items:center;gap:24px;box-shadow:var(--shadow-sm)">
+        <div style="background:var(--navy);border-radius:12px;padding:16px 20px;text-align:center;color:white;flex-shrink:0;min-width:80px">
+          <div style="font-size:22px;font-weight:800">{{year}}</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">{{label}}</div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px">RS ICT Department Annual Report {{year}}</div>
+          <div style="font-size:13px;color:var(--gray-600);line-height:1.65;margin-bottom:8px">{{desc}}</div>
+          <div style="font-size:11px;color:var(--gray-500)">{{meta}} &nbsp;·&nbsp; {{published}}</div>
+        </div>
+        <a href="#" onclick="alert('PDF download available in production.');return false" style="background:var(--navy);color:white;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;flex-shrink:0"><i class="fas fa-download" style="margin-right:6px"></i>Download</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div></section>
+{% endblock %}
+{% block extra_js %}
+<script>
+function showTab(id){
+  ['policies','publications','guidelines','reports'].forEach(t=>{
+    document.getElementById('tab-content-'+t).style.display=t===id?'block':'none';
+    const btn=document.getElementById('tab-'+t);
+    btn.style.background=t===id?'var(--navy)':'white';
+    btn.style.color=t===id?'white':'var(--gray-600)';
+    btn.style.borderColor=t===id?'var(--navy)':'var(--gray-200)';
+    btn.setAttribute('aria-selected',t===id?'true':'false');
+  });
+}
+</script>
+{% endblock %}
