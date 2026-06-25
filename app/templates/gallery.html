@@ -1,156 +1,148 @@
 {% extends "base.html" %}
-{% block title %}Photo Gallery — Rivers State ICT Department{% endblock %}
-{% block meta_desc %}Photo gallery of the Rivers State ICT Department — training sessions, graduation ceremonies, tech summits, infrastructure projects, and community outreach events.{% endblock %}
+{% block title %}Photo Gallery{% endblock %}
+{% block meta_desc %}Photo gallery of the Rivers State ICT Department — headquarters, computer labs, training sessions, the innovation pavilion, and campus facilities.{% endblock %}
 {% block content %}
 
-<div class="page-header">
+<div class="page-header"><div class="ph-inner">
   <h1>Photo Gallery</h1>
-  <p>Capturing Rivers State's digital transformation in pictures</p>
-  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>Photo Gallery</span></div>
+  <p>Authentic photography from our headquarters, labs, and training sessions</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/news">News &amp; Events</a><span class="sep">/</span><span>Gallery</span></div>
+</div></div>
+
+<section class="section"><div class="section-inner">
+
+  <!-- Filter buttons -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px" role="tablist">
+    {% for tid, tlabel in [("all","All Photos"),("facilities","Facilities"),("training","Training Sessions"),("campus","Campus &amp; Grounds")] %}
+    <button onclick="filterGallery('{{tid}}')" id="btn-{{tid}}" role="tab"
+      style="padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid {% if loop.first %}var(--navy){% else %}var(--gray-200){% endif %};background:{% if loop.first %}var(--navy){% else %}white{% endif %};color:{% if loop.first %}white{% else %}var(--gray-600){% endif %};transition:.2s">
+      {{tlabel}}
+    </button>
+    {% endfor %}
+  </div>
+
+  <!-- Masonry-style gallery -->
+  <div id="galleryGrid" style="columns:3 280px;column-gap:16px">
+
+    <!-- 1: Building exterior -->
+    <div class="gallery-item facilities" style="break-inside:avoid;margin-bottom:16px;position:relative;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.12)" onclick="openLightbox(0)">
+      <img src="/static/images/building.jpg" alt="Rivers State ICT Department Headquarters, Aba Expressway, Port Harcourt"
+        style="width:100%;display:block;transition:transform .4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,14,32,.8) 0%,transparent 55%);opacity:0;transition:opacity .3s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'"></div>
+      <div class="gal-caption">
+        <div style="color:#6ee7a8;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">Facilities</div>
+        <div style="color:white;font-size:13px;font-weight:600">Headquarters — Aba Expressway, Port Harcourt</div>
+      </div>
+    </div>
+
+    <!-- 2: Training room wide -->
+    <div class="gallery-item training" style="break-inside:avoid;margin-bottom:16px;position:relative;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.12)" onclick="openLightbox(1)">
+      <img src="/static/images/training_room_1.jpg" alt="Trainees in active lecture session, ICT Training Centre"
+        style="width:100%;display:block;transition:transform .4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="gal-caption">
+        <div style="color:#6ee7a8;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">Training Sessions</div>
+        <div style="color:white;font-size:13px;font-weight:600">Active Lecture Session — Training Hall</div>
+      </div>
+    </div>
+
+    <!-- 3: Computer lab close-up -->
+    <div class="gallery-item training facilities" style="break-inside:avoid;margin-bottom:16px;position:relative;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.12)" onclick="openLightbox(2)">
+      <img src="/static/images/computer_lab.jpg" alt="Trainees working at desktop computers in the ICT computer lab"
+        style="width:100%;display:block;transition:transform .4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="gal-caption">
+        <div style="color:#6ee7a8;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">Facilities · Training</div>
+        <div style="color:white;font-size:13px;font-weight:600">Computer Laboratory — Practical Session</div>
+      </div>
+    </div>
+
+    <!-- 4: Innovation Pavilion -->
+    <div class="gallery-item campus facilities" style="break-inside:avoid;margin-bottom:16px;position:relative;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.12)" onclick="openLightbox(3)">
+      <img src="/static/images/pavilion.jpg" alt="Learn Create Connect Innovation Pavilion on the ICT Department campus"
+        style="width:100%;display:block;transition:transform .4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="gal-caption">
+        <div style="color:#6ee7a8;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">Campus</div>
+        <div style="color:white;font-size:13px;font-weight:600">"Learn · Create · Connect" Innovation Pavilion</div>
+      </div>
+    </div>
+
+    <!-- 5: Outdoor study area -->
+    <div class="gallery-item campus" style="break-inside:avoid;margin-bottom:16px;position:relative;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.12)" onclick="openLightbox(4)">
+      <img src="/static/images/outdoor_study.jpg" alt="Covered outdoor seating and collaboration area on the ICT campus"
+        style="width:100%;display:block;transition:transform .4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="gal-caption">
+        <div style="color:#6ee7a8;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">Campus</div>
+        <div style="color:white;font-size:13px;font-weight:600">Outdoor Covered Collaboration &amp; Study Area</div>
+      </div>
+    </div>
+
+    <!-- 6: Search screen / digital reach -->
+    <div class="gallery-item facilities" style="break-inside:avoid;margin-bottom:16px;position:relative;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.12)" onclick="openLightbox(5)">
+      <img src="/static/images/search_screen.jpg" alt="Large display screen used for training presentations and demonstrations"
+        style="width:100%;display:block;transition:transform .4s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="gal-caption">
+        <div style="color:#6ee7a8;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">Facilities</div>
+        <div style="color:white;font-size:13px;font-weight:600">Interactive Display &amp; Presentation Equipment</div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- ═══ LIGHTBOX ═══ -->
+<div id="lightbox" style="position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px" onclick="closeLightbox()">
+  <button onclick="prevImg(event)" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:none;color:white;width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;z-index:10000">‹</button>
+  <div style="position:relative;max-width:900px;width:100%;text-align:center" onclick="event.stopPropagation()">
+    <img id="lbImg" src="" alt="" style="max-height:80vh;max-width:100%;border-radius:12px;object-fit:contain;box-shadow:0 32px 80px rgba(0,0,0,.5)">
+    <div id="lbCaption" style="color:white;margin-top:16px;font-size:14px;opacity:.8"></div>
+    <div id="lbCounter" style="color:rgba(255,255,255,.4);font-size:12px;margin-top:6px"></div>
+  </div>
+  <button onclick="nextImg(event)" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:none;color:white;width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;z-index:10000">›</button>
+  <button onclick="closeLightbox()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,.1);border:none;color:white;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer">✕</button>
 </div>
 
-<section class="section">
-  <div class="section-inner">
-    <p style="font-size:15px;color:var(--gray-600);line-height:1.85;max-width:680px;margin:0 auto 48px;text-align:center">
-      Browse photos from our training programs, graduation ceremonies, government partnerships, community
-      outreach events, and infrastructure projects across all 23 LGAs of Rivers State.
-    </p>
-
-    <!-- Filter tabs -->
-    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:40px">
-      <button onclick="filterGallery('all')" id="btn-all" style="background:var(--navy);color:white;border:none;padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">All</button>
-      <button onclick="filterGallery('training')" id="btn-training" style="background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">Training &amp; Graduation</button>
-      <button onclick="filterGallery('events')" id="btn-events" style="background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">Events &amp; Summits</button>
-      <button onclick="filterGallery('infra')" id="btn-infra" style="background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">Infrastructure</button>
-      <button onclick="filterGallery('outreach')" id="btn-outreach" style="background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer">Community Outreach</button>
-    </div>
-
-    <!-- Gallery grid with SVG placeholders -->
-    <div id="galleryGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px">
-
-      <div class="gallery-item training" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
-        <div style="background:linear-gradient(135deg,#1a3a5c,#004080);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:10px">🎓</div>
-          <div style="font-size:14px;font-weight:600">April 2026 Graduation Ceremony</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">1,200 graduates · Government House Banquet Hall</div>
-        </div>
-        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
-          <p style="font-size:12px;color:var(--gray-500)">📅 April 28, 2026 · Training &amp; Graduation</p>
-        </div>
-      </div>
-
-      <div class="gallery-item events" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
-        <div style="background:linear-gradient(135deg,#2d1b69,#5e35b1);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:10px">🖥️</div>
-          <div style="font-size:14px;font-weight:600">Rivers State Tech Summit 2025</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">500+ attendees · Novotel Port Harcourt</div>
-        </div>
-        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
-          <p style="font-size:12px;color:var(--gray-500)">📅 November 2025 · Events &amp; Summits</p>
-        </div>
-      </div>
-
-      <div class="gallery-item training" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
-        <div style="background:linear-gradient(135deg,#1b5e20,#388e3c);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:10px">👩‍💻</div>
-          <div style="font-size:14px;font-weight:600">Web Development Class — Cohort 7</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">Computer Lab 3 · Trans-Amadi Training Center</div>
-        </div>
-        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
-          <p style="font-size:12px;color:var(--gray-500)">📅 February 2026 · Training &amp; Graduation</p>
-        </div>
-      </div>
-
-      <div class="gallery-item infra" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
-        <div style="background:linear-gradient(135deg,#bf360c,#e64a19);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:10px">🏗️</div>
-          <div style="font-size:14px;font-weight:600">Digital Hub Phase 2 Construction Progress</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">ICT House Expansion · Trans-Amadi, PH</div>
-        </div>
-        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
-          <p style="font-size:12px;color:var(--gray-500)">📅 March 2026 · Infrastructure</p>
-        </div>
-      </div>
-
-      <div class="gallery-item outreach" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
-        <div style="background:linear-gradient(135deg,#004d40,#00695c);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:10px">🏘️</div>
-          <div style="font-size:14px;font-weight:600">Khana LGA Community Digital Literacy Drive</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">300 rural residents trained · Bori, Khana LGA</div>
-        </div>
-        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
-          <p style="font-size:12px;color:var(--gray-500)">📅 January 2026 · Community Outreach</p>
-        </div>
-      </div>
-
-      <div class="gallery-item events" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
-        <div style="background:linear-gradient(135deg,#0d47a1,#1976d2);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:10px">🤝</div>
-          <div style="font-size:14px;font-weight:600">Microsoft Nigeria MoU Signing Ceremony</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">ICT House, Port Harcourt · April 2026</div>
-        </div>
-        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
-          <p style="font-size:12px;color:var(--gray-500)">📅 April 10, 2026 · Events &amp; Summits</p>
-        </div>
-      </div>
-
-      <div class="gallery-item training" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
-        <div style="background:linear-gradient(135deg,#4a148c,#7b1fa2);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:10px">🔐</div>
-          <div style="font-size:14px;font-weight:600">Cybersecurity Bootcamp — Cohort 3</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">60 trainees · 10-week intensive program</div>
-        </div>
-        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
-          <p style="font-size:12px;color:var(--gray-500)">📅 March 2026 · Training &amp; Graduation</p>
-        </div>
-      </div>
-
-      <div class="gallery-item outreach" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
-        <div style="background:linear-gradient(135deg,#e65100,#f57c00);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:10px">👩‍🎓</div>
-          <div style="font-size:14px;font-weight:600">Women in Tech Graduation — Obio/Akpor</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">250 women certified · Rumuola Centre</div>
-        </div>
-        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
-          <p style="font-size:12px;color:var(--gray-500)">📅 February 2026 · Community Outreach</p>
-        </div>
-      </div>
-
-      <div class="gallery-item infra" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer" onclick="openLightbox(this)">
-        <div style="background:linear-gradient(135deg,#263238,#455a64);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center">
-          <div style="font-size:42px;margin-bottom:10px">🏫</div>
-          <div style="font-size:14px;font-weight:600">School Connectivity — GGC Port Harcourt</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px">First 50 schools connected · Fibre Wi-Fi installation</div>
-        </div>
-        <div style="background:white;padding:14px 16px;border-top:1px solid var(--gray-100)">
-          <p style="font-size:12px;color:var(--gray-500)">📅 May 2026 · Infrastructure</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 {% endblock %}
+
+{% block extra_css %}
+<style>
+.gal-caption { position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,14,32,.88),transparent);padding:20px 16px 14px;transform:translateY(4px);transition:transform .3s }
+.gallery-item:hover .gal-caption { transform:translateY(0) }
+</style>
+{% endblock %}
+
 {% block extra_js %}
 <script>
-function filterGallery(cat) {
-  const items = document.querySelectorAll('.gallery-item');
-  items.forEach(item => {
-    item.style.display = (cat === 'all' || item.classList.contains(cat)) ? 'block' : 'none';
-  });
-  document.querySelectorAll('[id^="btn-"]').forEach(b => {
-    b.style.background = '#f1f5f9';
-    b.style.color = '#475569';
-    b.style.border = '1px solid #e2e8f0';
-  });
-  const active = document.getElementById('btn-' + cat);
-  if (active) { active.style.background = 'var(--navy)'; active.style.color = 'white'; active.style.border = 'none'; }
+const images = [
+  {src:"/static/images/building.jpg", cap:"Headquarters — Rivers State ICT Department, Aba Expressway, Port Harcourt"},
+  {src:"/static/images/training_room_1.jpg", cap:"Active Lecture Session — ICT Training Centre, Aba Expressway"},
+  {src:"/static/images/computer_lab.jpg", cap:"Computer Laboratory — Hands-on Practical Training Session"},
+  {src:"/static/images/pavilion.jpg", cap:"'Learn · Create · Connect' Innovation Pavilion — ICT Department Campus"},
+  {src:"/static/images/outdoor_study.jpg", cap:"Outdoor Covered Collaboration & Study Area — ICT Campus Grounds"},
+  {src:"/static/images/search_screen.jpg", cap:"Interactive Display Equipment used for Training Presentations"},
+];
+let cur=0;
+function openLightbox(i){
+  cur=i; const lb=document.getElementById('lightbox');
+  document.getElementById('lbImg').src=images[i].src;
+  document.getElementById('lbCaption').textContent=images[i].cap;
+  document.getElementById('lbCounter').textContent=(i+1)+' / '+images.length;
+  lb.style.display='flex'; document.body.style.overflow='hidden';
 }
-function openLightbox(el) {
-  const title = el.querySelector('[style*="font-size:14px;font-weight:600"]')?.innerText || '';
-  const desc = el.querySelector('[style*="color:rgba(255,255,255,0.55)"]')?.innerText || '';
-  alert('📸 ' + title + '\n' + desc + '\n\n(High-resolution photos available on request — contact info@ict.riversstate.gov.ng)');
+function closeLightbox(){ document.getElementById('lightbox').style.display='none'; document.body.style.overflow=''; }
+function prevImg(e){ e.stopPropagation(); cur=(cur-1+images.length)%images.length; openLightbox(cur); }
+function nextImg(e){ e.stopPropagation(); cur=(cur+1)%images.length; openLightbox(cur); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeLightbox(); if(e.key==='ArrowLeft')prevImg({stopPropagation:()=>{}}); if(e.key==='ArrowRight')nextImg({stopPropagation:()=>{}}); });
+
+function filterGallery(cat){
+  document.querySelectorAll('.gallery-item').forEach(item=>{
+    item.style.display=(cat==='all'||item.classList.contains(cat))?'block':'none';
+  });
+  ['all','facilities','training','campus'].forEach(t=>{
+    const b=document.getElementById('btn-'+t);
+    if(!b)return;
+    b.style.background=t===cat?'var(--navy)':'white';
+    b.style.color=t===cat?'white':'var(--gray-600)';
+    b.style.borderColor=t===cat?'var(--navy)':'var(--gray-200)';
+  });
 }
 </script>
 {% endblock %}

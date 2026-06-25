@@ -1,156 +1,157 @@
 {% extends "base.html" %}
-{% block title %}ICT Training Center — Rivers State{% endblock %}
-{% block meta_desc %}The Rivers State ICT Training Center in Trans-Amadi, Port Harcourt — facilities, schedules, certification process, and how to enrol in our digital skills programs.{% endblock %}
+{% block title %}ICT Training Centre{% endblock %}
+{% block meta_desc %}The Rivers State ICT Training Centre — facilities, computer labs, schedules, certification, and how to enrol in digital skills programs.{% endblock %}
 {% block content %}
 
-<div class="page-header">
-  <h1>ICT Training Center</h1>
-  <p>State-of-the-art digital learning facility serving all 23 LGAs of Rivers State</p>
-  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>ICT Training Center</span></div>
+<div class="page-header" style="background-image:linear-gradient(135deg,rgba(0,14,32,0.92),rgba(0,40,100,0.85)),url('/static/images/building.jpg');background-size:cover;background-position:center 20%"><div class="ph-inner">
+  <h1>ICT Training Centre</h1>
+  <p>Located at Aba Expressway, Port Harcourt · Serving all 23 LGAs of Rivers State</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/services">Services</a><span class="sep">/</span><span>Training Centre</span></div>
+</div></div>
+
+<!-- ═══ HERO PHOTO — training room full bleed ═══ -->
+<div style="position:relative;height:480px;overflow:hidden">
+  <img src="/static/images/training_room_1.jpg"
+    alt="Trainees at the Rivers State ICT Training Centre lecture hall"
+    style="width:100%;height:100%;object-fit:cover;object-position:center 40%">
+  <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,14,32,.85) 0%,rgba(0,14,32,.4) 60%,transparent 100%)"></div>
+  <div style="position:absolute;inset:0;display:flex;align-items:center">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;width:100%">
+      <div style="max-width:520px;color:white">
+        <div style="color:#6ee7a8;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">📍 Aba Expressway, Port Harcourt</div>
+        <h2 style="font-size:clamp(22px,3.5vw,38px);font-weight:800;letter-spacing:-1px;margin-bottom:12px;line-height:1.2">Rivers State's Premier Public Technology Learning Hub</h2>
+        <p style="font-size:15px;color:rgba(255,255,255,.7);line-height:1.75;margin-bottom:24px">Training over 15,000 residents since 2012 — in digital skills from basic computing to AI, cloud computing, and cybersecurity.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="/register" style="background:#6ee7a8;color:#0a1628;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none">Enrol Now →</a>
+          <a href="/programs" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:white;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none">View Programs →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Floating stat bubbles -->
+  <div style="position:absolute;top:32px;right:40px;display:flex;gap:12px">
+    {% for n, l in [("15,000+","Alumni"),("200+","Workstations"),("4","Daily Sessions")] %}
+    <div style="background:rgba(255,255,255,.12);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 18px;text-align:center;color:white">
+      <div style="font-size:20px;font-weight:800;color:#6ee7a8">{{n}}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px">{{l}}</div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 
-<!-- Overview -->
-<section class="section">
-  <div class="section-inner">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start">
-      <div>
-        <div class="section-label">About the Center</div>
-        <h2 style="font-size:32px;font-weight:800;color:var(--navy);letter-spacing:-1px;margin-bottom:16px">Rivers State's Premier Public Technology Learning Hub</h2>
-        <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">
-          Established in 2012 and upgraded in 2023, the Rivers State ICT Training Center is the flagship public
-          technology education facility of the Rivers State Government. Located at ICT House, Trans-Amadi
-          Industrial Layout, Port Harcourt, the center provides world-class digital skills training to residents
-          from all 23 local government areas.
-        </p>
-        <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">
-          With a capacity of 400 students per cohort, the center runs morning, afternoon, and weekend sessions
-          to accommodate working professionals, students, and full-time trainees. Since inception, over
-          <strong>15,000 Rivers State residents</strong> have been trained and certified.
-        </p>
-        <p style="font-size:15px;color:var(--gray-600);line-height:1.85">
-          The center operates in partnership with the National Information Technology Development Agency (NITDA),
-          Microsoft Nigeria, and Google for Education — ensuring our curriculum meets international industry standards.
-        </p>
+<!-- ═══ ABOUT SECTION — image + text ═══ -->
+<section class="section"><div class="section-inner">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+    <!-- Two-photo stack -->
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <img src="/static/images/computer_lab.jpg"
+        alt="Students working at computer workstations in the ICT lab"
+        style="border-radius:16px;width:100%;height:280px;object-fit:cover;box-shadow:0 16px 48px rgba(0,0,0,.14)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <img src="/static/images/pavilion.jpg"
+          alt="Learn Create Connect innovation pavilion at the ICT campus"
+          style="border-radius:12px;width:100%;height:160px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.1)">
+        <img src="/static/images/outdoor_study.jpg"
+          alt="Outdoor covered collaboration and study area at the ICT campus"
+          style="border-radius:12px;width:100%;height:160px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.1)">
       </div>
-      <div>
-        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px">Training Center Facilities</h3>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div style="display:flex;align-items:center;gap:14px;background:var(--blue-xlight);border-radius:12px;padding:16px">
-            <div style="font-size:22px;flex-shrink:0">💻</div>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:var(--navy)">6 Computer Labs</div>
-              <div style="font-size:12px;color:var(--gray-600)">200 workstations total — Intel Core i7, 16GB RAM, 24″ displays</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:14px;background:var(--blue-xlight);border-radius:12px;padding:16px">
-            <div style="font-size:22px;flex-shrink:0">📶</div>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:var(--navy)">High-Speed Fibre Internet</div>
-              <div style="font-size:12px;color:var(--gray-600)">1Gbps dedicated connection with redundant backup links</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:14px;background:var(--blue-xlight);border-radius:12px;padding:16px">
-            <div style="font-size:22px;flex-shrink:0">🏫</div>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:var(--navy)">2 Lecture Theatres</div>
-              <div style="font-size:12px;color:var(--gray-600)">120-seat and 80-seat auditoriums with smart boards</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:14px;background:var(--blue-xlight);border-radius:12px;padding:16px">
-            <div style="font-size:22px;flex-shrink:0">⚡</div>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:var(--navy)">24/7 Power Supply</div>
-              <div style="font-size:12px;color:var(--gray-600)">Industrial generator + solar backup ensuring uninterrupted training</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:14px;background:var(--blue-xlight);border-radius:12px;padding:16px">
-            <div style="font-size:22px;flex-shrink:0">♿</div>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:var(--navy)">Accessible Facilities</div>
-              <div style="font-size:12px;color:var(--gray-600)">Ramps, lifts, and assistive technology for persons with disabilities</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:14px;background:var(--blue-xlight);border-radius:12px;padding:16px">
-            <div style="font-size:22px;flex-shrink:0">🍽️</div>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:var(--navy)">Cafeteria &amp; Rest Areas</div>
-              <div style="font-size:12px;color:var(--gray-600)">On-site canteen, lounge, and prayer room for trainees</div>
-            </div>
-          </div>
+    </div>
+    <div>
+      <div class="section-label">About the Centre</div>
+      <h2 style="font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.5px;margin-bottom:16px">Established 2012 · Upgraded 2023</h2>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">
+        Located at Rivers State ICT Department, Aba Expressway, Port Harcourt, the Rivers State ICT Training Centre is the flagship public technology education facility of the Rivers State Government. The centre provides world-class digital skills training to residents from all 23 local government areas.
+      </p>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">
+        With a capacity of 400 students per cohort, the centre runs morning, afternoon, evening, and weekend sessions to accommodate working professionals, students, and full-time trainees.
+      </p>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:28px">
+        The centre operates in partnership with <strong>NITDA</strong>, <strong>Microsoft Nigeria</strong>, and <strong>Google for Education</strong> — ensuring our curriculum meets international industry standards.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        {% for icon, text in [
+          ("fa-wifi","1Gbps dedicated fibre internet with redundant backup"),
+          ("fa-bolt","24/7 power supply — industrial generator + solar backup"),
+          ("fa-universal-access","Fully accessible facilities for persons with disabilities"),
+          ("fa-shield-alt","CCTV-monitored, secure campus environment"),
+        ] %}
+        <div style="display:flex;gap:10px;align-items:center;font-size:14px;color:var(--gray-600)">
+          <i class="fas {{icon}}" style="color:var(--blue);width:18px;flex-shrink:0"></i>{{text}}
         </div>
+        {% endfor %}
       </div>
     </div>
   </div>
-</section>
+</div></section>
 
-<!-- Training Schedule -->
-<section class="section" style="background:#f8f9fb;padding:64px 0">
-  <div class="section-inner">
-    <div class="section-label">Sessions &amp; Schedule</div>
-    <div class="section-title">Training Timetable</div>
-    <p style="font-size:15px;color:var(--gray-600);max-width:680px;margin:0 auto 40px;text-align:center;line-height:1.85">
-      Programs run in three daily sessions plus a weekend cohort, making it easy to combine learning with work or school.
-    </p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
-      <div style="background:white;border-radius:var(--radius-lg);padding:28px;text-align:center;border:2px solid var(--blue-light)">
-        <div style="font-size:32px;margin-bottom:12px">🌅</div>
-        <h4 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px">Morning Session</h4>
-        <p style="font-size:20px;font-weight:800;color:var(--blue);margin-bottom:4px">8:00 AM – 11:00 AM</p>
-        <p style="font-size:12px;color:var(--gray-600)">Monday to Friday<br>Ideal for: Students &amp; unemployed youth</p>
+<!-- ═══ FACILITIES DETAIL ═══ -->
+<section class="section" style="background:#f8f9fb;padding:64px 0"><div class="section-inner">
+  <div class="section-label">Facilities</div>
+  <div class="section-title" style="margin-bottom:36px">What's on the Campus</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+    {% for icon, title, desc in [
+      ("fa-desktop","6 Computer Labs","200 workstations total — Intel Core i7, 16GB RAM, 24″ displays across 6 dedicated labs"),
+      ("fa-chalkboard-teacher","2 Lecture Theatres","120-seat and 80-seat auditoriums with smart boards and AV systems"),
+      ("fa-seedling","Innovation Pavilion","The 'Learn · Create · Connect' glass-fronted hub for collaborative digital projects"),
+      ("fa-umbrella","Outdoor Study Areas","Covered seating and collaboration zones surrounded by greenery — perfect between classes"),
+      ("fa-utensils","Cafeteria &amp; Rest Areas","On-site canteen, lounge, and prayer room for trainees"),
+      ("fa-car","Parking &amp; Security","Guarded parking, CCTV, and 24-hour security for trainees and staff"),
+    ] %}
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.06)">
+      <div style="width:48px;height:48px;border-radius:12px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+        <i class="fas {{icon}}" style="color:var(--blue);font-size:18px"></i>
       </div>
-      <div style="background:white;border-radius:var(--radius-lg);padding:28px;text-align:center;border:2px solid var(--blue-light)">
-        <div style="font-size:32px;margin-bottom:12px">☀️</div>
-        <h4 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px">Afternoon Session</h4>
-        <p style="font-size:20px;font-weight:800;color:var(--blue);margin-bottom:4px">12:00 PM – 3:00 PM</p>
-        <p style="font-size:12px;color:var(--gray-600)">Monday to Friday<br>Ideal for: Traders &amp; part-time learners</p>
-      </div>
-      <div style="background:white;border-radius:var(--radius-lg);padding:28px;text-align:center;border:2px solid var(--blue-light)">
-        <div style="font-size:32px;margin-bottom:12px">🌆</div>
-        <h4 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px">Evening Session</h4>
-        <p style="font-size:20px;font-weight:800;color:var(--blue);margin-bottom:4px">4:00 PM – 7:00 PM</p>
-        <p style="font-size:12px;color:var(--gray-600)">Monday to Friday<br>Ideal for: Civil servants &amp; professionals</p>
-      </div>
-      <div style="background:white;border-radius:var(--radius-lg);padding:28px;text-align:center;border:2px solid var(--blue-light)">
-        <div style="font-size:32px;margin-bottom:12px">🗓️</div>
-        <h4 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px">Weekend Intensive</h4>
-        <p style="font-size:20px;font-weight:800;color:var(--blue);margin-bottom:4px">Sat &amp; Sun 9AM – 2PM</p>
-        <p style="font-size:12px;color:var(--gray-600)">Saturdays &amp; Sundays<br>Ideal for: Full-time workers</p>
-      </div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px">{{title}}</h3>
+      <p style="font-size:13px;color:var(--gray-600);line-height:1.7">{{desc}}</p>
     </div>
+    {% endfor %}
   </div>
-</section>
+</div></section>
 
-<!-- Certification -->
-<section class="section">
-  <div class="section-inner">
-    <div class="section-label">Certification</div>
-    <div class="section-title">What You Earn at the End</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:24px">
-      <div>
-        <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">
-          Participants who complete a program and pass the final assessment receive a <strong>Rivers State Government
-          Digital Skills Certificate</strong>, signed by the Director General of the ICT Department. The certificate
-          is registered in the RSG Digital Skills Database, which employers can verify online.
-        </p>
-        <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">
-          Advanced program graduates also receive preparation for globally recognised certifications including
-          <strong>CompTIA Security+</strong>, <strong>AWS Cloud Practitioner</strong>, and
-          <strong>Microsoft Azure Fundamentals</strong> — with the ICT Department subsidising exam vouchers
-          for qualifying completers.
-        </p>
-        <a href="/register" style="display:inline-block;background:var(--blue);color:white;padding:13px 30px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none">Enrol Today →</a>
-      </div>
-      <div style="background:linear-gradient(135deg,var(--navy),#004080);border-radius:var(--radius-xl);padding:36px;color:white;text-align:center">
-        <div style="font-size:48px;margin-bottom:16px">🏅</div>
-        <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">Rivers State Govt.<br>Digital Skills Certificate</h3>
-        <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:24px">Issued by the ICT Department<br>Ministry of Science, Technology &amp; Innovation</p>
-        <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:14px;font-size:12px;color:rgba(255,255,255,0.5)">
-          Certificate includes QR code for instant employer verification via the RSG Digital Skills Portal
-        </div>
-      </div>
+<!-- ═══ SCHEDULE ═══ -->
+<section class="section"><div class="section-inner">
+  <div class="section-label">Sessions &amp; Schedule</div>
+  <div class="section-title" style="margin-bottom:36px">Daily Training Timetable</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+    {% for emoji, label, time, days, ideal in [
+      ("🌅","Morning Session","8:00 AM – 11:00 AM","Monday to Friday","Students &amp; unemployed youth"),
+      ("☀️","Afternoon Session","12:00 PM – 3:00 PM","Monday to Friday","Traders &amp; part-time learners"),
+      ("🌆","Evening Session","4:00 PM – 7:00 PM","Monday to Friday","Civil servants &amp; professionals"),
+      ("🗓️","Weekend Intensive","Sat &amp; Sun 9AM – 2PM","Saturdays &amp; Sundays","Full-time workers"),
+    ] %}
+    <div style="background:white;border:2px solid var(--blue-light);border-radius:var(--radius-lg);padding:28px;text-align:center">
+      <div style="font-size:32px;margin-bottom:12px">{{emoji}}</div>
+      <h4 style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px">{{label}}</h4>
+      <p style="font-size:20px;font-weight:800;color:var(--blue);margin-bottom:4px">{{time}}</p>
+      <p style="font-size:12px;color:var(--gray-600)">{{days}}<br>Ideal for: {{ideal}}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div></section>
+
+<!-- ═══ CERTIFICATION ═══ -->
+<section class="section" style="background:#f8f9fb;padding:64px 0"><div class="section-inner">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+    <div>
+      <div class="section-label">Certification</div>
+      <h2 style="font-size:28px;font-weight:800;color:var(--navy);margin-bottom:16px">What You Earn at the End</h2>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:16px">Participants who complete a program and pass the final assessment receive a <strong>Rivers State Government Digital Skills Certificate</strong>, signed by the Director General and verifiable online via the RSG Digital Skills Database.</p>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:24px">Advanced program graduates also receive preparation for globally recognised certifications including <strong>CompTIA Security+</strong>, <strong>AWS Cloud Practitioner</strong>, and <strong>Microsoft Azure Fundamentals</strong> — with the ICT Department subsidising exam vouchers for qualifying completers.</p>
+      <a href="/register" style="display:inline-block;background:var(--blue);color:white;padding:13px 30px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none">Enrol Today →</a>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),#004080);border-radius:var(--radius-xl);padding:36px;color:white;text-align:center">
+      <div style="font-size:48px;margin-bottom:16px">🏅</div>
+      <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">Rivers State Govt.<br>Digital Skills Certificate</h3>
+      <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:24px">Issued by the ICT Department<br>Ministry of Science, Technology &amp; Innovation</p>
+      <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:14px;font-size:12px;color:rgba(255,255,255,0.5)">Certificate includes QR code for instant employer verification via the RSG Digital Skills Portal</div>
     </div>
   </div>
-</section>
+</div></section>
 
 {% endblock %}
-{% block extra_css %}<style>@media(max-width:768px){section .section-inner > div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;gap:24px!important}}</style>{% endblock %}
+{% block extra_css %}<style>
+@media(max-width:900px){
+  div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;gap:24px!important}
+  div[style*="position:absolute;top:32px;right:40px"]{display:none!important}
+}
+</style>{% endblock %}
