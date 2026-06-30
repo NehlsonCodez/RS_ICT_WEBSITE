@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+{% set cat_color = {"Web Development":"#0057B8","Cybersecurity":"#dc2626","Cloud Computing":"#7c3aed","Artificial Intelligence":"#d97706","Data Science":"#059669","UI/UX":"#0891b2","Graphics Design":"#db2777","Digital Marketing":"#ea580c"} %}
+<div class="page-header" style="background:linear-gradient(135deg,{{ cat_color.get(course.category,'var(--navy)') }},#0a1628)"><div class="ph-inner">
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.5);margin-bottom:8px">{{ course.category }}</div>
+  <h1>{{ course.title }}</h1>
+  <p>{{ course.duration_weeks or "?" }} weeks · {{ course.level or "All levels" }} · {% if course.is_free %}Free{% else %}₦{{ "{:,.0f}".format(course.fee) }}{% endif %}</p>
+  <div class="breadcrumb"><a href="/services/training">Training</a><span class="sep">/</span><span>{{ course.title }}</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:start">
+    <div>
+      <div class="section-label">About This Course</div>
+      <p style="font-size:15px;color:var(--gray-600);line-height:1.85;margin-bottom:28px">{{ course.description or "Comprehensive hands-on training program with government certification upon completion." }}</p>
+      {% if sessions %}
+      <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:16px">Available Sessions</h3>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        {% for s in sessions %}
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:24px">
+          <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+            <div><h4 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px">{{ s.cohort_name }}</h4>
+              <div style="font-size:13px;color:var(--gray-500)">{{ s.schedule or "TBD" }} · {{ s.venue or "ICT Training Centre, Aba Expressway, Port Harcourt" }}</div>
+            </div>
+            <div style="text-align:right"><div style="font-size:13px;font-weight:600;color:var(--blue)">{{ s.enrollments|length }}/{{ s.capacity }} enrolled</div></div>
+          </div>
+          <div style="display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap;font-size:13px;color:var(--gray-600)">
+            {% if s.start_date %}<span><i class="fas fa-calendar" style="margin-right:5px;color:var(--blue)"></i>{{ s.start_date.strftime("%d %b %Y") }}</span>{% endif %}
+            {% if s.end_date %}<span><i class="fas fa-calendar-check" style="margin-right:5px;color:var(--blue)"></i>{{ s.end_date.strftime("%d %b %Y") }}</span>{% endif %}
+          </div>
+          {% if user %}
+          {% if s.enrollments|length < s.capacity %}
+          <form method="post" action="/services/training/enroll">
+            <input type="hidden" name="session_id" value="{{ s.id }}">
+            <button type="submit" class="btn btn-primary" style="background:{{ cat_color.get(course.category,'var(--navy)') }}"><i class="fas fa-user-plus"></i> Enroll in This Session</button>
+          </form>
+          {% else %}
+          <div style="background:#fef2f2;color:#dc2626;font-size:13px;font-weight:600;padding:10px 14px;border-radius:8px">Session Full</div>
+          {% endif %}
+          {% else %}
+          <a href="/auth/login?next=/services/training/course/{{ course.id }}" class="btn btn-primary">Login to Enroll →</a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div style="background:var(--blue-xlight);border-radius:12px;padding:24px;text-align:center;color:var(--gray-600)"><i class="fas fa-clock" style="font-size:32px;display:block;margin-bottom:10px;opacity:.4"></i>No open sessions available. Check back soon or use the main register form.</div>
+      {% endif %}
+    </div>
+    <div>
+      <div style="background:var(--navy);border-radius:16px;padding:28px;color:white;position:sticky;top:120px">
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:16px">Course Details</h4>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+          <div style="display:flex;justify-content:space-between"><span style="color:rgba(255,255,255,.6)">Duration</span><span>{{ course.duration_weeks or "?" }} weeks</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:rgba(255,255,255,.6)">Level</span><span>{{ course.level or "All levels" }}</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:rgba(255,255,255,.6)">Fee</span><span>{% if course.is_free %}FREE{% else %}₦{{ "{:,.0f}".format(course.fee) }}{% endif %}</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:rgba(255,255,255,.6)">Certificate</span><span>✅ RS Govt Certified</span></div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.1);margin-top:16px;padding-top:16px;font-size:13px;color:rgba(255,255,255,.55)">Certificates are issued upon passing the final assessment and are verifiable online via the RSG Digital Skills Portal.</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+{% endblock %}
+{% block extra_css %}<style>@media(max-width:900px){.section-inner>div[style*="grid-template-columns:2fr"]{grid-template-columns:1fr!important}}</style>{% endblock %}

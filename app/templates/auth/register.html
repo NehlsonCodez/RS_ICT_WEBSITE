@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f8f9fb;padding:120px 24px 60px">
+  <div style="width:100%;max-width:520px">
+    <div style="text-align:center;margin-bottom:28px">
+      <img src="/static/images/riverslogo.png" alt="RS Logo" style="width:56px;height:56px;object-fit:contain;margin-bottom:14px">
+      <h1 style="font-size:24px;font-weight:800;color:var(--navy);margin-bottom:4px">Create a Portal Account</h1>
+      <p style="color:var(--gray-500);font-size:13px">Access all RS ICT Department digital services</p>
+    </div>
+    <div style="background:white;border-radius:16px;padding:36px;box-shadow:0 4px 24px rgba(0,0,0,.08);border:1px solid var(--gray-200)">
+      <form method="post" action="/auth/register">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" name="full_name" class="form-input {% if errors and errors.full_name %}error{% endif %}" value="{{ values.full_name if values else '' }}" required placeholder="Your full name">
+          {% if errors and errors.full_name %}<div style="color:#dc2626;font-size:12px;margin-top:4px">{{ errors.full_name }}</div>{% endif %}
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" name="email" class="form-input {% if errors and errors.email %}error{% endif %}" value="{{ values.email if values else '' }}" required>
+            {% if errors and errors.email %}<div style="color:#dc2626;font-size:12px;margin-top:4px">{{ errors.email }}</div>{% endif %}
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" name="phone" class="form-input" value="{{ values.phone if values else '' }}" placeholder="+234 xxx xxx xxxx">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Account Type *</label>
+          <select name="role" class="form-select" id="roleSelect" onchange="toggleAgency(this.value)">
+            <option value="citizen" {% if not values or values.role=='citizen' %}selected{% endif %}>Citizen</option>
+            <option value="agency" {% if values and values.role=='agency' %}selected{% endif %}>Government Agency / MDA</option>
+          </select>
+        </div>
+        <div class="form-group" id="agencyField" style="display:none">
+          <label class="form-label">Agency / Ministry Name</label>
+          <input type="text" name="agency_name" class="form-input" value="{{ values.agency_name if values else '' }}" placeholder="e.g. Ministry of Education">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Password *</label>
+            <input type="password" name="password" class="form-input {% if errors and errors.password %}error{% endif %}" required placeholder="Min. 6 characters">
+            {% if errors and errors.password %}<div style="color:#dc2626;font-size:12px;margin-top:4px">{{ errors.password }}</div>{% endif %}
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm Password *</label>
+            <input type="password" name="confirm_password" class="form-input {% if errors and errors.confirm_password %}error{% endif %}" required placeholder="Repeat password">
+            {% if errors and errors.confirm_password %}<div style="color:#dc2626;font-size:12px;margin-top:4px">{{ errors.confirm_password }}</div>{% endif %}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;padding:14px">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+      </form>
+      <p style="text-align:center;font-size:14px;color:var(--gray-500);margin-top:20px">
+        Already have an account? <a href="/auth/login" style="color:var(--blue);font-weight:600">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+function toggleAgency(val){document.getElementById('agencyField').style.display=val==='agency'?'block':'none';}
+toggleAgency(document.getElementById('roleSelect').value);
+</script>
+{% endblock %}

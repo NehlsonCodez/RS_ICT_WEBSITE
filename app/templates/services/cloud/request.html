@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Request Cloud Resources{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Request Cloud Resources</h1>
+  <p>Submit your agency's cloud infrastructure requirements for review and provisioning</p>
+  <div class="breadcrumb"><a href="/services/cloud">Cloud Services</a><span class="sep">/</span><span>New Request</span></div>
+</div></div>
+<section class="section"><div class="section-inner" style="max-width:720px">
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:16px;padding:36px">
+    <form method="post" action="/services/cloud/request">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Agency / Ministry Name *</label><input type="text" name="agency_name" class="form-input" required placeholder="e.g. Ministry of Health"></div>
+        <div class="form-group"><label class="form-label">Service Type *</label>
+          <select name="service_type" class="form-select" required>
+            <option value="">-- Select Service --</option>
+            {% for s in cloud_services %}<option>{{ s }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+      <div style="background:#f5f3ff;border-radius:12px;padding:20px;margin-bottom:20px">
+        <div style="font-size:13px;font-weight:700;color:#4c1d95;margin-bottom:12px">Resource Specifications (for Virtual Server / Hosting)</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">CPU Cores</label><input type="number" name="cpu_cores" class="form-input" min="1" max="64" placeholder="e.g. 4"></div>
+          <div class="form-group"><label class="form-label">RAM (GB)</label><input type="number" name="ram_gb" class="form-input" min="1" max="512" placeholder="e.g. 8"></div>
+          <div class="form-group"><label class="form-label">Storage (GB)</label><input type="number" name="storage_gb" class="form-input" min="10" placeholder="e.g. 100"></div>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Purpose / Justification *</label><textarea name="purpose" class="form-textarea" required placeholder="What application or service will use these resources? What is the expected impact?" style="min-height:100px"></textarea></div>
+      <div class="form-group"><label class="form-label">Expected Concurrent Users</label><input type="number" name="expected_users" class="form-input" min="1" placeholder="e.g. 500"></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;background:#7c3aed"><i class="fas fa-cloud-upload-alt"></i> Submit Cloud Request</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

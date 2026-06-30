@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Digital Skills Training Programs{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Digital Skills Training</h1>
+  <p>Browse and apply for government-sponsored ICT training programs — free and subsidised</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/services">Services</a><span class="sep">/</span><span>Training Programs</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:14px">
+    <div><div class="section-label">Available Courses</div><div class="section-title" style="margin-bottom:0">{{ courses|length }} Programs Available</div></div>
+    {% if user %}<a href="/services/training/my" class="btn btn-primary"><i class="fas fa-list"></i> My Enrollments</a>{% endif %}
+  </div>
+  {% if courses %}
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px">
+    {% for c in courses %}
+    {% set cat_color = {"Web Development":"#0057B8","Cybersecurity":"#dc2626","Cloud Computing":"#7c3aed","Artificial Intelligence":"#d97706","Data Science":"#059669","UI/UX":"#0891b2","Graphics Design":"#db2777","Digital Marketing":"#ea580c"} %}
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-sm)">
+      <div style="background:{{ cat_color.get(c.category,'var(--navy)') }};padding:20px;color:white">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.6);margin-bottom:6px">{{ c.category }}</div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:4px">{{ c.title }}</h3>
+        <div style="font-size:13px;color:rgba(255,255,255,.7)">{{ c.duration_weeks or "?" }} weeks · {% if c.is_free %}Free{% else %}₦{{ "{:,.0f}".format(c.fee) }}{% endif %} · {{ c.level or "All levels" }}</div>
+      </div>
+      <div style="padding:20px">
+        <p style="font-size:13px;color:var(--gray-600);line-height:1.65;margin-bottom:16px">{{ c.description or "Comprehensive hands-on training with government certification." }}</p>
+        <a href="/services/training/course/{{ c.id }}" class="btn btn-primary" style="width:100%;justify-content:center;background:{{ cat_color.get(c.category,'var(--navy)') }}"><i class="fas fa-graduation-cap"></i> View &amp; Enroll</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="text-align:center;padding:80px 0;color:var(--gray-400)"><i class="fas fa-graduation-cap" style="font-size:48px;display:block;margin-bottom:16px;opacity:.3"></i><p>No courses available at this time. Check back soon.</p></div>
+  {% endif %}
+</div></section>
+{% endblock %}

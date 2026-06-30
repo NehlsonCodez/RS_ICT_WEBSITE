@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>My Dashboard</h1>
+  <p>Welcome back, {{ user.full_name }} — track all your requests and applications</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>Dashboard</span></div>
+</div></div>
+
+<section class="section"><div class="section-inner">
+
+  <!-- Quick action cards -->
+  <div class="section-label">Quick Actions</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:48px">
+    {% for icon, label, url, color in [
+      ("fa-landmark","Portal Request","/services/portal/request","#0057B8"),
+      ("fa-wifi","Report Connectivity","/services/infrastructure/report","#00843D"),
+      ("fa-shield-alt","Report Incident","/services/cybersecurity/report","#dc2626"),
+      ("fa-cloud","Cloud Request","/services/cloud/request","#7c3aed"),
+      ("fa-graduation-cap","Browse Courses","/services/training","#d97706"),
+      ("fa-file-contract","Compliance Check","/services/policy/compliance","#0891b2"),
+      ("fa-building","Register Startup","/services/ecosystem/register","#059669"),
+      ("fa-ticket-alt","Submit Ticket","/services/helpdesk/new","#6366f1"),
+    ] %}
+    <a href="{{ url }}" style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:20px 16px;text-align:center;text-decoration:none;transition:.2s;box-shadow:var(--shadow-sm)" onmouseover="this.style.borderColor='{{ color }}';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='translateY(0)'">
+      <div style="width:44px;height:44px;border-radius:12px;background:{{ color }}18;display:flex;align-items:center;justify-content:center;margin:0 auto 10px"><i class="fas {{ icon }}" style="color:{{ color }};font-size:18px"></i></div>
+      <div style="font-size:12px;font-weight:600;color:var(--navy);line-height:1.3">{{ label }}</div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- Status rows -->
+  {% macro status_badge(status) %}
+    {% set colors = {"pending":"#d97706","under_review":"#6366f1","approved":"#059669","deployed":"#0891b2","rejected":"#dc2626","submitted":"#6366f1","assigned":"#0891b2","in_progress":"#d97706","completed":"#059669","reported":"#dc2626","investigating":"#d97706","contained":"#6366f1","resolved":"#059669","closed":"#6b7280","applied":"#6366f1","shortlisted":"#0891b2","admitted":"#059669","attending":"#d97706","open":"#dc2626"} %}
+    <span style="background:{{ colors.get(status,'#6b7280') }}18;color:{{ colors.get(status,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ status | replace('_',' ') }}</span>
+  {% endmacro %}
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+
+    <!-- Portal Requests -->
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden">
+      <div style="background:var(--navy);padding:14px 20px;display:flex;justify-content:space-between;align-items:center">
+        <span style="color:white;font-weight:700;font-size:14px"><i class="fas fa-landmark" style="margin-right:8px;opacity:.7"></i>Portal Requests</span>
+        <a href="/services/portal/request" style="font-size:11px;color:#6ee7a8;text-decoration:none">+ New</a>
+      </div>
+      <div style="padding:16px">
+        {% if my_portals %}
+          {% for r in my_portals %}
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gray-100)">
+            <div><div style="font-size:13px;font-weight:600;color:var(--navy)">{{ r.portal_name }}</div><div style="font-size:11px;color:var(--gray-500)">{{ r.reference }} · {{ r.submitted_at.strftime('%d %b %Y') }}</div></div>
+            <div style="display:flex;gap:8px;align-items:center">{{ status_badge(r.status.value) }}<a href="/services/portal/track/{{ r.reference }}" style="font-size:11px;color:var(--blue)">View</a></div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px 0">No requests yet. <a href="/services/portal/request" style="color:var(--blue)">Submit one →</a></p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Helpdesk Tickets -->
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden">
+      <div style="background:var(--navy);padding:14px 20px;display:flex;justify-content:space-between;align-items:center">
+        <span style="color:white;font-weight:700;font-size:14px"><i class="fas fa-ticket-alt" style="margin-right:8px;opacity:.7"></i>My Tickets</span>
+        <a href="/services/helpdesk/new" style="font-size:11px;color:#6ee7a8;text-decoration:none">+ New</a>
+      </div>
+      <div style="padding:16px">
+        {% if my_tickets %}
+          {% for t in my_tickets %}
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gray-100)">
+            <div><div style="font-size:13px;font-weight:600;color:var(--navy)">{{ t.subject[:40] }}{% if t.subject|length > 40 %}…{% endif %}</div><div style="font-size:11px;color:var(--gray-500)">{{ t.reference }} · {{ t.created_at.strftime('%d %b %Y') }}</div></div>
+            <div style="display:flex;gap:8px;align-items:center">{{ status_badge(t.status.value) }}<a href="/services/helpdesk/ticket/{{ t.reference }}" style="font-size:11px;color:var(--blue)">View</a></div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px 0">No tickets. <a href="/services/helpdesk/new" style="color:var(--blue)">Submit one →</a></p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Incidents -->
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden">
+      <div style="background:#7f1d1d;padding:14px 20px;display:flex;justify-content:space-between;align-items:center">
+        <span style="color:white;font-weight:700;font-size:14px"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.7"></i>Cyber Incidents</span>
+        <a href="/services/cybersecurity/report" style="font-size:11px;color:#fca5a5;text-decoration:none">+ Report</a>
+      </div>
+      <div style="padding:16px">
+        {% if my_incidents %}
+          {% for inc in my_incidents %}
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gray-100)">
+            <div><div style="font-size:13px;font-weight:600;color:var(--navy)">{{ inc.title[:40] }}{% if inc.title|length > 40 %}…{% endif %}</div><div style="font-size:11px;color:var(--gray-500)">{{ inc.reference }} · {{ inc.reported_at.strftime('%d %b %Y') }}</div></div>
+            <div style="display:flex;gap:8px;align-items:center">{{ status_badge(inc.status.value) }}<a href="/services/cybersecurity/track/{{ inc.reference }}" style="font-size:11px;color:var(--blue)">View</a></div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px 0">No incidents reported.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Enrollments -->
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden">
+      <div style="background:#78350f;padding:14px 20px;display:flex;justify-content:space-between;align-items:center">
+        <span style="color:white;font-weight:700;font-size:14px"><i class="fas fa-graduation-cap" style="margin-right:8px;opacity:.7"></i>Training Enrollments</span>
+        <a href="/services/training" style="font-size:11px;color:#fde68a;text-decoration:none">Browse →</a>
+      </div>
+      <div style="padding:16px">
+        {% if my_enrollments %}
+          {% for enr in my_enrollments %}
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gray-100)">
+            <div><div style="font-size:13px;font-weight:600;color:var(--navy)">{{ enr.session.course.title if enr.session and enr.session.course else enr.reference }}</div><div style="font-size:11px;color:var(--gray-500)">{{ enr.reference }} · {{ enr.applied_at.strftime('%d %b %Y') }}</div></div>
+            <div style="display:flex;gap:8px;align-items:center">{{ status_badge(enr.status.value) }}<a href="/services/training/track/{{ enr.reference }}" style="font-size:11px;color:var(--blue)">View</a></div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px 0">No enrollments. <a href="/services/training" style="color:var(--blue)">Browse courses →</a></p>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+</div></section>
+{% endblock %}
+{% block extra_css %}<style>@media(max-width:768px){div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}}</style>{% endblock %}

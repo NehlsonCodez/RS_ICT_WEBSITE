@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Security Advisories{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Security Advisories</h1>
+  <p>Latest threat intelligence and cybersecurity guidance from the RS ICT Security Operations Centre</p>
+  <div class="breadcrumb"><a href="/services/cybersecurity">Cybersecurity</a><span class="sep">/</span><span>Advisories</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  {% set sev_color = {"low":"#059669","medium":"#d97706","high":"#dc2626","critical":"#7f1d1d"} %}
+  {% if advisories %}
+  <div style="display:flex;flex-direction:column;gap:16px">
+    {% for a in advisories %}
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:24px;border-left:4px solid {{ sev_color.get(a.severity.value,'#6b7280') }}">
+      <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+        <h3 style="font-size:16px;font-weight:700;color:var(--navy)">{{ a.title }}</h3>
+        <span style="background:{{ sev_color.get(a.severity.value,'#6b7280') }}18;color:{{ sev_color.get(a.severity.value,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;flex-shrink:0">{{ a.severity.value }}</span>
+      </div>
+      <p style="font-size:14px;color:var(--gray-600);line-height:1.7">{{ a.content[:300] }}{% if a.content|length > 300 %}…{% endif %}</p>
+      <div style="font-size:12px;color:var(--gray-400);margin-top:10px">Published {{ a.published_at.strftime("%d %b %Y") if a.published_at else "N/A" }}{% if a.author %} · By {{ a.author }}{% endif %}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="text-align:center;padding:80px 0;color:var(--gray-400)"><i class="fas fa-shield-alt" style="font-size:48px;display:block;margin-bottom:16px;opacity:.3"></i><p>No advisories published yet.</p></div>
+  {% endif %}
+</div></section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Cybersecurity & Data Protection{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Cybersecurity &amp; Data Protection</h1>
+  <p>Report cyber incidents, access security advisories, and protect government digital assets</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/services">Services</a><span class="sep">/</span><span>Cybersecurity</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:14px;padding:20px 24px;margin-bottom:40px;display:flex;gap:14px;align-items:start">
+    <i class="fas fa-exclamation-triangle" style="color:#dc2626;font-size:20px;margin-top:2px;flex-shrink:0"></i>
+    <div><strong style="color:#991b1b;font-size:15px">Emergency Cyber Incident?</strong><p style="font-size:14px;color:#7f1d1d;margin:4px 0 0">For critical ransomware or active breaches call our 24/7 hotline: <strong>+234 800 ICT CERT</strong> or email <strong>cert@ict.riversstate.gov.ng</strong></p></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px">
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:28px">
+      <div style="width:48px;height:48px;border-radius:12px;background:#fef2f2;display:flex;align-items:center;justify-content:center;margin-bottom:14px"><i class="fas fa-bug" style="color:#dc2626;font-size:20px"></i></div>
+      <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px">Report an Incident</h3>
+      <p style="font-size:14px;color:var(--gray-600);line-height:1.7;margin-bottom:20px">Report phishing attacks, malware infections, data breaches, unauthorized access, website defacement, or ransomware. All reports are treated confidentially.</p>
+      {% if user %}<a href="/services/cybersecurity/report" class="btn btn-primary" style="background:#dc2626"><i class="fas fa-shield-alt"></i> Report Incident</a>
+      {% else %}<a href="/auth/login?next=/services/cybersecurity/report" class="btn btn-primary" style="background:#dc2626">Login to Report</a>{% endif %}
+    </div>
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:28px">
+      <div style="width:48px;height:48px;border-radius:12px;background:#eff6ff;display:flex;align-items:center;justify-content:center;margin-bottom:14px"><i class="fas fa-newspaper" style="color:var(--blue);font-size:20px"></i></div>
+      <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px">Security Advisories</h3>
+      <p style="font-size:14px;color:var(--gray-600);line-height:1.7;margin-bottom:20px">Browse the latest threat advisories, vulnerability alerts, and cybersecurity best practices published by the RS ICT Department Security Operations team.</p>
+      <a href="/services/cybersecurity/advisories" class="btn btn-primary"><i class="fas fa-bell"></i> View Advisories</a>
+    </div>
+  </div>
+  {% if advisories %}
+  <div class="section-label">Latest Security Advisories</div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    {% for a in advisories %}
+    {% set sev_color = {"low":"#059669","medium":"#d97706","high":"#dc2626","critical":"#7f1d1d"} %}
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:12px;padding:20px;display:flex;gap:16px;align-items:start">
+      <div style="width:10px;height:10px;border-radius:50%;background:{{ sev_color.get(a.severity.value,'#6b7280') }};margin-top:5px;flex-shrink:0"></div>
+      <div style="flex:1">
+        <div style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px">{{ a.title }}</div>
+        <div style="font-size:12px;color:var(--gray-500)">{{ a.published_at.strftime("%d %b %Y") if a.published_at else "" }} · Severity: <span style="color:{{ sev_color.get(a.severity.value,'#6b7280') }};font-weight:700;text-transform:uppercase">{{ a.severity.value }}</span></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div></section>
+{% endblock %}

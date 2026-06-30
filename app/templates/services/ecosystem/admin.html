@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Admin — Tech Ecosystem{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+{% macro status_badge(s) %}{% set c = {"pending":"#d97706","verified":"#059669","rejected":"#dc2626","open":"#dc2626","assigned":"#0891b2","in_progress":"#d97706","resolved":"#059669","closed":"#6b7280","submitted":"#6366f1","under_review":"#6366f1","approved":"#059669","review_required":"#d97706"} %}<span style="background:{{ c.get(s,'#6b7280') }}18;color:{{ c.get(s,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ s|replace('_',' ') }}</span>{% endmacro %}
+<div class="page-header" style="background:linear-gradient(135deg,#052e16,#166534)"><div class="ph-inner">
+  <h1>Tech Ecosystem Administration</h1>
+  <div class="breadcrumb"><a href="/dashboard">Admin</a><span class="sep">/</span><span>Ecosystem</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <form method="get" style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+    <select name="status" class="form-select" style="max-width:180px" onchange="this.form.submit()">
+      <option value="">All Statuses</option>
+      {% for s in statuses %}<option value="{{ s }}" {{ "selected" if status_filter==s }}>{{ s.title() }}</option>{% endfor %}
+    </select>
+  </form>
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden">
+    <div style="background:#166534;padding:14px 20px;display:flex;justify-content:space-between">
+      <span style="color:white;font-weight:700">{{ total }} Organisations</span>
+      <span style="color:rgba(255,255,255,.5);font-size:13px">Page {{ current_page }}/{{ total_pages }}</span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--gray-50)">
+        {% for h in ["Organisation","Type","Sector","LGA","Status","Registered","Action"] %}
+        <th style="padding:11px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">{{ h }}</th>
+        {% endfor %}
+      </tr></thead>
+      <tbody>
+        {% for s in items %}
+        <tr style="border-top:1px solid var(--gray-100)">
+          <td style="padding:11px 14px"><a href="/services/ecosystem/profile/{{ s.id }}" style="color:var(--navy);font-weight:700;text-decoration:none">{{ s.company_name }}</a></td>
+          <td style="padding:11px 14px;color:var(--gray-600)">{{ s.entity_type }}</td>
+          <td style="padding:11px 14px;color:var(--gray-600)">{{ s.sector or "—" }}</td>
+          <td style="padding:11px 14px;color:var(--gray-600)">{{ s.lga or "—" }}</td>
+          <td style="padding:11px 14px">{{ status_badge(s.status.value) }}</td>
+          <td style="padding:11px 14px;color:var(--gray-500)">{{ s.registered_at.strftime("%d %b %Y") }}</td>
+          <td style="padding:11px 14px"><button onclick="openModal('{{ s.id }}','{{ s.status.value }}','{{ (s.admin_notes or "").replace("'","") }}')" style="background:#166534;color:white;border:none;padding:5px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">Review</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div></section>
+<div id="updateModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:5000;align-items:center;justify-content:center">
+  <div style="background:white;border-radius:16px;padding:32px;width:100%;max-width:420px;margin:24px">
+    <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:20px">Review Organisation</h3>
+    <form id="updateForm" method="post">
+      <div class="form-group"><label class="form-label">Decision</label><select name="status" id="mStatus" class="form-select">{% for s in statuses %}<option value="{{ s }}">{{ s.title() }}</option>{% endfor %}</select></div>
+      <div class="form-group"><label class="form-label">Admin Notes</label><textarea name="admin_notes" id="mNotes" class="form-textarea" style="min-height:80px"></textarea></div>
+      <div style="display:flex;gap:12px;justify-content:flex-end">
+        <button type="button" onclick="closeModal()" style="background:white;border:1px solid var(--gray-200);color:var(--gray-600);padding:10px 20px;border-radius:8px;cursor:pointer">Cancel</button>
+        <button type="submit" class="btn btn-primary" style="padding:10px 20px;background:#166534">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script>
+function openModal(id,s,n){document.getElementById("updateForm").action="/services/ecosystem/admin/"+id+"/update";document.getElementById("mStatus").value=s;document.getElementById("mNotes").value=n;document.getElementById("updateModal").style.display="flex";}
+function closeModal(){document.getElementById("updateModal").style.display="none";}
+</script>{% endblock %}

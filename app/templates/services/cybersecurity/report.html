@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Report Cyber Incident{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Report a Cyber Incident</h1>
+  <p>All reports are treated with the highest confidentiality and urgency</p>
+  <div class="breadcrumb"><a href="/services/cybersecurity">Cybersecurity</a><span class="sep">/</span><span>Report Incident</span></div>
+</div></div>
+<section class="section"><div class="section-inner" style="max-width:720px">
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:16px;padding:36px">
+    <form method="post" action="/services/cybersecurity/report">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Incident Type *</label>
+          <select name="incident_type" class="form-select" required>
+            <option value="">-- Select Type --</option>
+            {% for t in incident_types %}<option>{{ t }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Severity *</label>
+          <select name="severity" class="form-select" required>
+            <option value="">-- Select Severity --</option>
+            {% for s in severities %}<option value="{{ s }}">{{ s.title() }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Incident Title *</label><input type="text" name="title" class="form-input" required placeholder="Brief description of the incident"></div>
+      <div class="form-group"><label class="form-label">Detailed Description *</label><textarea name="description" class="form-textarea" required placeholder="Describe what happened, when it was discovered, what systems are affected, and any actions already taken..." style="min-height:140px"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Affected System / Application</label><input type="text" name="affected_system" class="form-input" placeholder="e.g. Email server, payroll system"></div>
+        <div class="form-group"><label class="form-label">Affected Agency / Ministry</label><input type="text" name="affected_agency" class="form-input" placeholder="e.g. Ministry of Finance"></div>
+      </div>
+      <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:14px;margin-bottom:20px">
+        <p style="font-size:13px;color:#7f1d1d;margin:0"><i class="fas fa-lock" style="margin-right:6px"></i>Your identity is protected. Reports are only accessible to authorised cybersecurity analysts.</p>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;background:#dc2626"><i class="fas fa-shield-alt"></i> Submit Incident Report</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

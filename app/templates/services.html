@@ -1,90 +1,234 @@
 {% extends "base.html" %}
 {% block title %}ICT Services & Solutions{% endblock %}
-{% block meta_desc %}Explore the full range of ICT services offered by the Rivers State ICT Department — from e-government platforms to infrastructure management and digital skills training.{% endblock %}
+{% block meta_desc %}Full suite of Rivers State ICT Department digital services — e-government portals, infrastructure reports, cybersecurity, cloud resources, training, compliance, ecosystem, and helpdesk.{% endblock %}
 {% block content %}
 
-<div class="page-header">
+<div class="page-header"><div class="ph-inner">
   <h1>ICT Services &amp; Solutions</h1>
-  <p>Powering digital governance and inclusive technology access across Rivers State</p>
-  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>ICT Services &amp; Solutions</span></div>
-</div>
+  <p>Eight fully functional digital service modules powering Rivers State's transformation</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span>Services</span></div>
+</div></div>
 
-<!-- Intro -->
-<section class="section">
+<section class="section"><div class="section-inner">
+
+  <!-- Account prompt if not logged in -->
+  {% if not user %}
+  <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #bfdbfe;border-radius:14px;padding:20px 24px;margin-bottom:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+    <div><strong style="color:var(--navy);font-size:15px"><i class="fas fa-info-circle" style="color:var(--blue);margin-right:8px"></i>Create a free account to access all services</strong><p style="font-size:13px;color:var(--gray-600);margin:4px 0 0">Submit requests, track status, receive updates, and manage all your ICT service applications in one place.</p></div>
+    <div style="display:flex;gap:10px;flex-shrink:0">
+      <a href="/auth/register" class="btn btn-primary" style="padding:10px 20px;font-size:13px"><i class="fas fa-user-plus"></i> Register Free</a>
+      <a href="/auth/login" style="background:white;border:1px solid var(--blue);color:var(--blue);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">Sign In</a>
+    </div>
+  </div>
+  {% else %}
+  <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:14px;padding:16px 24px;margin-bottom:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <span style="font-size:14px;color:#166534"><i class="fas fa-check-circle" style="margin-right:8px"></i>Signed in as <strong>{{ user.full_name }}</strong> — all services are accessible.</span>
+    <a href="/dashboard" style="font-size:13px;color:#059669;font-weight:600;text-decoration:none"><i class="fas fa-tachometer-alt" style="margin-right:5px"></i>My Dashboard →</a>
+  </div>
+  {% endif %}
+
+  <!-- Services grid -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px">
+
+    <!-- SERVICE 1: E-GOVERNMENT -->
+    <div class="svc-card" style="background:white;border:1px solid var(--gray-200);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,.14)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)';this.style.transform='translateY(0)'">
+      <div style="background:linear-gradient(135deg,#0057B8,#003d85);padding:24px;color:white">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px">🏛️</div>
+          <span style="background:rgba(255,255,255,.2);font-size:10px;font-weight:700;padding:4px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px">Government</span>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;margin:14px 0 6px;letter-spacing:-.3px">E-Government Portal Management</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.65">Request new government digital portals or browse approved citizen-facing digital services across all MDAs.</p>
+      </div>
+      <div style="padding:20px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+          <span style="background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Portal Requests</span>
+          <span style="background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Status Tracking</span>
+          <span style="background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Audit Trail</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/services/portal" style="flex:1;text-align:center;background:white;border:2px solid #0057B8;color:#0057B8;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Learn More</a>
+          <a href="/services/portal/request" style="flex:1;text-align:center;background:#0057B8;color:white;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Access Service →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 2: INFRASTRUCTURE -->
+    <div class="svc-card" style="background:white;border:1px solid var(--gray-200);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,.14)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)';this.style.transform='translateY(0)'">
+      <div style="background:linear-gradient(135deg,#00843D,#005e2b);padding:24px;color:white">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px">📡</div>
+          <span style="background:rgba(255,255,255,.2);font-size:10px;font-weight:700;padding:4px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px">Infrastructure</span>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;margin:14px 0 6px;letter-spacing:-.3px">ICT Infrastructure &amp; Connectivity</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.65">Report internet outages, poor connectivity, or request fibre/Wi-Fi deployment across Rivers State communities.</p>
+      </div>
+      <div style="padding:20px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+          <span style="background:#f0fdf4;color:#166534;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Issue Reporting</span>
+          <span style="background:#f0fdf4;color:#166534;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Engineer Dispatch</span>
+          <span style="background:#f0fdf4;color:#166534;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">23 LGAs</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/services/infrastructure" style="flex:1;text-align:center;background:white;border:2px solid #00843D;color:#00843D;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Learn More</a>
+          <a href="/services/infrastructure/report" style="flex:1;text-align:center;background:#00843D;color:white;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Report Issue →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 3: CYBERSECURITY -->
+    <div class="svc-card" style="background:white;border:1px solid var(--gray-200);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,.14)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)';this.style.transform='translateY(0)'">
+      <div style="background:linear-gradient(135deg,#dc2626,#991b1b);padding:24px;color:white">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px">🔒</div>
+          <span style="background:rgba(255,255,255,.2);font-size:10px;font-weight:700;padding:4px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px">Security</span>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;margin:14px 0 6px;letter-spacing:-.3px">Cybersecurity &amp; Data Protection</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.65">Report cyber incidents, access security advisories, and protect government digital assets and citizen data.</p>
+      </div>
+      <div style="padding:20px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+          <span style="background:#fef2f2;color:#991b1b;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Incident Reporting</span>
+          <span style="background:#fef2f2;color:#991b1b;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">NDPR Compliance</span>
+          <span style="background:#fef2f2;color:#991b1b;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Advisories</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/services/cybersecurity" style="flex:1;text-align:center;background:white;border:2px solid #dc2626;color:#dc2626;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Learn More</a>
+          <a href="/services/cybersecurity/report" style="flex:1;text-align:center;background:#dc2626;color:white;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Report Incident →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 4: CLOUD -->
+    <div class="svc-card" style="background:white;border:1px solid var(--gray-200);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,.14)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)';this.style.transform='translateY(0)'">
+      <div style="background:linear-gradient(135deg,#7c3aed,#4c1d95);padding:24px;color:white">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px">☁️</div>
+          <span style="background:rgba(255,255,255,.2);font-size:10px;font-weight:700;padding:4px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px">Cloud</span>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;margin:14px 0 6px;letter-spacing:-.3px">Government Cloud &amp; Data Centre</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.65">Request cloud infrastructure — virtual servers, storage, database hosting, backups, and disaster recovery.</p>
+      </div>
+      <div style="padding:20px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+          <span style="background:#f5f3ff;color:#5b21b6;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Virtual Servers</span>
+          <span style="background:#f5f3ff;color:#5b21b6;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Cloud Storage</span>
+          <span style="background:#f5f3ff;color:#5b21b6;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">DB Hosting</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/services/cloud" style="flex:1;text-align:center;background:white;border:2px solid #7c3aed;color:#7c3aed;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Learn More</a>
+          <a href="/services/cloud/request" style="flex:1;text-align:center;background:#7c3aed;color:white;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Request Resources →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 5: TRAINING -->
+    <div class="svc-card" style="background:white;border:1px solid var(--gray-200);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,.14)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)';this.style.transform='translateY(0)'">
+      <div style="background:linear-gradient(135deg,#d97706,#92400e);padding:24px;color:white">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px">🎓</div>
+          <span style="background:rgba(255,255,255,.2);font-size:10px;font-weight:700;padding:4px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px">Training</span>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;margin:14px 0 6px;letter-spacing:-.3px">Digital Skills Training</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.65">Apply for government-sponsored ICT training — web dev, cybersecurity, AI, cloud, data science, and more.</p>
+      </div>
+      <div style="padding:20px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+          <span style="background:#fffbeb;color:#92400e;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">8 Programs</span>
+          <span style="background:#fffbeb;color:#92400e;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Free &amp; Subsidised</span>
+          <span style="background:#fffbeb;color:#92400e;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">RS Govt Certificate</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/services/training" style="flex:1;text-align:center;background:white;border:2px solid #d97706;color:#d97706;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Browse Courses</a>
+          <a href="/services/training" style="flex:1;text-align:center;background:#d97706;color:white;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Enrol Now →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 6: POLICY -->
+    <div class="svc-card" style="background:white;border:1px solid var(--gray-200);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,.14)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)';this.style.transform='translateY(0)'">
+      <div style="background:linear-gradient(135deg,#0369a1,#0c4a6e);padding:24px;color:white">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px">📋</div>
+          <span style="background:rgba(255,255,255,.2);font-size:10px;font-weight:700;padding:4px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px">Policy</span>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;margin:14px 0 6px;letter-spacing:-.3px">ICT Policy &amp; Standards</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.65">Browse official policies, download PDF documents, and submit procurement specifications for compliance review.</p>
+      </div>
+      <div style="padding:20px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+          <span style="background:#e0f2fe;color:#075985;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Policy Library</span>
+          <span style="background:#e0f2fe;color:#075985;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Compliance Review</span>
+          <span style="background:#e0f2fe;color:#075985;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">PDF Downloads</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/services/policy" style="flex:1;text-align:center;background:white;border:2px solid #0369a1;color:#0369a1;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Browse Policies</a>
+          <a href="/services/policy/compliance" style="flex:1;text-align:center;background:#0369a1;color:white;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Check Compliance →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 7: ECOSYSTEM -->
+    <div class="svc-card" style="background:white;border:1px solid var(--gray-200);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,.14)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)';this.style.transform='translateY(0)'">
+      <div style="background:linear-gradient(135deg,#059669,#064e3b);padding:24px;color:white">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px">🚀</div>
+          <span style="background:rgba(255,255,255,.2);font-size:10px;font-weight:700;padding:4px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px">Ecosystem</span>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;margin:14px 0 6px;letter-spacing:-.3px">Tech Ecosystem Development</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.65">Register your startup, hub, or investment firm in the official Rivers State technology ecosystem directory.</p>
+      </div>
+      <div style="padding:20px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+          <span style="background:#ecfdf5;color:#065f46;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Startup Registry</span>
+          <span style="background:#ecfdf5;color:#065f46;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Hubs &amp; Incubators</span>
+          <span style="background:#ecfdf5;color:#065f46;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Public Directory</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/services/ecosystem" style="flex:1;text-align:center;background:white;border:2px solid #059669;color:#059669;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">View Directory</a>
+          <a href="/services/ecosystem/register" style="flex:1;text-align:center;background:#059669;color:white;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Register Org →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 8: HELPDESK -->
+    <div class="svc-card" style="background:white;border:1px solid var(--gray-200);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,.14)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)';this.style.transform='translateY(0)'">
+      <div style="background:linear-gradient(135deg,#4338ca,#1e1b4b);padding:24px;color:white">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px">🎫</div>
+          <span style="background:rgba(255,255,255,.2);font-size:10px;font-weight:700;padding:4px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px">Support</span>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;margin:14px 0 6px;letter-spacing:-.3px">Citizen ICT Helpdesk</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.65">Submit support tickets for portal issues, email, password resets, connectivity, and general ICT problems.</p>
+      </div>
+      <div style="padding:20px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px">
+          <span style="background:#eef2ff;color:#3730a3;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Ticket Tracking</span>
+          <span style="background:#eef2ff;color:#3730a3;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">Live Replies</span>
+          <span style="background:#eef2ff;color:#3730a3;font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">4hr Response</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/services/helpdesk" style="flex:1;text-align:center;background:white;border:2px solid #4338ca;color:#4338ca;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Learn More</a>
+          <a href="/services/helpdesk/new" style="flex:1;text-align:center;background:#4338ca;color:white;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Submit Ticket →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- Admin quick-links -->
+{% if user and user.role.value == 'admin' %}
+<section class="section" style="background:#0a1628;padding:48px 0">
   <div class="section-inner">
-    <div class="section-label">What We Do</div>
-    <div class="section-title">Comprehensive ICT Services for Rivers State</div>
-    <p style="font-size:15px;color:var(--gray-600);line-height:1.85;max-width:740px;margin:0 auto 56px">
-      The Rivers State ICT Department delivers a wide portfolio of technology services to government ministries,
-      departments, agencies (MDAs), and the general public. From e-government platforms and broadband
-      infrastructure to citizen digital skills training, our services are designed to make Rivers State
-      a model of technology-enabled governance in Nigeria.
-    </p>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px">
-
-      <!-- Service cards -->
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)">
-        <div style="width:52px;height:52px;border-radius:14px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px">🖥️</div>
-        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px">E-Government Platform Management</h3>
-        <p style="font-size:14px;color:var(--gray-600);line-height:1.75">We develop and maintain digital portals that allow Rivers State residents to access government services online — from birth certificates and land registry queries to business permits and tax payments — without visiting a government office.</p>
-      </div>
-
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)">
-        <div style="width:52px;height:52px;border-radius:14px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px">🌐</div>
-        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px">ICT Infrastructure &amp; Connectivity</h3>
-        <p style="font-size:14px;color:var(--gray-600);line-height:1.75">We coordinate the deployment and management of broadband networks, fibre-optic connectivity, and Wi-Fi hotspots across government buildings, public spaces, and educational institutions in all 23 LGAs of Rivers State.</p>
-      </div>
-
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)">
-        <div style="width:52px;height:52px;border-radius:14px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px">🔒</div>
-        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px">Cybersecurity &amp; Data Protection</h3>
-        <p style="font-size:14px;color:var(--gray-600);line-height:1.75">Our cybersecurity unit safeguards all state government digital assets, implements Nigeria Data Protection Regulation (NDPR) compliance across MDAs, and conducts regular security audits, staff awareness campaigns, and incident response operations.</p>
-      </div>
-
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)">
-        <div style="width:52px;height:52px;border-radius:14px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px">📡</div>
-        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px">Government Cloud &amp; Data Centre</h3>
-        <p style="font-size:14px;color:var(--gray-600);line-height:1.75">The Rivers State Government Data Centre, managed by our department, hosts critical applications for MDAs including financial management systems, personnel records, and citizen databases — with 99.9% uptime SLA and disaster recovery protocols.</p>
-      </div>
-
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)">
-        <div style="width:52px;height:52px;border-radius:14px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px">🎓</div>
-        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px">Digital Skills Training</h3>
-        <p style="font-size:14px;color:var(--gray-600);line-height:1.75">Through the Rivers State ICT Training Center, we deliver free and subsidised training in web development, data analysis, cybersecurity, AI tools, cloud computing, graphic design, and digital marketing — targeting youth, women, PWDs, and civil servants.</p>
-      </div>
-
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)">
-        <div style="width:52px;height:52px;border-radius:14px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px">📊</div>
-        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px">ICT Policy &amp; Standards</h3>
-        <p style="font-size:14px;color:var(--gray-600);line-height:1.75">We develop and enforce Rivers State ICT policy frameworks, enterprise architecture standards, and technology procurement guidelines to ensure all government technology investments are interoperable, secure, and cost-effective.</p>
-      </div>
-
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)">
-        <div style="width:52px;height:52px;border-radius:14px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px">🤝</div>
-        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px">Tech Ecosystem Development</h3>
-        <p style="font-size:14px;color:var(--gray-600);line-height:1.75">We partner with tech hubs, startups, universities, and private sector operators to grow the Rivers State technology ecosystem — supporting innovation, creating youth employment, and attracting technology investment to Port Harcourt and beyond.</p>
-      </div>
-
-      <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)">
-        <div style="width:52px;height:52px;border-radius:14px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px">📱</div>
-        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px">Citizen Digital Helpdesk</h3>
-        <p style="font-size:14px;color:var(--gray-600);line-height:1.75">Our walk-in and telephone ICT helpdesk at Aba Expressway, Port Harcourt assists citizens who need help accessing e-government services, troubleshooting devices, and understanding digital tools. Available Monday to Friday, 8am–5pm.</p>
-      </div>
-
+    <div style="color:rgba(255,255,255,.5);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px">Admin Quick Links</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      {% for label, url in [("Portal Admin","/services/portal/admin"),("Infrastructure Admin","/services/infrastructure/admin"),("Cyber Incidents","/services/cybersecurity/admin"),("Cloud Admin","/services/cloud/admin"),("Training Admin","/services/training/admin"),("Policy Admin","/services/policy/admin"),("Ecosystem Admin","/services/ecosystem/admin"),("Helpdesk Admin","/services/helpdesk/admin")] %}
+      <a href="{{ url }}" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.75);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;transition:.2s" onmouseover="this.style.background='rgba(255,255,255,.16)';this.style.color='white'" onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.color='rgba(255,255,255,.75)'">{{ label }}</a>
+      {% endfor %}
     </div>
   </div>
 </section>
-
-<!-- CTA -->
-<section class="section" style="background:linear-gradient(135deg,var(--navy),#004080);padding:64px 0">
-  <div class="section-inner" style="text-align:center;color:white">
-    <h2 style="font-size:32px;font-weight:800;margin-bottom:12px">Need ICT Support for Your MDA or Business?</h2>
-    <p style="font-size:16px;color:rgba(255,255,255,0.7);margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto">
-      Contact our team to discuss how we can help your ministry, department, or agency leverage technology for better service delivery.
-    </p>
-    <a href="/contact" style="display:inline-block;background:#6ee7a8;color:#0a1628;font-weight:700;padding:14px 36px;border-radius:50px;font-size:15px;text-decoration:none">Contact Our Team →</a>
-  </div>
-</section>
+{% endif %}
 
 {% endblock %}

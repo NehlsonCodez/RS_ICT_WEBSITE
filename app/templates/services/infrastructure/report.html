@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Report Connectivity Issue{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Report Connectivity / Infrastructure Issue</h1>
+  <div class="breadcrumb"><a href="/services/infrastructure">Infrastructure</a><span class="sep">/</span><span>Report</span></div>
+</div></div>
+<section class="section"><div class="section-inner" style="max-width:720px">
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:16px;padding:36px">
+    <form method="post" action="/services/infrastructure/report">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">LGA *</label>
+          <select name="lga" class="form-select" required>
+            <option value="">-- Select LGA --</option>
+            {% for lga in ["Abua/Odual","Ahoada East","Ahoada West","Akuku-Toru","Andoni","Asari-Toru","Bonny","Degema","Eleme","Emuoha","Etche","Gokana","Ikwerre","Khana","Obio/Akpor","Ogba/Egbema/Ndoni","Ogu/Bolo","Okrika","Omuma","Opobo/Nkoro","Oyigbo","Port Harcourt","Tai"] %}<option>{{ lga }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Community *</label><input type="text" name="community" class="form-input" required placeholder="Community or area name"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Institution (if applicable)</label><input type="text" name="institution" class="form-input" placeholder="School, hospital, government office..."></div>
+      <div class="form-group"><label class="form-label">Issue Type *</label>
+        <select name="issue_type" class="form-select" required>
+          <option value="">-- Select Issue Type --</option>
+          <option>Internet Outage</option>
+          <option>Poor Connectivity / Slow Speed</option>
+          <option>Request Public Wi-Fi Hotspot</option>
+          <option>Request Fibre Deployment</option>
+          <option>Government Building Connectivity</option>
+          <option>School Connectivity Request</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Description *</label><textarea name="description" class="form-textarea" required placeholder="Describe the issue or request in detail. Include affected population, duration, impact..." style="min-height:120px"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">GPS Latitude (optional)</label><input type="number" name="gps_lat" class="form-input" step="any" placeholder="e.g. 4.8156"></div>
+        <div class="form-group"><label class="form-label">GPS Longitude (optional)</label><input type="number" name="gps_lng" class="form-input" step="any" placeholder="e.g. 7.0498"></div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px"><i class="fas fa-paper-plane"></i> Submit Report</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

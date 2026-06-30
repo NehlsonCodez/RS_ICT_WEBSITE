@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Submit Compliance Request{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>ICT Procurement Compliance Request</h1>
+  <p>Submit procurement specifications for ICT compliance review before purchasing</p>
+  <div class="breadcrumb"><a href="/services/policy">ICT Policy</a><span class="sep">/</span><span>Compliance Request</span></div>
+</div></div>
+<section class="section"><div class="section-inner" style="max-width:720px">
+  <div style="background:var(--blue-xlight);border-radius:12px;padding:18px 20px;margin-bottom:28px;border:1px solid var(--blue-light)">
+    <p style="font-size:14px;color:var(--gray-700);margin:0"><strong>Mandatory:</strong> All ICT procurements above ₦5,000,000 require a compliance clearance from the ICT Department before contracts are awarded. Clearance is issued within 7 working days.</p>
+  </div>
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:16px;padding:36px">
+    <form method="post" action="/services/policy/compliance">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Agency / Ministry *</label><input type="text" name="agency_name" class="form-input" required placeholder="e.g. Ministry of Health"></div>
+        <div class="form-group"><label class="form-label">Procurement Title *</label><input type="text" name="procurement_title" class="form-input" required placeholder="e.g. Supply of 200 Laptops"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Relevant Policy (optional)</label>
+        <select name="policy_id" class="form-select">
+          <option value="">-- Select a Policy (optional) --</option>
+          {% for p in policies %}<option value="{{ p.id }}">{{ p.title }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Technical Specifications *</label><textarea name="specifications" class="form-textarea" required placeholder="List the items, quantities, technical specs, intended use, and target deployment location..." style="min-height:140px"></textarea></div>
+      <div class="form-group"><label class="form-label">Estimated Procurement Value (₦)</label><input type="number" name="estimated_value" class="form-input" step="0.01" placeholder="e.g. 15000000"></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px"><i class="fas fa-file-contract"></i> Submit for Compliance Review</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

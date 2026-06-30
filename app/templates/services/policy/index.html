@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}ICT Policy & Standards{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>ICT Policy &amp; Standards</h1>
+  <p>Browse official ICT policies, check procurement compliance, and download guidelines</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/services">Services</a><span class="sep">/</span><span>ICT Policy</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <form method="get" style="display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap">
+    <input name="q" value="{{ q }}" placeholder="Search policies..." class="form-input" style="max-width:320px">
+    <button class="btn btn-primary" style="padding:10px 20px">Search</button>
+    {% if user %}<a href="/services/policy/compliance" class="btn" style="background:white;border:2px solid var(--navy);color:var(--navy);padding:10px 20px;border-radius:8px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px"><i class="fas fa-file-contract"></i> Submit Compliance Request</a>{% endif %}
+  </form>
+  {% if policies %}
+  <div style="display:flex;flex-direction:column;gap:14px">
+    {% for p in policies %}
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:22px;display:flex;gap:16px;align-items:center;box-shadow:var(--shadow-sm)">
+      <div style="width:52px;height:60px;background:#dc2626;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0">PDF</div>
+      <div style="flex:1">
+        <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px">{{ p.title }}</h3>
+        <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px">{{ p.category or "General" }} · Active Policy</div>
+        {% if p.description %}<p style="font-size:13px;color:var(--gray-600);line-height:1.6">{{ p.description }}</p>{% endif %}
+      </div>
+      <div style="flex-shrink:0">
+        {% if p.versions %}<a href="#" onclick="alert('PDF download available in production.');return false" style="display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:white;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none"><i class="fas fa-download"></i> Download</a>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="text-align:center;padding:80px 0;color:var(--gray-400)"><i class="fas fa-file-alt" style="font-size:48px;display:block;margin-bottom:16px;opacity:.3"></i><p>No policies published yet.</p></div>
+  {% endif %}
+</div></section>
+{% endblock %}

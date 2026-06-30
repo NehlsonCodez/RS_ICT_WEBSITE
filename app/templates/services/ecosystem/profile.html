@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ startup.company_name }}{% endblock %}
+{% block content %}
+{% macro status_badge(s) %}{% set c = {"pending":"#d97706","verified":"#059669","rejected":"#dc2626","open":"#dc2626","assigned":"#0891b2","in_progress":"#d97706","resolved":"#059669","closed":"#6b7280","submitted":"#6366f1","under_review":"#6366f1","approved":"#059669","review_required":"#d97706"} %}<span style="background:{{ c.get(s,'#6b7280') }}18;color:{{ c.get(s,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ s|replace('_',' ') }}</span>{% endmacro %}
+{% set et_color = {"startup":"#0057B8","Innovation Hub":"#7c3aed","Incubator":"#059669","Accelerator":"#d97706","Training Centre":"#0891b2","Investor":"#dc2626"} %}
+<div class="page-header" style="background:linear-gradient(135deg,{{ et_color.get(startup.entity_type,'var(--navy)') }},#0a1628)"><div class="ph-inner">
+  <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div style="width:72px;height:72px;border-radius:16px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:white;flex-shrink:0">{{ startup.company_name[0] }}</div>
+    <div>
+      <h1 style="margin-bottom:4px">{{ startup.company_name }}</h1>
+      <p>{{ startup.entity_type }} · {{ startup.sector or "Technology" }} · {{ startup.lga or startup.location or "Rivers State" }}</p>
+    </div>
+  </div>
+  <div class="breadcrumb" style="margin-top:12px"><a href="/services/ecosystem">Tech Ecosystem</a><span class="sep">/</span><span>{{ startup.company_name }}</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  {% if success %}<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px 16px;margin-bottom:24px;color:#166534;font-weight:600"><i class="fas fa-check-circle" style="margin-right:8px"></i>Registration submitted! Your profile will be reviewed within 5 working days. Reference: <strong>{{ startup.id[:8].upper() }}</strong></div>{% endif %}
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:start">
+    <div>
+      <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:28px;margin-bottom:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h3 style="font-size:17px;font-weight:700;color:var(--navy)">About</h3>
+          {{ status_badge(startup.status.value) }}
+        </div>
+        <p style="font-size:15px;color:var(--gray-600);line-height:1.85">{{ startup.description or "Technology organisation based in Rivers State." }}</p>
+      </div>
+      {% if startup.admin_notes and startup.status.value != 'verified' %}<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px"><strong style="color:#92400e;font-size:12px;text-transform:uppercase">Review Note: </strong><span style="color:#78350f">{{ startup.admin_notes }}</span></div>{% endif %}
+    </div>
+    <div>
+      <div style="background:var(--navy);border-radius:14px;padding:24px;color:white">
+        <h4 style="font-size:15px;font-weight:700;margin-bottom:16px">Company Details</h4>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:13px">
+          {% if startup.founding_year %}<div style="display:flex;justify-content:space-between"><span style="color:rgba(255,255,255,.55)">Founded</span><span>{{ startup.founding_year }}</span></div>{% endif %}
+          {% if startup.employees %}<div style="display:flex;justify-content:space-between"><span style="color:rgba(255,255,255,.55)">Employees</span><span>{{ startup.employees }}</span></div>{% endif %}
+          {% if startup.funding_stage %}<div style="display:flex;justify-content:space-between"><span style="color:rgba(255,255,255,.55)">Stage</span><span>{{ startup.funding_stage }}</span></div>{% endif %}
+          {% if startup.lga %}<div style="display:flex;justify-content:space-between"><span style="color:rgba(255,255,255,.55)">LGA</span><span>{{ startup.lga }}</span></div>{% endif %}
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.1);margin-top:16px;padding-top:16px;display:flex;flex-direction:column;gap:8px">
+          {% if startup.website %}<a href="{{ startup.website }}" target="_blank" style="color:#6ee7a8;font-size:13px;text-decoration:none"><i class="fas fa-globe" style="margin-right:6px"></i>{{ startup.website }}</a>{% endif %}
+          {% if startup.email %}<a href="mailto:{{ startup.email }}" style="color:#6ee7a8;font-size:13px;text-decoration:none"><i class="fas fa-envelope" style="margin-right:6px"></i>{{ startup.email }}</a>{% endif %}
+          {% if startup.phone %}<span style="color:rgba(255,255,255,.55);font-size:13px"><i class="fas fa-phone" style="margin-right:6px"></i>{{ startup.phone }}</span>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+{% endblock %}
+{% block extra_css %}<style>@media(max-width:900px){.section-inner>div[style*="grid-template-columns:2fr"]{grid-template-columns:1fr!important}}</style>{% endblock %}

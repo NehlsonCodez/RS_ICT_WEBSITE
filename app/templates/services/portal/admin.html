@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Admin — Portal Requests{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+{% macro status_badge(status) %}
+{% set c = {"pending":"#d97706","under_review":"#6366f1","approved":"#059669","deployed":"#0891b2","rejected":"#dc2626","submitted":"#6366f1","assigned":"#0891b2","in_progress":"#d97706","completed":"#059669","reported":"#dc2626","investigating":"#d97706","contained":"#6366f1","resolved":"#059669","closed":"#6b7280","applied":"#6366f1","shortlisted":"#0891b2","admitted":"#059669","attending":"#d97706","open":"#dc2626","active":"#059669","provisioning":"#d97706","suspended":"#dc2626","pending_verification":"#6366f1","verified":"#059669","draft":"#6b7280","review_required":"#d97706","approved_compliance":"#059669"} %}
+<span style="background:{{ c.get(status,'#6b7280') }}18;color:{{ c.get(status,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ status | replace('_',' ') }}</span>
+{% endmacro %}
+<div class="page-header" style="background:linear-gradient(135deg,#0a1628,#1a3a5c)"><div class="ph-inner">
+  <h1>Portal Requests</h1>
+  <div class="breadcrumb"><a href="/dashboard">Admin</a><span class="sep">/</span><span>Portal Requests</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <form method="get" style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+    <input name="q" value="{{ q }}" placeholder="Search portal name, ministry, ref..." class="form-input" style="max-width:300px">
+    <select name="status" class="form-select" style="max-width:180px" onchange="this.form.submit()">
+      <option value="">All Statuses</option>
+      {% for s in statuses %}<option value="{{ s }}" {{ "selected" if status_filter==s }}>{{ s.replace('_',' ').title() }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-primary" style="padding:10px 20px">Search</button>
+  </form>
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden">
+    <div style="background:var(--navy);padding:14px 20px;display:flex;justify-content:space-between">
+      <span style="color:white;font-weight:700">{{ total }} Portal Requests</span>
+      <span style="color:rgba(255,255,255,.5);font-size:13px">Page {{ current_page }} / {{ total_pages }}</span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--gray-50)">
+        <th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">Ref</th>
+        <th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">Portal</th>
+        <th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">Ministry</th>
+        <th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">Status</th>
+        <th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">Submitted</th>
+        <th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">Action</th>
+      </tr></thead>
+      <tbody>
+        {% for r in requests %}
+        <tr style="border-top:1px solid var(--gray-100)">
+          <td style="padding:12px 16px;font-weight:600;color:var(--blue)">{{ r.reference }}</td>
+          <td style="padding:12px 16px;color:var(--navy);font-weight:500">{{ r.portal_name }}</td>
+          <td style="padding:12px 16px;color:var(--gray-600)">{{ r.ministry }}</td>
+          <td style="padding:12px 16px">{{ status_badge(r.status.value) }}</td>
+          <td style="padding:12px 16px;color:var(--gray-500)">{{ r.submitted_at.strftime('%d %b %Y') }}</td>
+          <td style="padding:12px 16px">
+            <button onclick="openModal('{{ r.id }}','{{ r.status.value }}','{{ r.admin_notes or "" }}')" style="background:var(--navy);color:white;border:none;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600">Update</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if total_pages > 1 %}<div style="display:flex;gap:8px;justify-content:center;margin-top:20px">{% for p in range(1,total_pages+1) %}<a href="?page={{ p }}&status={{ status_filter }}&q={{ q }}" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;background:{{ 'var(--navy)' if p==current_page else 'white' }};color:{{ 'white' if p==current_page else 'var(--gray-600)' }};border:1px solid {{ 'var(--navy)' if p==current_page else 'var(--gray-200)' }}">{{ p }}</a>{% endfor %}</div>{% endif %}
+</div></section>
+
+<!-- Update Modal -->
+<div id="updateModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:5000;align-items:center;justify-content:center">
+  <div style="background:white;border-radius:16px;padding:32px;width:100%;max-width:480px;margin:24px">
+    <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px">Update Portal Request</h3>
+    <form id="updateForm" method="post">
+      <div class="form-group"><label class="form-label">Status</label>
+        <select name="status" id="modalStatus" class="form-select">
+          {% for s in statuses %}<option value="{{ s }}">{{ s.replace('_',' ').title() }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Admin Notes</label><textarea name="admin_notes" id="modalNotes" class="form-textarea" style="min-height:80px"></textarea></div>
+      <div style="display:flex;gap:12px;justify-content:flex-end">
+        <button type="button" onclick="closeModal()" style="background:white;border:1px solid var(--gray-200);color:var(--gray-600);padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Cancel</button>
+        <button type="submit" class="btn btn-primary" style="padding:10px 24px">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script>
+function openModal(id, status, notes){
+  document.getElementById('updateForm').action='/services/portal/admin/'+id+'/update';
+  document.getElementById('modalStatus').value=status;
+  document.getElementById('modalNotes').value=notes;
+  document.getElementById('updateModal').style.display='flex';
+}
+function closeModal(){ document.getElementById('updateModal').style.display='none'; }
+</script>{% endblock %}

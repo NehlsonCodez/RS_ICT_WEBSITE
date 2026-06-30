@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Request a Government Portal{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Request a Government Portal</h1>
+  <p>Submit a new digital portal request for your Ministry or Agency</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/services/portal">Portal Management</a><span class="sep">/</span><span>New Request</span></div>
+</div></div>
+<section class="section"><div class="section-inner" style="max-width:760px">
+  <div style="background:var(--blue-xlight);border-radius:12px;padding:18px 20px;margin-bottom:32px;border:1px solid var(--blue-light)">
+    <p style="font-size:14px;color:var(--gray-700);margin:0"><strong>Note:</strong> All portal requests are reviewed within 5–7 working days. You will be notified by email at each stage of the approval process.</p>
+  </div>
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:16px;padding:36px;box-shadow:var(--shadow-sm)">
+    <form method="post" action="/services/portal/request">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Ministry / Department *</label><input type="text" name="ministry" class="form-input" required placeholder="e.g. Ministry of Education"></div>
+        <div class="form-group"><label class="form-label">Portal Name *</label><input type="text" name="portal_name" class="form-input" required placeholder="e.g. RS Student Portal"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Target Domain (if known)</label><input type="text" name="target_domain" class="form-input" placeholder="e.g. students.riversstate.gov.ng"></div>
+      <div class="form-group"><label class="form-label">Description *</label><textarea name="description" class="form-textarea" required placeholder="What will this portal do? Who will use it?" style="min-height:100px"></textarea></div>
+      <div class="form-group"><label class="form-label">Purpose / Justification *</label><textarea name="purpose" class="form-textarea" required placeholder="Why is this portal needed? What problem does it solve?" style="min-height:80px"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Contact Officer *</label><input type="text" name="contact_officer" class="form-input" required placeholder="Full name of responsible officer"></div>
+        <div class="form-group"><label class="form-label">Contact Email *</label><input type="email" name="contact_email" class="form-input" required placeholder="officer@ministry.gov.ng"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" name="phone" class="form-input" placeholder="+234 xxx xxx xxxx"></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;margin-top:8px"><i class="fas fa-paper-plane"></i> Submit Portal Request</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

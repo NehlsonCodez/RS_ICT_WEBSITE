@@ -1,157 +1,141 @@
-# Rivers State ICT Department — Official Website
+# Rivers State ICT Department — Full E-Government Portal
 
-**FastAPI + Jinja2 + SQLite (SQLAlchemy async)**
+**FastAPI + SQLAlchemy (async) + SQLite + Jinja2**
 
-Refactored version of the Rivers State ICT Department website with a real persistent SQLite database,
-fully completed page content (no placeholder Jinja2 text), and clean async database architecture.
-
----
-
-## What Changed in This Refactor
-
-| Before | After |
-|---|---|
-| In-memory Python lists (`registrations = []`) | SQLite database via SQLAlchemy async ORM |
-| Placeholder Jinja2 text on 6 pages | Real, department-specific content on all pages |
-| No data persistence (lost on restart) | Data persists across server restarts |
-| No DB schema | Proper tables: `registrations`, `contact_messages`, `newsletter_subscribers` |
+A fully functional government services portal with 8 complete service modules, role-based
+authentication, citizen/admin dashboards, and persistent database-backed workflows for every
+service described in the Ministry's service catalogue.
 
 ---
 
-## Project Structure
+## What This Is
+
+Every service on the `/services` page is now a **real, working application** — not an
+informational card. Citizens and agencies can register, log in, submit requests, track status,
+and reply to support threads. Admins have dedicated management consoles for every module with
+search, filtering, pagination, and status workflows.
+
+---
+
+## Architecture
 
 ```
-rs_ict_website/
-├── main.py                        # FastAPI app, routes, API endpoints
-├── requirements.txt               # Python dependencies
-├── rs_ict.db                      # SQLite database (auto-created on first run)
-├── app/
-│   ├── __init__.py
-│   ├── database.py                # Async SQLAlchemy engine & session
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── models.py              # ORM models: Registration, ContactMessage, NewsletterSubscriber
-│   ├── static/
-│   │   ├── css/main.css
-│   │   └── js/main.js
-│   └── templates/
-│       ├── base.html              # Shared layout (nav, footer, newsletter strip)
-│       ├── index.html             # Home page
-│       ├── about.html             # About the department
-│       ├── services.html          # ICT services (8 service cards — real content)
-│       ├── programs.html          # Digital skills programs by tier (real content)
-│       ├── training.html          # Training center facilities & schedule (real content)
-│       ├── news.html              # News articles & upcoming events (real content)
-│       ├── staff.html             # Leadership profiles (real content)
-│       ├── gallery.html           # Filterable photo gallery (real content)
-│       ├── contact.html           # Contact form (submits to DB)
-│       └── register.html          # Program registration form (submits to DB)
+app/
+├── database.py              # Async SQLAlchemy engine, session, auto-seed on startup
+├── models/
+│   └── models.py             # All ORM models (Users + 8 service modules, ~30 tables)
+├── schemas/
+│   └── schemas.py            # Pydantic request/response schemas
+├── dependencies/
+│   └── auth.py                # Session auth (bcrypt + itsdangerous signed cookies)
+├── routers/
+│   ├── auth.py                 # Register / Login / Logout / Profile
+│   ├── dashboard.py             # Citizen dashboard + Admin overview
+│   ├── portals.py                # Service 1: E-Government Portal Management
+│   └── services_all.py            # Services 2–8 (Infra, Cyber, Cloud, Training,
+│                                     Policy, Ecosystem, Helpdesk)
+├── templates/
+│   ├── auth/                  # login.html, register.html, profile.html
+│   ├── dashboard/              # citizen.html
+│   ├── admin/                   # dashboard.html (admin overview)
+│   └── services/
+│       ├── portal/               # index, request, track, admin
+│       ├── infrastructure/        # index, report, track, admin
+│       ├── cybersecurity/          # index, report, track, advisories, admin
+│       ├── cloud/                   # index, request, track, admin
+│       ├── training/                 # index, course, track, my, admin
+│       ├── policy/                    # index, compliance, track, admin
+│       ├── ecosystem/                  # index, register, profile, admin
+│       └── helpdesk/                    # index, new, ticket, my, admin
+└── static/
+    ├── css/main.css            # Full design system incl. forms, badges, modals
+    ├── js/main.js               # Nav, search, newsletter, counters, reveal
+    └── images/                   # Real department photography
 ```
+
+---
+
+## The 8 Service Modules
+
+| # | Service | Citizen Can | Admin Can |
+|---|---|---|---|
+| 1 | **E-Government Portal Management** | Browse live portals, request new portal, track approval | Review, approve/reject/deploy, audit log |
+| 2 | **ICT Infrastructure & Connectivity** | Report outages, request Wi-Fi/fibre, track status | Assign engineers, update progress, view stats |
+| 3 | **Cybersecurity & Data Protection** | Report incidents (phishing, malware, breach...), read advisories | Triage severity, investigate, resolve, publish advisories |
+| 4 | **Government Cloud & Data Centre** | Request VMs/storage/DB hosting with specs | Approve, provision, track allocations |
+| 5 | **Digital Skills Training** | Browse 8 courses, enrol in sessions, track enrollment | Create courses, manage cohorts, issue certificates |
+| 6 | **ICT Policy & Standards** | Browse policies, submit compliance requests | Publish policies, review compliance, issue decisions |
+| 7 | **Tech Ecosystem Development** | Register startup/hub, browse public directory | Verify/reject registrations |
+| 8 | **Citizen Digital Helpdesk** | Submit tickets, reply, track status | Assign technicians, reply, resolve, escalate |
+
+Every module has: real database persistence, reference-numbered tracking (e.g. `PRT-123456`,
+`TKT-789012`), status workflows matching the original spec, and a dedicated admin console with
+search + filter + pagination.
+
+---
+
+## Authentication & Roles
+
+Session-based auth using signed cookies (`itsdangerous`) — no JWT complexity needed for a
+server-rendered Jinja2 app. Passwords hashed with `bcrypt` directly (not via `passlib`, to avoid
+a known passlib/bcrypt version incompatibility).
+
+**Roles:** `citizen`, `agency`, `admin`, `technician`, `analyst`, `engineer`
+
+A default admin account is auto-created on first startup:
+```
+Email:    admin@ict.riversstate.gov.ng
+Password: Admin@2024
+```
+**Change this password immediately in production.**
 
 ---
 
 ## Setup & Run
 
-### 1. Install dependencies
-
 ```bash
 pip install -r requirements.txt
-```
-
-### 2. Run the development server
-
-```bash
 uvicorn main:app --reload
 ```
 
-The SQLite database (`rs_ict.db`) is created automatically on first startup.
+On first run, the app automatically:
+1. Creates all ~30 database tables
+2. Seeds a default admin account
+3. Seeds 8 sample training courses
+4. Seeds 1 published security advisory
+5. Seeds 3 sample government portals
 
-### 3. Open in browser
-
-```
-http://localhost:8000
-```
+Visit `http://localhost:8000`.
 
 ---
 
 ## Database
 
-**Engine:** SQLite (file: `rs_ict.db`)  
-**ORM:** SQLAlchemy 2.x with `asyncio` support (`aiosqlite` driver)
+SQLite via `aiosqlite`, fully async via SQLAlchemy 2.x ORM. ~30 tables covering:
 
-### Tables
+- **Auth:** `users`
+- **Service 1:** `portal_requests`, `portals`, `audit_logs`
+- **Service 2:** `infrastructure_requests`, `engineer_assignments`
+- **Service 3:** `incidents`, `evidence`, `security_advisories`
+- **Service 4:** `cloud_requests`, `cloud_allocations`
+- **Service 5:** `courses`, `training_sessions`, `enrollments`, `certificates`
+- **Service 6:** `policies`, `policy_versions`, `compliance_requests`
+- **Service 7:** `startups`, `grant_applications`
+- **Service 8:** `tickets`, `ticket_replies`, `ticket_attachments`
+- **Legacy:** `registrations`, `contact_messages`, `newsletter_subscribers`
 
-#### `registrations`
-Stores all program registration form submissions.
-
-| Column | Type | Notes |
-|---|---|---|
-| id | INTEGER PK | Auto-increment |
-| reference | VARCHAR(20) | Unique ref e.g. RS-ICT-12345 |
-| first_name, last_name | VARCHAR | Applicant name |
-| email, phone | VARCHAR | Contact details |
-| gender, age_group, lga | VARCHAR | Demographics |
-| program, schedule | VARCHAR | Chosen program & session |
-| occupation, experience, referral | VARCHAR | Background info |
-| submitted_at | DATETIME | UTC timestamp |
-
-#### `contact_messages`
-Stores all contact form submissions.
-
-| Column | Type | Notes |
-|---|---|---|
-| id | INTEGER PK | Auto-increment |
-| first_name, last_name, email, phone | VARCHAR | Sender details |
-| subject, message | TEXT | Message content |
-| submitted_at | DATETIME | UTC timestamp |
-| is_read | BOOLEAN | Admin tracking flag |
-
-#### `newsletter_subscribers`
-Stores newsletter subscriptions with duplicate-email protection.
-
-| Column | Type | Notes |
-|---|---|---|
-| id | INTEGER PK | Auto-increment |
-| email | VARCHAR UNIQUE | Subscriber email |
-| subscribed_at | DATETIME | UTC timestamp |
-| is_active | BOOLEAN | Unsubscribe flag |
+To switch to PostgreSQL: change `DATABASE_URL` in `app/database.py` to a `postgresql+asyncpg://`
+connection string and add `asyncpg` to requirements. No other code changes needed — SQLAlchemy
+abstracts the engine.
 
 ---
 
-## API Endpoints
+## Deployment (Railway / Render)
 
-| Method | Path | Description |
-|---|---|---|
-| GET | `/` | Home page |
-| GET | `/about` | About the department |
-| GET | `/services` | ICT services |
-| GET | `/programs` | Digital skills programs |
-| GET | `/training` | Training center |
-| GET | `/news` | News & events |
-| GET | `/gallery` | Photo gallery |
-| GET | `/staff` | Leadership & staff |
-| GET | `/contact` | Contact page |
-| GET | `/register` | Registration form |
-| POST | `/api/contact` | Submit contact form → saves to DB |
-| POST | `/api/newsletter` | Subscribe to newsletter → saves to DB |
-| POST | `/api/register` | Submit program registration → saves to DB |
-| GET | `/api/stats` | Live stats including DB registration count |
-| GET | `/api/search?q=...` | Site search |
-| GET | `/docs` | FastAPI interactive docs (Swagger UI) |
+Same as before — see `railway.json` / `render.yaml`. Set the `DATA_DIR` environment variable to
+your persistent volume mount path so `rs_ict.db` survives redeploys.
 
 ---
 
-## To Switch to PostgreSQL
-
-1. Install `asyncpg`: `pip install asyncpg`
-2. In `app/database.py`, change:
-   ```python
-   DATABASE_URL = "postgresql+asyncpg://user:password@localhost/rs_ict_db"
-   ```
-3. Remove `aiosqlite` from `requirements.txt`, add `asyncpg`.
-4. The rest of the code is identical — SQLAlchemy abstracts the engine.
-
----
-
-*Rivers State ICT Department · Ministry of Science, Technology & Innovation*  
-*ICT House, Trans-Amadi Industrial Layout, Port Harcourt, Rivers State*
+*Rivers State ICT Department · Ministry of Science, Technology & Innovation*
+*Aba Expressway, Port Harcourt, Rivers State, Nigeria*

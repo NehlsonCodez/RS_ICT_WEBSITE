@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Submit Support Ticket{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Submit a Support Ticket</h1>
+  <p>Describe your issue and our technical team will respond within 4 business hours</p>
+  <div class="breadcrumb"><a href="/services/helpdesk">Helpdesk</a><span class="sep">/</span><span>New Ticket</span></div>
+</div></div>
+<section class="section"><div class="section-inner" style="max-width:700px">
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:16px;padding:36px">
+    <form method="post" action="/services/helpdesk/new">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Issue Category *</label>
+          <select name="category" class="form-select" required>
+            <option value="">-- Select Category --</option>
+            {% for cat in categories %}<option>{{ cat }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Priority *</label>
+          <select name="priority" class="form-select" required>
+            <option value="">-- Select Priority --</option>
+            {% for p in priorities %}
+            {% set labels = {"low":"Low — Non-urgent","medium":"Medium — Business impact","high":"High — Urgent","critical":"Critical — Total outage"} %}
+            <option value="{{ p }}">{{ labels.get(p, p.title()) }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Subject / Title *</label><input type="text" name="subject" class="form-input" required placeholder="Brief summary of your issue (e.g. Cannot log in to IPPIS portal)"></div>
+      <div class="form-group"><label class="form-label">Detailed Description *</label><textarea name="description" class="form-textarea" required placeholder="Provide full details: what happened, when it started, steps you already tried, affected systems, number of users impacted..." style="min-height:150px"></textarea></div>
+      <div style="background:#eff6ff;border-radius:10px;padding:14px;margin-bottom:20px">
+        <p style="font-size:13px;color:#1e40af;margin:0"><i class="fas fa-info-circle" style="margin-right:6px"></i>For critical issues (full outage, ransomware, data breach), also call <strong>+234 (0) 801 234 5678</strong> immediately after submitting.</p>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;background:#4338ca"><i class="fas fa-paper-plane"></i> Submit Ticket</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

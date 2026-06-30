@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Ticket — {{ ticket.reference }}{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+{% macro status_badge(s) %}{% set c = {"open":"#dc2626","assigned":"#0891b2","pending":"#d97706","in_progress":"#d97706","resolved":"#059669","closed":"#6b7280"} %}<span style="background:{{ c.get(s,'#6b7280') }}18;color:{{ c.get(s,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ s|replace('_',' ') }}</span>{% endmacro %}
+{% macro priority_badge(p) %}{% set c = {"low":"#059669","medium":"#d97706","high":"#dc2626","critical":"#7f1d1d"} %}<span style="background:{{ c.get(p,'#6b7280') }}18;color:{{ c.get(p,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ p }}</span>{% endmacro %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Ticket — {{ ticket.reference }}</h1>
+  <p>{{ ticket.subject }}</p>
+  <div class="breadcrumb"><a href="/services/helpdesk">Helpdesk</a><span class="sep">/</span><span>{{ ticket.reference }}</span></div>
+</div></div>
+<section class="section"><div class="section-inner" style="max-width:800px">
+  {% if success %}<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px 16px;margin-bottom:24px;color:#166534;font-weight:600"><i class="fas fa-check-circle" style="margin-right:8px"></i>Ticket submitted! Reference: <strong>{{ ticket.reference }}</strong>. Our team will respond within 4 business hours.</div>{% endif %}
+
+  <!-- Ticket header card -->
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:16px;padding:28px;margin-bottom:20px">
+    <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+      <div>
+        <h2 style="font-size:18px;font-weight:800;color:var(--navy);margin-bottom:6px">{{ ticket.subject }}</h2>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          {{ status_badge(ticket.status.value) }}
+          {{ priority_badge(ticket.priority.value) }}
+          <span style="background:var(--blue-xlight);color:var(--blue);font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px">{{ ticket.category }}</span>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray-500);text-align:right">
+        <div>Opened {{ ticket.created_at.strftime("%d %b %Y, %I:%M %p") }}</div>
+        {% if ticket.assignee %}<div>Assigned to {{ ticket.assignee.full_name }}</div>{% endif %}
+      </div>
+    </div>
+    <div style="background:#f8f9fb;border-radius:10px;padding:16px"><p style="font-size:14px;color:var(--gray-700);line-height:1.8;margin:0">{{ ticket.description }}</p></div>
+    {% if ticket.resolution %}<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px;margin-top:14px"><strong style="color:#166534;font-size:12px;text-transform:uppercase">Resolution: </strong><span style="color:#15803d;font-size:14px">{{ ticket.resolution }}</span></div>{% endif %}
+  </div>
+
+  <!-- Conversation thread -->
+  {% if replies %}
+  <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:24px">
+    {% for r in replies %}
+    {% if not r.is_internal or user.role == 'admin' %}
+    <div style="background:white;border:1px solid {{ '#fde68a' if r.is_internal else 'var(--gray-200)' }};border-radius:14px;padding:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:50%;background:{{ '#7c3aed' if r.author and r.author.role.value in ['admin','technician','analyst'] else 'var(--blue)' }};display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700">{{ r.author.full_name[0] if r.author else "?" }}</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--navy)">{{ r.author.full_name if r.author else "Unknown" }}</div>
+            <div style="font-size:11px;color:var(--gray-400)">{% if r.author and r.author.role.value in ['admin','technician','analyst'] %}Support Team{% else %}Customer{% endif %} · {{ r.created_at.strftime("%d %b %Y, %I:%M %p") }}</div>
+          </div>
+        </div>
+        {% if r.is_internal %}<span style="background:#fef3c7;color:#92400e;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px">INTERNAL</span>{% endif %}
+      </div>
+      <p style="font-size:14px;color:var(--gray-700);line-height:1.75;margin:0">{{ r.message }}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Reply form -->
+  {% if ticket.status.value not in ['resolved','closed'] %}
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:24px">
+    <h4 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:16px"><i class="fas fa-reply" style="color:var(--blue);margin-right:8px"></i>Add a Reply</h4>
+    <form method="post" action="/services/helpdesk/ticket/{{ ticket.reference }}/reply">
+      <div class="form-group"><textarea name="message" class="form-textarea" required placeholder="Provide additional information, updates, or respond to the support team..." style="min-height:100px"></textarea></div>
+      <button type="submit" class="btn btn-primary" style="background:#4338ca"><i class="fas fa-paper-plane"></i> Send Reply</button>
+    </form>
+  </div>
+  {% else %}
+  <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:12px;padding:20px;text-align:center;color:#166534"><i class="fas fa-check-circle" style="font-size:24px;margin-bottom:8px;display:block"></i><strong>This ticket is {{ ticket.status.value }}.</strong><br>If the issue persists, please open a new ticket.</div>
+  {% endif %}
+</div></section>
+{% endblock %}

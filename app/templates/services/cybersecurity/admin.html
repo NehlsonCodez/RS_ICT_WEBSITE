@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Admin — Cyber Incidents{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+{% macro status_badge(s) %}{% set c = {"pending":"#d97706","under_review":"#6366f1","approved":"#059669","deployed":"#0891b2","rejected":"#dc2626","submitted":"#6366f1","assigned":"#0891b2","in_progress":"#d97706","completed":"#059669","reported":"#dc2626","investigating":"#d97706","contained":"#6366f1","resolved":"#059669","closed":"#6b7280","applied":"#6366f1","shortlisted":"#0891b2","admitted":"#059669","attending":"#d97706","open":"#dc2626","active":"#059669","provisioning":"#d97706","suspended":"#dc2626","verified":"#059669","draft":"#6b7280","review_required":"#d97706"} %}<span style="background:{{ c.get(s,'#6b7280') }}18;color:{{ c.get(s,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ s|replace('_',' ') }}</span>{% endmacro %}
+<div class="page-header" style="background:linear-gradient(135deg,#450a0a,#7f1d1d)"><div class="ph-inner">
+  <h1>Cyber Incident Management</h1>
+  <div class="breadcrumb"><a href="/dashboard">Admin</a><span class="sep">/</span><span>Incidents</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <form method="get" style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+    <input name="q" value="{{ q }}" placeholder="Search title, reference..." class="form-input" style="max-width:280px">
+    <select name="status" class="form-select" style="max-width:160px" onchange="this.form.submit()">
+      <option value="">All Statuses</option>
+      {% for s in statuses %}<option value="{{ s }}" {{ "selected" if status_filter==s }}>{{ s.replace("_"," ").title() }}</option>{% endfor %}
+    </select>
+    <select name="severity" class="form-select" style="max-width:140px" onchange="this.form.submit()">
+      <option value="">All Severities</option>
+      {% for s in severities %}<option value="{{ s }}" {{ "selected" if severity_filter==s }}>{{ s.title() }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-primary" style="padding:10px 20px">Search</button>
+  </form>
+  {% set sev_color = {"low":"#059669","medium":"#d97706","high":"#dc2626","critical":"#7f1d1d"} %}
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden">
+    <div style="background:#7f1d1d;padding:14px 20px;display:flex;justify-content:space-between">
+      <span style="color:white;font-weight:700">{{ total }} Incidents</span>
+      <span style="color:rgba(255,255,255,.5);font-size:13px">Page {{ current_page }}/{{ total_pages }}</span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--gray-50)">
+        {% for h in ["Ref","Title","Type","Severity","Status","Reported","Action"] %}
+        <th style="padding:11px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">{{ h }}</th>
+        {% endfor %}
+      </tr></thead>
+      <tbody>
+        {% for r in items %}
+        <tr style="border-top:1px solid var(--gray-100)">
+          <td style="padding:11px 14px;font-weight:600;color:var(--blue)">{{ r.reference }}</td>
+          <td style="padding:11px 14px;color:var(--navy);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.title }}</td>
+          <td style="padding:11px 14px;color:var(--gray-600)">{{ r.incident_type }}</td>
+          <td style="padding:11px 14px"><span style="background:{{ sev_color.get(r.severity.value,'#6b7280') }}18;color:{{ sev_color.get(r.severity.value,'#6b7280') }};font-size:11px;font-weight:700;padding:2px 8px;border-radius:50px;text-transform:uppercase">{{ r.severity.value }}</span></td>
+          <td style="padding:11px 14px">{{ status_badge(r.status.value) }}</td>
+          <td style="padding:11px 14px;color:var(--gray-500)">{{ r.reported_at.strftime("%d %b %Y") }}</td>
+          <td style="padding:11px 14px"><button onclick="openModal('{{ r.id }}','{{ r.status.value }}','{{ r.severity.value }}','{{ (r.analyst_notes or "").replace("'","") }}')" style="background:#7f1d1d;color:white;border:none;padding:5px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">Update</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div></section>
+<div id="updateModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:5000;align-items:center;justify-content:center">
+  <div style="background:white;border-radius:16px;padding:32px;width:100%;max-width:440px;margin:24px">
+    <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:20px">Update Incident</h3>
+    <form id="updateForm" method="post">
+      <div class="form-group"><label class="form-label">Status</label><select name="status" id="mStatus" class="form-select">{% for s in statuses %}<option value="{{ s }}">{{ s.replace("_"," ").title() }}</option>{% endfor %}</select></div>
+      <div class="form-group"><label class="form-label">Severity</label><select name="severity" id="mSev" class="form-select">{% for s in severities %}<option value="{{ s }}">{{ s.title() }}</option>{% endfor %}</select></div>
+      <div class="form-group"><label class="form-label">Analyst Notes</label><textarea name="analyst_notes" id="mNotes" class="form-textarea" style="min-height:80px"></textarea></div>
+      <div style="display:flex;gap:12px;justify-content:flex-end">
+        <button type="button" onclick="closeModal()" style="background:white;border:1px solid var(--gray-200);color:var(--gray-600);padding:10px 20px;border-radius:8px;cursor:pointer">Cancel</button>
+        <button type="submit" class="btn btn-primary" style="padding:10px 20px;background:#7f1d1d">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script>
+function openModal(id,s,sev,n){document.getElementById("updateForm").action="/services/cybersecurity/admin/"+id+"/update";document.getElementById("mStatus").value=s;document.getElementById("mSev").value=sev;document.getElementById("mNotes").value=n;document.getElementById("updateModal").style.display="flex";}
+function closeModal(){document.getElementById("updateModal").style.display="none";}
+</script>{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Admin — Training Enrollments{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+{% macro status_badge(s) %}{% set c = {"applied":"#6366f1","shortlisted":"#0891b2","admitted":"#059669","attending":"#d97706","completed":"#059669","rejected":"#dc2626","pending":"#d97706","verified":"#059669","submitted":"#6366f1","under_review":"#6366f1","approved":"#059669","review_required":"#d97706","open":"#dc2626","assigned":"#0891b2","in_progress":"#d97706","resolved":"#059669","closed":"#6b7280"} %}<span style="background:{{ c.get(s,'#6b7280') }}18;color:{{ c.get(s,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ s|replace('_',' ') }}</span>{% endmacro %}
+<div class="page-header" style="background:linear-gradient(135deg,#431407,#9a3412)"><div class="ph-inner">
+  <h1>Training Administration</h1>
+  <div class="breadcrumb"><a href="/dashboard">Admin</a><span class="sep">/</span><span>Training</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap">
+    <form method="get" style="display:flex;gap:12px;flex:1;flex-wrap:wrap">
+      <select name="status" class="form-select" style="max-width:180px" onchange="this.form.submit()">
+        <option value="">All Statuses</option>
+        {% for s in statuses %}<option value="{{ s }}" {{ "selected" if status_filter==s }}>{{ s.replace("_"," ").title() }}</option>{% endfor %}
+      </select>
+    </form>
+    <button onclick="document.getElementById('courseModal').style.display='flex'" class="btn btn-primary" style="background:#9a3412">+ Add Course</button>
+  </div>
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden">
+    <div style="background:#9a3412;padding:14px 20px;display:flex;justify-content:space-between">
+      <span style="color:white;font-weight:700">{{ total }} Enrollments</span>
+      <span style="color:rgba(255,255,255,.5);font-size:13px">Page {{ current_page }}/{{ total_pages }}</span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--gray-50)">
+        {% for h in ["Reference","Student","Course","Session","Status","Applied","Action"] %}
+        <th style="padding:11px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">{{ h }}</th>
+        {% endfor %}
+      </tr></thead>
+      <tbody>
+        {% for e in items %}
+        <tr style="border-top:1px solid var(--gray-100)">
+          <td style="padding:11px 14px;font-weight:600;color:var(--blue)">{{ e.reference }}</td>
+          <td style="padding:11px 14px;color:var(--navy)">{{ e.user.full_name if e.user else "—" }}</td>
+          <td style="padding:11px 14px;color:var(--gray-600)">{{ e.session.course.title if e.session and e.session.course else "—" }}</td>
+          <td style="padding:11px 14px;color:var(--gray-600)">{{ e.session.cohort_name if e.session else "—" }}</td>
+          <td style="padding:11px 14px">{{ status_badge(e.status.value) }}</td>
+          <td style="padding:11px 14px;color:var(--gray-500)">{{ e.applied_at.strftime("%d %b %Y") }}</td>
+          <td style="padding:11px 14px"><button onclick="openModal('{{ e.id }}','{{ e.status.value }}','{{ (e.admin_notes or "").replace("'","") }}')" style="background:#9a3412;color:white;border:none;padding:5px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">Update</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div></section>
+
+<!-- Update Enrollment Modal -->
+<div id="updateModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:5000;align-items:center;justify-content:center">
+  <div style="background:white;border-radius:16px;padding:32px;width:100%;max-width:420px;margin:24px">
+    <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:20px">Update Enrollment</h3>
+    <form id="updateForm" method="post">
+      <div class="form-group"><label class="form-label">Status</label><select name="status" id="mStatus" class="form-select">{% for s in statuses %}<option value="{{ s }}">{{ s.replace("_"," ").title() }}</option>{% endfor %}</select></div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea name="admin_notes" id="mNotes" class="form-textarea" style="min-height:70px"></textarea></div>
+      <p style="font-size:12px;color:var(--gray-500);margin-bottom:16px">Setting status to "Completed" will automatically issue a certificate.</p>
+      <div style="display:flex;gap:12px;justify-content:flex-end">
+        <button type="button" onclick="closeModal()" style="background:white;border:1px solid var(--gray-200);color:var(--gray-600);padding:10px 20px;border-radius:8px;cursor:pointer">Cancel</button>
+        <button type="submit" class="btn btn-primary" style="padding:10px 20px;background:#9a3412">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add Course Modal -->
+<div id="courseModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:5000;align-items:center;justify-content:center">
+  <div style="background:white;border-radius:16px;padding:32px;width:100%;max-width:480px;margin:24px;max-height:90vh;overflow-y:auto">
+    <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:20px">Create New Course</h3>
+    <form method="post" action="/services/training/admin/course/create">
+      <div class="form-group"><label class="form-label">Course Title *</label><input type="text" name="title" class="form-input" required></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Category *</label>
+          <select name="category" class="form-select" required>
+            {% for cat in ["Web Development","Cybersecurity","Cloud Computing","Artificial Intelligence","Data Science","UI/UX","Graphics Design","Digital Marketing"] %}<option>{{ cat }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Level</label>
+          <select name="level" class="form-select"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Duration (weeks)</label><input type="number" name="duration_weeks" class="form-input" min="1"></div>
+        <div class="form-group"><label class="form-label">Fee (₦)</label><input type="number" name="fee" class="form-input" value="0" min="0"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Is Free?</label>
+        <select name="is_free" class="form-select"><option value="true">Yes — Free</option><option value="false">No — Paid</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Description</label><textarea name="description" class="form-textarea" style="min-height:80px"></textarea></div>
+      <div style="display:flex;gap:12px;justify-content:flex-end">
+        <button type="button" onclick="document.getElementById('courseModal').style.display='none'" style="background:white;border:1px solid var(--gray-200);color:var(--gray-600);padding:10px 20px;border-radius:8px;cursor:pointer">Cancel</button>
+        <button type="submit" class="btn btn-primary" style="padding:10px 20px;background:#9a3412">Create Course</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script>
+function openModal(id,s,n){document.getElementById("updateForm").action="/services/training/admin/enrollment/"+id+"/update";document.getElementById("mStatus").value=s;document.getElementById("mNotes").value=n;document.getElementById("updateModal").style.display="flex";}
+function closeModal(){document.getElementById("updateModal").style.display="none";}
+</script>{% endblock %}

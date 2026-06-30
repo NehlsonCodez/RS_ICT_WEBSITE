@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}E-Government Portal Management{% endblock %}
+{% block content %}
+<div class="page-header"><div class="ph-inner">
+  <h1>E-Government Portal Management</h1>
+  <p>Browse approved government digital portals or submit a request for a new one</p>
+  <div class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/services">Services</a><span class="sep">/</span><span>Portal Management</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:16px">
+    <div><div class="section-label">Live Government Portals</div><div class="section-title" style="margin-bottom:0">Approved Digital Services</div></div>
+    {% if user %}<a href="/services/portal/request" class="btn btn-primary"><i class="fas fa-plus"></i> Request New Portal</a>
+    {% else %}<a href="/auth/login?next=/services/portal/request" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login to Request</a>{% endif %}
+  </div>
+  {% if portals %}
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px">
+    {% for p in portals %}
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;padding:24px;box-shadow:var(--shadow-sm)">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+        <div style="width:44px;height:44px;border-radius:10px;background:var(--blue-xlight);display:flex;align-items:center;justify-content:center"><i class="fas fa-globe" style="color:var(--blue);font-size:18px"></i></div>
+        <span style="background:#dcfce7;color:#166534;font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px">LIVE</span>
+      </div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px">{{ p.name }}</h3>
+      <p style="font-size:12px;color:var(--gray-500);margin-bottom:8px">{{ p.ministry }}</p>
+      <p style="font-size:13px;color:var(--gray-600);line-height:1.6;margin-bottom:14px">{{ p.description or "Official government digital service portal." }}</p>
+      <a href="{{ p.url }}" target="_blank" style="font-size:13px;color:var(--blue);font-weight:600;text-decoration:none"><i class="fas fa-external-link-alt" style="margin-right:5px"></i>Visit Portal</a>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="text-align:center;padding:80px 0;color:var(--gray-400)">
+    <i class="fas fa-globe" style="font-size:48px;display:block;margin-bottom:16px;opacity:.3"></i>
+    <p style="font-size:15px">No approved portals published yet.</p>
+    {% if user %}<a href="/services/portal/request" class="btn btn-primary" style="margin-top:16px;display:inline-flex">Submit a Portal Request →</a>{% endif %}
+  </div>
+  {% endif %}
+  <div style="margin-top:48px;background:var(--blue-xlight);border-radius:14px;padding:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+    <div><h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:4px">Need a new government portal?</h3><p style="font-size:14px;color:var(--gray-600)">Agencies and MDAs can submit a portal request for review by the ICT Department.</p></div>
+    {% if user %}<a href="/services/portal/request" class="btn btn-primary">Submit Request →</a>
+    {% else %}<a href="/auth/register" class="btn btn-primary">Create Account to Apply →</a>{% endif %}
+  </div>
+</div></section>
+{% endblock %}

@@ -30,12 +30,18 @@
   </div>
   <!-- Floating stat bubbles -->
   <div style="position:absolute;top:32px;right:40px;display:flex;gap:12px">
-    {% for n, l in [("15,000+","Alumni"),("200+","Workstations"),("4","Daily Sessions")] %}
     <div style="background:rgba(255,255,255,.12);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 18px;text-align:center;color:white">
-      <div style="font-size:20px;font-weight:800;color:#6ee7a8">{{n}}</div>
-      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px">{{l}}</div>
+      <div style="font-size:20px;font-weight:800;color:#6ee7a8">15,000+</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px">Alumni</div>
     </div>
-    {% endfor %}
+    <div style="background:rgba(255,255,255,.12);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 18px;text-align:center;color:white">
+      <div style="font-size:20px;font-weight:800;color:#6ee7a8">200+</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px">Workstations</div>
+    </div>
+    <div style="background:rgba(255,255,255,.12);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 18px;text-align:center;color:white">
+      <div style="font-size:20px;font-weight:800;color:#6ee7a8">4</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px">Daily Sessions</div>
+    </div>
   </div>
 </div>
 

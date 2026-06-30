@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}My Enrollments{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+{% macro status_badge(s) %}{% set c = {"applied":"#6366f1","shortlisted":"#0891b2","admitted":"#059669","attending":"#d97706","completed":"#059669","rejected":"#dc2626","pending":"#d97706","verified":"#059669","submitted":"#6366f1","under_review":"#6366f1","approved":"#059669","review_required":"#d97706","open":"#dc2626","assigned":"#0891b2","in_progress":"#d97706","resolved":"#059669","closed":"#6b7280"} %}<span style="background:{{ c.get(s,'#6b7280') }}18;color:{{ c.get(s,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ s|replace('_',' ') }}</span>{% endmacro %}
+<div class="page-header"><div class="ph-inner">
+  <h1>My Training Enrollments</h1>
+  <div class="breadcrumb"><a href="/services/training">Training</a><span class="sep">/</span><span>My Enrollments</span></div>
+</div></div>
+<section class="section"><div class="section-inner">
+  {% if already %}<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 16px;margin-bottom:24px;color:#92400e">You are already enrolled in that session.</div>{% endif %}
+  {% if enrollments %}
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:14px;overflow:hidden">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--gray-50)">
+        {% for h in ["Reference","Course","Session","Status","Applied","Action"] %}
+        <th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase">{{ h }}</th>
+        {% endfor %}
+      </tr></thead>
+      <tbody>
+        {% for e in enrollments %}
+        <tr style="border-top:1px solid var(--gray-100)">
+          <td style="padding:12px 16px;font-weight:600;color:var(--blue)">{{ e.reference }}</td>
+          <td style="padding:12px 16px;color:var(--navy);font-weight:500">{{ e.session.course.title if e.session and e.session.course else "—" }}</td>
+          <td style="padding:12px 16px;color:var(--gray-600)">{{ e.session.cohort_name if e.session else "—" }}</td>
+          <td style="padding:12px 16px">{{ status_badge(e.status.value) }}</td>
+          <td style="padding:12px 16px;color:var(--gray-500)">{{ e.applied_at.strftime("%d %b %Y") }}</td>
+          <td style="padding:12px 16px"><a href="/services/training/track/{{ e.reference }}" style="color:var(--blue);font-size:12px;font-weight:600">View →</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div style="text-align:center;padding:80px 0;color:var(--gray-400)"><i class="fas fa-graduation-cap" style="font-size:48px;display:block;margin-bottom:16px;opacity:.3"></i><p>No enrollments yet.</p><a href="/services/training" class="btn btn-primary" style="margin-top:16px;display:inline-flex">Browse Courses →</a></div>
+  {% endif %}
+</div></section>
+{% endblock %}

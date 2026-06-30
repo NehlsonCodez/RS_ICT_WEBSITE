@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Enrollment — {{ enr.reference }}{% endblock %}
+{% block newsletter %}{% endblock %}
+{% block content %}
+{% macro status_badge(s) %}{% set c = {"applied":"#6366f1","shortlisted":"#0891b2","admitted":"#059669","attending":"#d97706","completed":"#059669","rejected":"#dc2626","pending":"#d97706","verified":"#059669","submitted":"#6366f1","under_review":"#6366f1","approved":"#059669","review_required":"#d97706","open":"#dc2626","assigned":"#0891b2","in_progress":"#d97706","resolved":"#059669","closed":"#6b7280"} %}<span style="background:{{ c.get(s,'#6b7280') }}18;color:{{ c.get(s,'#6b7280') }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px">{{ s|replace('_',' ') }}</span>{% endmacro %}
+<div class="page-header"><div class="ph-inner">
+  <h1>Enrollment — {{ enr.reference }}</h1>
+  <div class="breadcrumb"><a href="/services/training">Training</a><span class="sep">/</span><span>Track</span></div>
+</div></div>
+<section class="section"><div class="section-inner" style="max-width:680px">
+  {% if success %}<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px 16px;margin-bottom:24px;color:#166534;font-weight:600"><i class="fas fa-check-circle" style="margin-right:8px"></i>Enrollment submitted! Reference: <strong>{{ enr.reference }}</strong>. Await confirmation email.</div>{% endif %}
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:16px;padding:32px">
+    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+      <div>
+        <h2 style="font-size:18px;font-weight:800;color:var(--navy)">{{ enr.session.course.title if enr.session and enr.session.course else "Course" }}</h2>
+        <p style="color:var(--gray-500);font-size:14px">{{ enr.session.cohort_name if enr.session else "" }}</p>
+      </div>
+      <div>{{ status_badge(enr.status.value) }}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+      <div><div style="font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;margin-bottom:3px">Reference</div><div style="font-size:14px;color:var(--navy);font-weight:600">{{ enr.reference }}</div></div>
+      <div><div style="font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;margin-bottom:3px">Applied</div><div style="font-size:14px;color:var(--navy)">{{ enr.applied_at.strftime("%d %b %Y") }}</div></div>
+      <div><div style="font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;margin-bottom:3px">Schedule</div><div style="font-size:14px;color:var(--navy)">{{ enr.session.schedule if enr.session else "TBD" }}</div></div>
+      <div><div style="font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;margin-bottom:3px">Venue</div><div style="font-size:14px;color:var(--navy)">{{ enr.session.venue if enr.session else "Aba Expressway, Port Harcourt" }}</div></div>
+    </div>
+    {% if enr.admin_notes %}<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px"><strong style="color:#92400e;font-size:12px;text-transform:uppercase">Admin Note: </strong><span style="color:#78350f">{{ enr.admin_notes }}</span></div>{% endif %}
+    {% if enr.certificate %}<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:16px;margin-top:14px;text-align:center"><div style="font-size:36px;margin-bottom:8px">🏅</div><div style="font-weight:700;color:#166534;margin-bottom:4px">Certificate Issued!</div><div style="font-size:13px;color:#15803d">Certificate No: {{ enr.certificate.certificate_number }}</div></div>{% endif %}
+  </div>
+</div></section>
+{% endblock %}
